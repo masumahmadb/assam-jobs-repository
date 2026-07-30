@@ -1,0 +1,5 @@
+{
+  "name": "assam-jobs-scripts",
+  "private": true,
+  "dependencies": { "firebase-admin": "^12.3.1" }
+}
