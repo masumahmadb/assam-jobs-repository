@@ -1,55 +1,19 @@
-import React, { useState } from 'react'
-import { useNavigate, Link } from 'react-router-dom'
-import { signUpWithEmail, signInWithGoogle } from '../../firebase/auth.js'
+import React from 'react'
+import ReactDOM from 'react-dom/client'
+import { BrowserRouter } from 'react-router-dom'
+import App from './App.jsx'
+import { AuthProvider } from './contexts/AuthContext.jsx'
+import { LanguageProvider } from './contexts/LanguageContext.jsx'
+import './index.css'
 
-export default function Signup() {
-  const [name, setName] = useState('')
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [error, setError] = useState('')
-  const [loading, setLoading] = useState(false)
-  const navigate = useNavigate()
-
-  async function handleSubmit(e) {
-    e.preventDefault()
-    setError('')
-    setLoading(true)
-    try {
-      await signUpWithEmail({ name, email, password })
-      navigate('/profile-setup')
-    } catch (err) {
-      setError('Could not create account. The email may already be in use.')
-    } finally {
-      setLoading(false)
-    }
-  }
-
-  async function handleGoogle() {
-    setError('')
-    try {
-      await signInWithGoogle()
-      navigate('/profile-setup')
-    } catch (err) {
-      setError('Google sign-in failed. Please try again.')
-    }
-  }
-
-  return (
-    <div className="min-h-screen flex flex-col justify-center px-6 bg-sand-50">
-      <h1 className="text-2xl font-display font-semibold text-tea-700 mb-6">Create your account</h1>
-      <form onSubmit={handleSubmit} className="space-y-3">
-        <input required value={name} onChange={(e) => setName(e.target.value)} placeholder="Full name" className="w-full border border-tea-100 rounded-xl2 px-4 py-3" />
-        <input type="email" required value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email" className="w-full border border-tea-100 rounded-xl2 px-4 py-3" />
-        <input type="password" required value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Password (min 6 characters)" className="w-full border border-tea-100 rounded-xl2 px-4 py-3" />
-        {error && <p className="text-gamosa-500 text-sm">{error}</p>}
-        <button disabled={loading} className="btn-primary w-full">{loading ? '...' : 'Sign Up'}</button>
-      </form>
-
-      <button onClick={handleGoogle} className="btn-outline w-full mt-3">Continue with Google</button>
-
-      <p className="text-sm text-center mt-6 text-tea-900/70">
-        Already have an account? <Link to="/login" className="text-tea-600 font-medium">Sign in</Link>
-      </p>
-    </div>
-  )
-}
+ReactDOM.createRoot(document.getElementById('root')).render(
+  <React.StrictMode>
+    <BrowserRouter>
+      <LanguageProvider>
+        <AuthProvider>
+          <App />
+        </AuthProvider>
+      </LanguageProvider>
+    </BrowserRouter>
+  </React.StrictMode>
+)
