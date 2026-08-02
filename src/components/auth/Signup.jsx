@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
-import { signUpWithEmail } from '../../firebase/auth.js'
+import { signUpWithEmail, signInWithGoogle } from '../../firebase/auth.js'
 
 export default function Signup() {
   const [name, setName] = useState('')
@@ -16,11 +16,21 @@ export default function Signup() {
     setLoading(true)
     try {
       await signUpWithEmail({ name, email, password })
-      navigate('/profile')
+      navigate('/profile-setup')
     } catch (err) {
       setError('Could not create account. The email may already be in use.')
     } finally {
       setLoading(false)
+    }
+  }
+
+  async function handleGoogle() {
+    setError('')
+    try {
+      await signInWithGoogle()
+      navigate('/profile-setup')
+    } catch (err) {
+      setError('Google sign-in failed. Please try again.')
     }
   }
 
@@ -34,6 +44,9 @@ export default function Signup() {
         {error && <p className="text-gamosa-500 text-sm">{error}</p>}
         <button disabled={loading} className="btn-primary w-full">{loading ? '...' : 'Sign Up'}</button>
       </form>
+
+      <button onClick={handleGoogle} className="btn-outline w-full mt-3">Continue with Google</button>
+
       <p className="text-sm text-center mt-6 text-tea-900/70">
         Already have an account? <Link to="/login" className="text-tea-600 font-medium">Sign in</Link>
       </p>
