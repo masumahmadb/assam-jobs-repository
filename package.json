@@ -8,7 +8,8 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "scrape": "node scripts/scrapeGovtJobs.js"
   },
   "dependencies": {
     "cheerio": "^1.2.0",
