@@ -1,11 +1,17 @@
 import admin from "firebase-admin";
 import crypto from "crypto";
+import fs from "fs";
 
 let initialized = false;
 
 function initFirebase() {
   if (initialized) return;
-  const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
+  let serviceAccount;
+  if (process.env.FIREBASE_SERVICE_ACCOUNT_PATH) {
+    serviceAccount = JSON.parse(fs.readFileSync(process.env.FIREBASE_SERVICE_ACCOUNT_PATH, "utf8"));
+  } else {
+    serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
+  }
   admin.initializeApp({
     credential: admin.credential.cert(serviceAccount)
   });
@@ -19,7 +25,6 @@ function docIdFromLink(link) {
 export async function pushJobToFirestore(candidate, structured) {
   initFirebase();
   const db = admin.firestore();
-
   const docId = docIdFromLink(candidate.link);
   const docRef = db.collection("job_listings").doc(docId);
 
