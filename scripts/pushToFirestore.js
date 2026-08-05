@@ -1,8 +1,10 @@
-import admin from "firebase-admin";
+import { initializeApp, cert } from "firebase-admin/app";
+import { getFirestore, FieldValue } from "firebase-admin/firestore";
 import crypto from "crypto";
 import fs from "fs";
 
 let initialized = false;
+let db;
 
 function initFirebase() {
   if (initialized) return;
@@ -12,9 +14,8 @@ function initFirebase() {
   } else {
     serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
   }
-  admin.initializeApp({
-    credential: admin.credential.cert(serviceAccount)
-  });
+  initializeApp({ credential: cert(serviceAccount) });
+  db = getFirestore();
   initialized = true;
 }
 
@@ -24,7 +25,6 @@ function docIdFromLink(link) {
 
 export async function pushJobToFirestore(candidate, structured) {
   initFirebase();
-  const db = admin.firestore();
   const docId = docIdFromLink(candidate.link);
   const docRef = db.collection("job_listings").doc(docId);
 
@@ -47,7 +47,7 @@ export async function pushJobToFirestore(candidate, structured) {
       category: candidate.category,
       jobType: "government",
       status: "active",
-      postedAt: admin.firestore.FieldValue.serverTimestamp()
+      postedAt: FieldValue.serverTimestamp()
     },
     { merge: true }
   );
