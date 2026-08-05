@@ -1,5 +1,5 @@
 import { scrapeAllSites } from "./fetchCandidates.js";
-import { structureJobWithClaude } from "./structureWithClaude.js";
+import { structureJobWithGemini } from "./structureWithGemini.js";
 import { pushJobToFirestore } from "./pushToFirestore.js";
 
 async function main() {
@@ -10,18 +10,14 @@ async function main() {
   let skippedCount = 0;
 
   for (const candidate of candidates) {
-    const structured = await structureJobWithClaude(candidate);
-
+    const structured = await structureJobWithGemini(candidate);
     if (!structured || structured.isJob !== true) {
       skippedCount++;
       continue;
     }
-
     await pushJobToFirestore(candidate, structured);
     savedCount++;
-
-    // Small delay to avoid hammering the Claude API rate limits
-    await new Promise((r) => setTimeout(r, 500));
+    await new Promise((r) => setTimeout(r, 1000));
   }
 
   console.log(`\nDone. Saved: ${savedCount}, Skipped (not real jobs): ${skippedCount}`);
