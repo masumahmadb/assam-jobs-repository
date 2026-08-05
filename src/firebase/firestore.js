@@ -60,3 +60,15 @@ export async function getChatHistory(uid) {
   const snap = await getDocs(q)
   return snap.docs.map((d) => ({ id: d.id, ...d.data() }))
 }
+
+export function subscribeToPrivateJobs(callback) {
+  const q = query(
+    collection(db, 'private_jobs'),
+    where('status', '==', 'approved'),
+    orderBy('postedAt', 'desc'),
+    limit(100)
+  )
+  return onSnapshot(q, (snap) => {
+    callback(snap.docs.map((doc) => ({ id: doc.id, ...doc.data() })))
+  })
+}
