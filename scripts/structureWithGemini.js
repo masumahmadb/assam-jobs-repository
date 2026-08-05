@@ -1,7 +1,7 @@
 import fetch from "node-fetch";
 
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
-const GEMINI_MODEL = "gemini-2.5-flash";
+const GEMINI_MODEL = "gemini-3.5-flash-lite";
 
 const SYSTEM_PROMPT = `You are a data-extraction assistant for a government job listing website in Assam, India.
 You will be given a short piece of text (a link title/snippet) scraped from a government website, plus the link URL.
