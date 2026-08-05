@@ -15,6 +15,7 @@ Rules:
 - Do not hallucinate deadlines, vacancy counts, or syllabus details.
 - "employmentType" must be one of: "Permanent", "Contractual", "Not specified".
 - "syllabus" should only be filled if syllabus/exam-pattern details are explicitly present in the given text; otherwise "Not specified".
+- "examPattern" describes how the selection process works (e.g. "Written (OMR/MCQ)", "Written + Interview", "Interview only", "Skill Test", "Not specified"). Only fill this if explicitly mentioned; otherwise "Not specified".
 - Respond with ONLY valid JSON, no markdown fences, no preamble, no explanation.
 
 Output JSON shape:
@@ -26,6 +27,7 @@ Output JSON shape:
   "vacancies": "string (number/count if found, else 'Not specified')",
   "employmentType": "Permanent | Contractual | Not specified",
   "syllabus": "string (brief syllabus/exam pattern if found, else 'Not specified')",
+  "examPattern": "string (e.g. Written (OMR/MCQ), Interview only, Not specified)",
   "summary": "string (1-2 sentence plain-language summary)"
 }`;
 

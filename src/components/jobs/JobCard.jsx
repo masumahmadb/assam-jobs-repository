@@ -19,6 +19,26 @@ export default function JobCard({ job, onOpen }) {
         <FiMapPin size={14} /> {job.assam_district || 'Entire Assam'}
       </div>
 
+      {(job.vacancies || job.employmentType || job.deadline) && (
+        <div className="flex flex-wrap gap-2 mt-2">
+          {job.vacancies && job.vacancies !== 'Not specified' && (
+            <span className="text-xs bg-blue-50 text-blue-700 px-2 py-1 rounded-full">
+              {job.vacancies} Posts
+            </span>
+          )}
+          {job.employmentType && job.employmentType !== 'Not specified' && (
+            <span className="text-xs bg-purple-50 text-purple-700 px-2 py-1 rounded-full">
+              {job.employmentType}
+            </span>
+          )}
+          {job.deadline && job.deadline !== 'Not specified' && (
+            <span className="text-xs bg-red-50 text-red-700 px-2 py-1 rounded-full">
+              Last Date: {job.deadline}
+            </span>
+          )}
+        </div>
+      )}
+
       <div className="flex gap-2 mt-3">
         <button onClick={() => onOpen(job)} className="btn-primary flex-1 py-2 text-sm">View Details</button>
         <button onClick={() => shareJob(job)} className="btn-outline py-2 px-3" aria-label="Share job">

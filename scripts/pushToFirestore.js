@@ -42,6 +42,7 @@ export async function pushJobToFirestore(candidate, structured) {
       vacancies: structured.vacancies,
       employmentType: structured.employmentType,
       syllabus: structured.syllabus,
+      examPattern: structured.examPattern,
       summary: structured.summary,
       sourceSite: candidate.siteName,
       category: candidate.category,
