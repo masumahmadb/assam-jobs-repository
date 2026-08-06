@@ -49,15 +49,26 @@ export default function Login() {
           type="password" required value={password} onChange={(e) => setPassword(e.target.value)}
           placeholder="Password" className="w-full border border-tea-100 rounded-xl2 px-4 py-3"
         />
-        {error && <p className="text-gamosa-500 text-sm">{error}</p>}
-        <button disabled={loading} className="btn-primary w-full">{loading ? '...' : t('signIn')}</button>
+        {error && <p className="text-red-600 text-sm">{error}</p>}
+        <button type="submit" disabled={loading} className="btn-primary w-full py-3">
+          {loading ? 'Signing in...' : 'Sign In'}
+        </button>
       </form>
 
-      <button onClick={handleGoogle} className="btn-outline w-full mt-3">Continue with Google</button>
+      <button onClick={handleGoogle} className="btn-outline w-full py-3 mt-3">
+        Sign in with Google
+      </button>
 
-      <p className="text-sm text-center mt-6 text-tea-900/70">
-        New here? <Link to="/signup" className="text-tea-600 font-medium">Create an account</Link>
+      <p className="text-center text-sm text-tea-900/60 mt-4">
+        Don't have an account? <Link to="/signup" className="text-tea-700 font-medium">Sign up</Link>
       </p>
+
+      <div className="border-t border-tea-100 mt-6 pt-6">
+        <p className="text-center text-sm text-tea-900/60 mb-3">Are you an employer?</p>
+        <Link to="/employer/login" className="btn-outline w-full py-3 text-center">
+          Post a Job
+        </Link>
+      </div>
     </div>
   )
 }
