@@ -27,6 +27,8 @@ export async function completeEmployerLoginIfLink() {
   }
   const cred = await signInWithEmailLink(auth, email, window.location.href)
   window.localStorage.removeItem('employerEmailForSignIn')
+
+  window.localStorage.setItem('employerUser', JSON.stringify({ uid: cred.user.uid, email: cred.user.email }))
   await ensureEmployerProfileDoc(cred.user)
   return cred.user
 }
@@ -36,6 +38,7 @@ export function watchEmployerAuthState(callback) {
 }
 
 export function employerLogOut() {
+  window.localStorage.removeItem('employerUser')
   return signOut(auth)
 }
 
