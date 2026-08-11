@@ -2,8 +2,8 @@ name: Scrape Govt Jobs
 
 on:
   schedule:
-    - cron: '0 2 * * *'  # Daily at 2 AM UTC (7:30 AM IST)
-  workflow_dispatch:       # Manual run bhi kar sako
+    - cron: '0 2 * * *'
+  workflow_dispatch:
 
 jobs:
   scrape:
@@ -20,10 +20,6 @@ jobs:
 
       - name: Install dependencies
         run: npm install
-        working-directory: .
-
-      - name: Install Playwright browsers
-        run: npx playwright install chromium --with-deps
 
       - name: Run scraper
         env:

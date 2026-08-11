@@ -9,11 +9,21 @@ let db;
 function initFirebase() {
   if (initialized) return;
   let serviceAccount;
+
   if (process.env.FIREBASE_SERVICE_ACCOUNT_PATH) {
     serviceAccount = JSON.parse(fs.readFileSync(process.env.FIREBASE_SERVICE_ACCOUNT_PATH, "utf8"));
-  } else {
+  } else if (process.env.FIREBASE_SERVICE_ACCOUNT) {
     serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
+  } else {
+    // Individual env vars se banao
+    serviceAccount = {
+      type: "service_account",
+      project_id: process.env.FIREBASE_PROJECT_ID,
+      client_email: process.env.FIREBASE_CLIENT_EMAIL,
+      private_key: process.env.FIREBASE_PRIVATE_KEY?.replace(/\\n/g, '\n'),
+    };
   }
+
   initializeApp({ credential: cert(serviceAccount) });
   db = getFirestore();
   initialized = true;
