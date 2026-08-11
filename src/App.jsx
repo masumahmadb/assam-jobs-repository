@@ -15,6 +15,7 @@ import Profile from './pages/Profile.jsx'
 import EmployerLogin from './pages/EmployerLogin.jsx'
 import EmployerVerify from './pages/EmployerVerify.jsx'
 import EmployerDashboard from './pages/EmployerDashboard.jsx'
+import AdminPanel from './pages/AdminPanel.jsx'
 
 function PrivateRoute({ children }) {
   const { user, loading } = useAuth()
@@ -57,6 +58,7 @@ export default function App() {
           </EmployerRoute>
         } />
 
+        <Route path="/admin" element={<AdminPanel />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
       {user && <BottomNav />}
