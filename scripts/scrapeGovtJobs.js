@@ -1,3 +1,5 @@
+import dotenv from "dotenv";
+dotenv.config();
 import { scrapeAllSites } from "./fetchCandidates.js";
 import { structureJobWithGemini } from "./structureWithGemini.js";
 import { pushJobToFirestore } from "./pushToFirestore.js";
@@ -11,13 +13,13 @@ async function main() {
 
   for (const candidate of candidates) {
     const structured = await structureJobWithGemini(candidate);
-    if (!structured || structured.isJob !== true) {
+    if (!structured || structured.isRelevant !== true) {
       skippedCount++;
       continue;
     }
     await pushJobToFirestore(candidate, structured);
     savedCount++;
-    await new Promise((r) => setTimeout(r, 1000));
+    await new Promise((r) => setTimeout(r, 4000));
   }
 
   console.log(`\nDone. Saved: ${savedCount}, Skipped (not real jobs): ${skippedCount}`);

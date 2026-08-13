@@ -15,7 +15,16 @@ export default {
         body: ['"Inter"', 'sans-serif'],
         assamese: ['"Noto Sans Bengali"', 'sans-serif']
       },
-      borderRadius: { xl2: '1.25rem' }
+      borderRadius: { xl2: '1.25rem' },
+      keyframes: {
+        marquee: {
+          '0%': { transform: 'translateX(0%)' },
+          '100%': { transform: 'translateX(-50%)' }
+        }
+      },
+      animation: {
+        marquee: 'marquee 20s linear infinite'
+      }
     }
   },
   plugins: []

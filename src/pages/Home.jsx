@@ -2,6 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { FiBriefcase, FiMap, FiFileText, FiCamera } from 'react-icons/fi'
 import { useAuth } from '../contexts/AuthContext.jsx'
+import UpdatesTicker from '../components/common/UpdatesTicker.jsx'
 
 const shortcuts = [
   { to: '/jobs', icon: FiBriefcase, label: 'Latest Jobs', color: 'bg-tea-600' },
@@ -14,6 +15,8 @@ export default function Home() {
   const { profile } = useAuth()
   return (
     <div className="p-4 pb-24 space-y-5">
+      <UpdatesTicker />
+
       <div className="card bg-tea-700 text-white border-none">
         <h2 className="text-xl font-display font-semibold">
           {profile?.name ? `Namaskar, ${profile.name}` : 'Namaskar!'}

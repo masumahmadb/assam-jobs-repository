@@ -8,14 +8,13 @@ let db;
 
 function initFirebase() {
   if (initialized) return;
-  let serviceAccount;
 
-  if (process.env.FIREBASE_SERVICE_ACCOUNT_PATH) {
-    serviceAccount = JSON.parse(fs.readFileSync(process.env.FIREBASE_SERVICE_ACCOUNT_PATH, "utf8"));
-  } else if (process.env.FIREBASE_SERVICE_ACCOUNT) {
-    serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
+  const jsonPath = '/sdcard/Download/assamjobs-masum98-firebase-adminsdk-fbsvc-d6312d99d7.json';
+
+  let serviceAccount;
+  if (fs.existsSync(jsonPath)) {
+    serviceAccount = JSON.parse(fs.readFileSync(jsonPath, 'utf8'));
   } else {
-    // Individual env vars se banao
     serviceAccount = {
       type: "service_account",
       project_id: process.env.FIREBASE_PROJECT_ID,
@@ -36,32 +35,41 @@ function docIdFromLink(link) {
 export async function pushJobToFirestore(candidate, structured) {
   initFirebase();
   const docId = docIdFromLink(candidate.link);
-  const docRef = db.collection("job_listings").doc(docId);
 
-  await docRef.set(
-    {
-      role: structured.title,
-      department: structured.department,
-      deadline: structured.deadline,
-      applyUrl: candidate.link,
-      assam_district: "Entire Assam",
-      salary: null,
-      minAge: null,
-      maxAge: null,
-      requiredEducation: null,
+  const isNewJob = structured.category === "new_recruitment";
+  const collectionName = isNewJob ? "job_listings" : "updates";
+  const docRef = db.collection(collectionName).doc(docId);
+
+  const baseData = {
+    role: structured.title,
+    title: structured.title,
+    department: structured.department,
+    deadline: structured.deadline,
+    applyUrl: candidate.link,
+    assam_district: "Entire Assam",
+    summary: structured.summary,
+    sourceSite: candidate.siteName,
+    category: candidate.category,
+    noticeCategory: structured.category,
+    jobType: "government",
+    status: "active",
+    postedAt: FieldValue.serverTimestamp()
+  };
+
+  if (isNewJob) {
+    Object.assign(baseData, {
+      salary: structured.salary || "Not specified",
+      minAge: structured.minAge || "Not specified",
+      maxAge: structured.maxAge || "Not specified",
+      requiredEducation: structured.requiredEducation || "Not specified",
       vacancies: structured.vacancies,
       employmentType: structured.employmentType,
       syllabus: structured.syllabus,
-      examPattern: structured.examPattern,
-      summary: structured.summary,
-      sourceSite: candidate.siteName,
-      category: candidate.category,
-      jobType: "government",
-      status: "active",
-      postedAt: FieldValue.serverTimestamp()
-    },
-    { merge: true }
-  );
+      examPattern: structured.examPattern
+    });
+  }
 
-  console.log(`Saved: ${structured.title} (${candidate.siteName})`);
+  await docRef.set(baseData, { merge: true });
+
+  console.log(`Saved [${collectionName}]: ${structured.title} (${candidate.siteName})`);
 }

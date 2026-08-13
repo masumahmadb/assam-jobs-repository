@@ -1,9 +1,39 @@
 import fetch from "node-fetch";
 import * as cheerio from "cheerio";
+import { createRequire } from "module";
 import { SITES, KEYWORDS } from "./sites.config.js";
 
-// Fetches a page and returns candidate "notification items": link text + href + a bit of
-// surrounding context, filtered by keyword match so we don't send menu/footer junk to Claude.
+const require = createRequire(import.meta.url);
+const pdfParse = require("pdf-parse");
+
+async function fetchPageText(url) {
+  try {
+    const res = await fetch(url, {
+      headers: { "User-Agent": "Mozilla/5.0 (compatible; AssamJobsBot/1.0)" },
+      timeout: 15000
+    });
+    if (!res.ok) return "";
+
+    const contentType = res.headers.get("content-type") || "";
+    const isPdf = contentType.includes("pdf") || url.toLowerCase().endsWith(".pdf");
+
+    if (isPdf) {
+      const buffer = await res.buffer();
+      const data = await pdfParse(buffer);
+      return data.text.replace(/\s+/g, " ").trim().slice(0, 4000);
+    }
+
+    const html = await res.text();
+    const $ = cheerio.load(html);
+    $("script, style, nav, footer, header").remove();
+    const text = $("body").text().replace(/\s+/g, " ").trim();
+    return text.slice(0, 3000);
+  } catch (err) {
+    console.error(`  Failed to extract content from ${url}:`, err.message);
+    return "";
+  }
+}
+
 async function fetchCandidates(site) {
   const candidates = [];
   try {
@@ -27,7 +57,6 @@ async function fetchCandidates(site) {
       const isRelevant = KEYWORDS.some((kw) => lowerText.includes(kw));
       if (!isRelevant) return;
 
-      // Resolve relative links to absolute URLs
       try {
         href = new URL(href, site.listUrl).toString();
       } catch {
@@ -46,13 +75,21 @@ async function fetchCandidates(site) {
     console.error(`[${site.id}] Error fetching ${site.listUrl}:`, err.message);
   }
 
-  // De-duplicate by link
   const seen = new Set();
-  return candidates.filter((c) => {
+  const unique = candidates.filter((c) => {
     if (seen.has(c.link)) return false;
     seen.add(c.link);
     return true;
   });
+
+  console.log(`  Fetching page content for ${unique.length} candidates...`);
+  for (const candidate of unique) {
+    const pageText = await fetchPageText(candidate.link);
+    candidate.pageContent = pageText;
+    await new Promise(r => setTimeout(r, 1000));
+  }
+
+  return unique;
 }
 
 export async function scrapeAllSites() {

@@ -72,3 +72,15 @@ export function subscribeToPrivateJobs(callback) {
     callback(snap.docs.map((doc) => ({ id: doc.id, ...doc.data() })))
   })
 }
+
+// ---- updates (interview/admit card/verification/results) ----
+export function subscribeToUpdates(callback) {
+  const q = query(
+    collection(db, 'updates'),
+    orderBy('postedAt', 'desc'),
+    limit(30)
+  )
+  return onSnapshot(q, (snap) => {
+    callback(snap.docs.map((d) => ({ id: d.id, ...d.data() })))
+  })
+}
