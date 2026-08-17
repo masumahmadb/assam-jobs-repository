@@ -45,6 +45,7 @@ export default function JobDetailModal({ job, onClose }) {
           </p>
         )}
 
+
         {/* Details */}
         <dl className="space-y-2 text-sm">
           <Row label="Department" value={job.department} />
@@ -73,7 +74,7 @@ export default function JobDetailModal({ job, onClose }) {
         {/* Buttons */}
         <div className="mt-4 space-y-2">
           {job.applyUrl && (
-            
+            <a
               href={job.applyUrl}
               target="_blank"
               rel="noreferrer"
