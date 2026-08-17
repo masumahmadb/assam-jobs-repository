@@ -1,6 +1,6 @@
 # Assam Jobs Repository
 
-A high-performance, offline-friendly PWA for Sarkari and private job discovery across Assam — with an AI eligibility engine, an interactive district map, an in-app CV builder, and document utilities (resizer, scanner, vault).
+A high-performance, offline-friendly PWA for Sarkari and private job discovery across Assam — with an in-app CV builder, and document utilities (resizer, scanner, vault).
 
 **Android package name:** `com.assamjobs.repository`
 
@@ -14,7 +14,6 @@ A high-performance, offline-friendly PWA for Sarkari and private job discovery a
 | Routing | React Router v6 |
 | Backend | Firebase (Auth, Firestore, Storage, Cloud Functions, FCM) |
 | AI | Google Gemini 2.5 Flash, called only from Cloud Functions |
-| Map | Leaflet + React-Leaflet + OpenStreetMap tiles (no API key needed; swap for Google Maps JS API if preferred) |
 | PDF | jsPDF (CV generation), pdf-parse (server-side notice parsing) |
 
 ## 2. Project Structure
@@ -28,13 +27,12 @@ assam-jobs-repository/
 │  │  ├─ common/        BottomNav, TopBar, Toast, SkeletonLoader
 │  │  ├─ auth/           Login, Signup, ProfileSetup
 │  │  ├─ jobs/           JobList, JobCard, JobDetailModal
-│  │  ├─ map/            EligibilityMap, MapPin3D
 │  │  ├─ cv/             CVBuilder
 │  │  ├─ vault/          PhotoResizer, DocumentScanner, DocumentVault
 │  │  └─ assistant/      AIAssistant
-│  ├─ pages/            Home, Jobs, MapPage, Utilities, Assistant, Profile
-│  ├─ hooks/            useEligibility, useOffline
-│  ├─ utils/            eligibility.js, imageResize.js, i18n.js, districts.js, share.js
+│  ├─ pages/            Home, Jobs, Utilities, Assistant, Profile
+│  ├─ hooks/            useOffline
+│  ├─ utils/            imageResize.js, i18n.js, districts.js, share.js
 │  └─ services/         geminiAgent.js, pushNotifications.js
 ├─ functions/           Cloud Functions: Gemini AI agent suite
 ├─ firestore.rules
@@ -46,7 +44,7 @@ assam-jobs-repository/
 ## 3. Firestore Collections
 
 - `user_profiles/{uid}` — education_level, birth_year, caste_status, assam_district, fcmToken
-- `job_listings/{id}` — role, department, salary, minAge, maxAge, requiredEducation, assam_district, lat/lng, deadline, applyUrl, status
+- `job_listings/{id}` — role, department, salary, minAge, maxAge, requiredEducation, assam_district, deadline, applyUrl, status
 - `vault_documents/{id}` — uid, name, url, type, sizeKB
 - `chat_history/{id}` — uid, role, text, language
 
@@ -111,7 +109,6 @@ Set the package name to `com.assamjobs.repository` when prompted in either tool.
 
 ## 6. Key Feature Notes
 
-- **Eligibility Engine** (`src/utils/eligibility.js`): compares `user_profiles` against `job_listings` on age (with category relaxation), education level, and district restriction; used by both the Jobs list and the 3D floating pins on the map.
 - **Exam Photo Resizer** (`src/utils/imageResize.js`): canvas-based resize + binary-search JPEG compression to hit the exact KB ceilings specified for Passport (200×260, 50KB), Stamp (150×180, 30KB), Standard (240×360, 50KB), and Signature (20KB/50KB) presets.
 - **"Added to Vault" alert**: triggered via the shared `Toast` context (`src/components/common/Toast.jsx`) from both the Resizer and Scanner after a successful Storage + Firestore write.
 - **Offline support**: Firestore IndexedDB persistence is enabled in `src/firebase/config.js`; `vite-plugin-pwa` caches the app shell and does network-first caching of Firestore reads for weak 2G/3G connectivity.
@@ -123,7 +120,7 @@ Set the package name to `com.assamjobs.repository` when prompted in either tool.
 
 ## 7. Seeding sample data
 
-A ready-made seed script is included at `scripts/seedFirestore.js` — 6 realistic Assam job listings (Sarkari + private) with district coordinates for the map:
+A ready-made seed script is included at `scripts/seedFirestore.js` — 6 realistic Assam job listings (Sarkari + private):
 
 ```bash
 cd scripts && npm install && cd ..
@@ -146,4 +143,3 @@ GOOGLE_APPLICATION_CREDENTIALS=./serviceAccountKey.json node scripts/seedFiresto
 
 - Add an admin web panel (or Firebase console workflow) for staff to upload notice PDFs into `notices/` and trigger the extraction agent.
 - Add Firestore composite indexes for `job_listings` (`assam_district` + `status` + `postedAt`) — Firebase will prompt with a direct console link on first query.
-- Wire real district GPS coordinates into `job_listings.lat/lng` for the map (e.g., district HQ centroids) so pins render correctly.

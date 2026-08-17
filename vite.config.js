@@ -13,7 +13,7 @@ export default defineConfig({
       manifest: {
         name: 'Assam Jobs Repository',
         short_name: 'AssamJobs',
-        description: 'Sarkari & Private Jobs, Eligibility Map, CV Builder for Assam',
+        description: 'Sarkari & Private Jobs, CV Builder for Assam',
         theme_color: '#0B6E4F',
         background_color: '#F7F5F0',
         display: 'standalone',

@@ -8,7 +8,6 @@ import Signup from './components/auth/Signup.jsx'
 import ProfileSetup from './components/auth/ProfileSetup.jsx'
 import Home from './pages/Home.jsx'
 import Jobs from './pages/Jobs.jsx'
-import MapPage from './pages/MapPage.jsx'
 import NewJobsNews from './pages/NewJobsNews'
 import Utilities from './pages/Utilities.jsx'
 import Assistant from './pages/Assistant.jsx'
@@ -46,7 +45,6 @@ export default function App() {
         <Route path="/" element={<PrivateRoute><Home /></PrivateRoute>} />
         <Route path="/jobs" element={<PrivateRoute><Jobs /></PrivateRoute>} />
         <Route path="/newjobsnews" element={<PrivateRoute><NewJobsNews /></PrivateRoute>} />
-        <Route path="/map" element={<PrivateRoute><MapPage /></PrivateRoute>} />
         <Route path="/utilities" element={<PrivateRoute><Utilities /></PrivateRoute>} />
         <Route path="/assistant" element={<PrivateRoute><Assistant /></PrivateRoute>} />
         <Route path="/profile" element={<PrivateRoute><Profile /></PrivateRoute>} />

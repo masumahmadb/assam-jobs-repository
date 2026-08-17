@@ -1,12 +1,11 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { FiBriefcase, FiMap, FiFileText, FiCamera } from 'react-icons/fi'
+import { FiBriefcase, FiFileText, FiCamera } from 'react-icons/fi'
 import { useAuth } from '../contexts/AuthContext.jsx'
 import UpdatesTicker from '../components/common/UpdatesTicker.jsx'
 
 const shortcuts = [
   { to: '/jobs', icon: FiBriefcase, label: 'Latest Jobs', color: 'bg-tea-600' },
-  { to: '/map', icon: FiMap, label: 'Eligibility Map', color: 'bg-brahma-600' },
   { to: '/utilities?tab=cv', icon: FiFileText, label: 'Build CV', color: 'bg-muga-500' },
   { to: '/utilities?tab=resizer', icon: FiCamera, label: 'Photo Resizer', color: 'bg-gamosa-500' }
 ]

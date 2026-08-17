@@ -3,7 +3,7 @@
   "private": true,
   "version": "1.0.0",
   "type": "module",
-  "description": "Assam Jobs Repository - Sarkari & Private job discovery, eligibility mapping, CV builder and document utilities for Assam youth",
+  "description": "Assam Jobs Repository - Sarkari & Private job discovery, CV builder and document utilities for Assam youth",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
@@ -13,16 +13,15 @@
   },
   "dependencies": {
     "cheerio": "^1.2.0",
+    "core-js": "^3.49.0",
     "firebase": "^10.13.0",
     "firebase-admin": "^14.2.0",
     "html2canvas": "^1.4.1",
     "jspdf": "^2.5.1",
-    "leaflet": "^1.9.4",
     "node-fetch": "^3.3.2",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-icons": "^5.2.1",
-    "react-leaflet": "^4.2.1",
     "react-router-dom": "^6.26.0",
     "workbox-window": "^7.1.0"
   },

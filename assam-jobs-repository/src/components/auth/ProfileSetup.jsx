@@ -18,7 +18,7 @@ export default function ProfileSetup() {
     await updateUserProfile(user.uid, form)
     await refreshProfile()
     setSaving(false)
-    navigate('/map')
+    navigate('/')
   }
 
   return (
