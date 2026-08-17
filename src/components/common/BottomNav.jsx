@@ -8,6 +8,7 @@ const items = [
   { to: '/jobs', icon: FiBriefcase, key: 'jobs' },
   { to: '/map', icon: FiMap, key: 'map' },
   { to: '/utilities', icon: FiTool, key: 'utilities' },
+  { to: '/newjobsnews', icon: FiMessageCircle, key: 'newjobsnews' },
   { to: '/assistant', icon: FiMessageCircle, key: 'assistant' },
   { to: '/profile', icon: FiUser, key: 'profile' }
 ]
@@ -22,6 +23,7 @@ export default function BottomNav() {
           to={to}
           end={to === '/'}
           className={({ isActive }) =>
+
             `flex flex-col items-center gap-1 text-xs px-2 py-1 rounded-lg shrink-0 ${
               isActive ? 'text-tea-700 font-semibold' : 'text-tea-900/50'
             }`
