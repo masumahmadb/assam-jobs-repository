@@ -3,6 +3,7 @@ import { uploadFile } from '../../firebase/storage.js'
 import { addVaultDocument } from '../../firebase/firestore.js'
 import { useAuth } from '../../contexts/AuthContext.jsx'
 import { useToast } from '../common/Toast.jsx'
+import { saveToDevice } from '../../utils/download.js'
 
 const FILTERS = {
   none: 'none',
@@ -18,6 +19,7 @@ export default function DocumentScanner() {
   const [filter, setFilter] = useState('none')
   const [brightness, setBrightness] = useState(100)
   const [contrast, setContrast] = useState(100)
+  const [busy, setBusy] = useState(false)
 
   function handleFile(e) {
     const file = e.target.files?.[0]
@@ -41,23 +43,44 @@ export default function DocumentScanner() {
     if (image) draw(image, f, b, c)
   }
 
-  async function saveScan() {
-    canvasRef.current.toBlob(async (blob) => {
-      const path = `vault/${user.uid}/scan_${Date.now()}.jpg`
-      const url = await uploadFile(path, blob)
-      await addVaultDocument(user.uid, { name: 'Scanned Document', url, type: 'scan', sizeKB: Math.round(blob.size / 1024) })
-      showToast('Added to Vault')
-    }, 'image/jpeg', 0.9)
+  function canvasToBlob() {
+    return new Promise((resolve) => canvasRef.current.toBlob(resolve, 'image/jpeg', 0.9))
+  }
+
+  async function saveToPhone() {
+    if (!image) return
+    setBusy(true)
+    const blob = await canvasToBlob()
+    await saveToDevice(blob, `scan_${Date.now()}.jpg`)
+    setBusy(false)
+    showToast('Saved to Phone')
+  }
+
+  async function saveToVault() {
+    if (!image || !user) return
+    setBusy(true)
+    const blob = await canvasToBlob()
+    const path = `vault/${user.uid}/scan_${Date.now()}.jpg`
+    const { url } = await uploadFile(path, blob)
+    await addVaultDocument(user.uid, { name: 'Scanned Document', url, type: 'scan', sizeKB: Math.round(blob.size / 1024) })
+    setBusy(false)
+    showToast('Added to Vault')
   }
 
   return (
     <div className="p-4 space-y-4">
       <h2 className="text-lg font-semibold text-tea-800">Document Scanner</h2>
 
-      <label className="btn-outline w-full block text-center cursor-pointer">
-        Scan / Upload Document
-        <input type="file" accept="image/*" capture="environment" className="hidden" onChange={handleFile} />
-      </label>
+      <div className="flex gap-2">
+        <label className="btn-outline flex-1 block text-center cursor-pointer">
+          Take Photo
+          <input type="file" accept="image/*" capture="environment" className="hidden" onChange={handleFile} />
+        </label>
+        <label className="btn-outline flex-1 block text-center cursor-pointer">
+          Upload from Gallery
+          <input type="file" accept="image/*" className="hidden" onChange={handleFile} />
+        </label>
+      </div>
 
       <canvas ref={canvasRef} className="w-full border rounded-xl2" />
 
@@ -79,7 +102,11 @@ export default function DocumentScanner() {
             <input type="range" min="50" max="150" value={contrast}
               onChange={(e) => applySettings(filter, brightness, Number(e.target.value))} className="w-full" />
           </label>
-          <button onClick={saveScan} className="btn-primary w-full">Save to Vault</button>
+          {busy && <p className="text-sm text-tea-900/60">Processing...</p>}
+          <div className="flex gap-2">
+            <button onClick={saveToPhone} className="btn-outline flex-1">Save to Phone</button>
+            <button onClick={saveToVault} className="btn-primary flex-1">Save to Vault</button>
+          </div>
         </div>
       )}
     </div>

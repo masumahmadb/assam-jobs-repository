@@ -38,6 +38,10 @@ export async function addVaultDocument(uid, { name, url, type, sizeKB }) {
   })
 }
 
+export async function updateVaultDocument(docId, data) {
+  return updateDoc(doc(db, 'vault_documents', docId), data)
+}
+
 export async function getVaultDocuments(uid) {
   const q = query(collection(db, 'vault_documents'), where('uid', '==', uid), orderBy('createdAt', 'desc'))
   const snap = await getDocs(q)
