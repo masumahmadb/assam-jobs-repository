@@ -20,10 +20,15 @@ export default {
         marquee: {
           '0%': { transform: 'translateX(0%)' },
           '100%': { transform: 'translateX(-50%)' }
+        },
+        navPulse: {
+          '0%, 100%': { opacity: '1' },
+          '50%': { opacity: '0.85' }
         }
       },
       animation: {
-        marquee: 'marquee 20s linear infinite'
+        marquee: 'marquee 20s linear infinite',
+        navPulse: 'navPulse 3s ease-in-out infinite'
       }
     }
   },

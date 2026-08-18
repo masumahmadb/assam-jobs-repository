@@ -15,7 +15,7 @@ const items = [
 export default function BottomNav() {
   const { t } = useLanguage()
   return (
-    <nav className="fixed bottom-0 inset-x-0 bg-white border-t border-tea-100 flex justify-around py-2 pb-[max(0.5rem,env(safe-area-inset-bottom))] z-40 overflow-x-auto">
+    <nav className="fixed bottom-0 inset-x-0 bg-white border-t border-tea-100 flex justify-around py-2 pb-[max(0.5rem,env(safe-area-inset-bottom))] z-40 overflow-x-auto animate-navPulse">
       {items.map(({ to, icon: Icon, key }) => (
         <NavLink
           key={to}
