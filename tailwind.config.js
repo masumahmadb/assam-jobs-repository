@@ -22,8 +22,8 @@ export default {
           '100%': { transform: 'translateX(-50%)' }
         },
         navPulse: {
-          '0%, 100%': { opacity: '1' },
-          '50%': { opacity: '0.85' }
+          '0%, 100%': { opacity: '1', boxShadow: '0 0 0 rgba(46, 154, 99, 0)' },
+          '50%': { opacity: '0.5', boxShadow: '0 0 20px rgba(46, 154, 99, 0.3)' }
         }
       },
       animation: {

@@ -14,3 +14,9 @@
   .card { @apply bg-white rounded-xl2 shadow-sm border border-tea-100 p-4; }
   .skeleton { @apply animate-pulse bg-tea-100/70 rounded-lg; }
 }
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-navPulse {
+    animation: none;
+  }
+}
