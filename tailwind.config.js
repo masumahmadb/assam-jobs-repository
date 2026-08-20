@@ -23,7 +23,7 @@ export default {
         },
         navPulse: {
           '0%, 100%': { opacity: '1', boxShadow: '0 0 0 rgba(46, 154, 99, 0)' },
-          '50%': { opacity: '0.5', boxShadow: '0 0 20px rgba(46, 154, 99, 0.3)' }
+          '50%': { opacity: '0.85', boxShadow: '0 0 15px rgba(46, 154, 99, 0.15)' }
         }
       },
       animation: {
