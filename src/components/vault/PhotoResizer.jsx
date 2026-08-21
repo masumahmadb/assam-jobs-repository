@@ -55,10 +55,16 @@ export default function PhotoResizer() {
         ))}
       </select>
 
-      <label className="btn-outline w-full block text-center cursor-pointer">
-        Choose Photo
-        <input type="file" accept="image/*" capture="environment" className="hidden" onChange={handleFile} />
-      </label>
+      <div className="flex gap-2">
+        <label className="btn-outline flex-1 block text-center cursor-pointer">
+          📷 Camera
+          <input type="file" accept="image/*" capture="environment" className="hidden" onChange={handleFile} />
+        </label>
+        <label className="btn-outline flex-1 block text-center cursor-pointer">
+          🖼️ Gallery
+          <input type="file" accept="image/*" className="hidden" onChange={handleFile} />
+        </label>
+      </div>
 
       {busy && <p className="text-sm text-tea-900/60">Processing...</p>}
 
