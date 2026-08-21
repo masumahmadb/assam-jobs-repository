@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { getVaultDocuments, deleteVaultDocument, addVaultDocument } from '../../firebase/firestore.js'
 import { uploadFile, removeFile } from '../../firebase/storage.js'
+import { compressImageForUpload } from '../../utils/imageResize.js'
 import { useAuth } from '../../contexts/AuthContext.jsx'
 import { useToast } from '../common/Toast.jsx'
 import { ListSkeleton } from '../common/SkeletonLoader.jsx'
@@ -16,12 +17,20 @@ const ALLOWED_TYPES = {
   'application/pdf': 'pdf'
 }
 
+function withTimeout(promise, ms, label) {
+  return Promise.race([
+    promise,
+    new Promise((_, reject) => setTimeout(() => reject(new Error(`${label} timed out — check your internet connection`)), ms))
+  ])
+}
+
 export default function DocumentVault() {
   const { user } = useAuth()
   const { showToast } = useToast()
   const [docs, setDocs] = useState(null)
   const [loadError, setLoadError] = useState(null)
   const [busy, setBusy] = useState(false)
+  const [busyLabel, setBusyLabel] = useState('')
 
   async function load() {
     if (!user) return
@@ -49,14 +58,28 @@ export default function DocumentVault() {
     }
     setBusy(true)
     try {
-      const path = `vault/${user.uid}/upload_${Date.now()}.${ext}`
-      const { url } = await uploadFile(path, file)
-      await addVaultDocument(user.uid, {
+      let uploadBlob = file
+      let sizeKB = Math.round(file.size / 1024)
+      let uploadExt = ext
+
+      if (file.type.startsWith('image/')) {
+        setBusyLabel('Compressing photo...')
+        const { blob, sizeKB: compressedKB } = await compressImageForUpload(file)
+        uploadBlob = blob
+        sizeKB = compressedKB
+        uploadExt = 'jpg'
+      }
+
+      setBusyLabel('Uploading...')
+      const path = `vault/${user.uid}/upload_${Date.now()}.${uploadExt}`
+      const { url } = await withTimeout(uploadFile(path, uploadBlob), 45000, 'Upload')
+      await withTimeout(addVaultDocument(user.uid, {
         name: file.name.replace(/\.[^.]+$/, ''),
         url,
         type: file.type.startsWith('image/') ? 'image' : 'pdf',
-        sizeKB: Math.round(file.size / 1024)
-      })
+        sizeKB
+      }), 15000, 'Save')
+
       showToast('Uploaded to Vault')
       await load()
     } catch (err) {
@@ -64,6 +87,7 @@ export default function DocumentVault() {
       showToast(err.message || 'Upload failed')
     } finally {
       setBusy(false)
+      setBusyLabel('')
       e.target.value = ''
     }
   }
@@ -107,7 +131,7 @@ export default function DocumentVault() {
         <input type="file" accept="image/*,application/pdf" className="hidden" onChange={handleUpload} />
       </label>
 
-      {busy && <p className="text-sm text-tea-900/60">Uploading...</p>}
+      {busy && <p className="text-sm text-tea-900/60">{busyLabel || 'Uploading...'}</p>}
 
       {loadError && (
         <div className="card text-center space-y-2 bg-red-50 border-red-200">
