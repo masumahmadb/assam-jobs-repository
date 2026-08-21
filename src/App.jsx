@@ -35,6 +35,7 @@ export default function App() {
 
   return (
     <ToastProvider>
+      <div className={user ? 'pb-24' : ''}>
       <Routes>
         {/* User auth routes */}
         <Route path="/login" element={user ? <Navigate to="/" /> : <Login />} />
@@ -61,6 +62,7 @@ export default function App() {
         <Route path="/admin" element={<AdminPanel />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
+      </div>
       {user && <BottomNav />}
     </ToastProvider>
   )
