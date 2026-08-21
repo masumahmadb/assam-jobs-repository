@@ -74,21 +74,3 @@ export async function compressImageForUpload(file, maxDimension = 1600, maxKB = 
   ctx.drawImage(img, 0, 0, width, height)
   return compressToTargetSize(canvas, maxKB)
 }
-
-// General-purpose compressor for direct vault uploads (not tied to a fixed preset).
-// Caps the longest side at maxDimension and compresses to keep upload fast on slow networks.
-export async function compressImageForUpload(file, maxDimension = 1600, maxKB = 800) {
-  const img = await loadImage(file)
-  let { width, height } = img
-  if (width > maxDimension || height > maxDimension) {
-    const scale = maxDimension / Math.max(width, height)
-    width = Math.round(width * scale)
-    height = Math.round(height * scale)
-  }
-  const canvas = document.createElement('canvas')
-  canvas.width = width
-  canvas.height = height
-  const ctx = canvas.getContext('2d')
-  ctx.drawImage(img, 0, 0, width, height)
-  return compressToTargetSize(canvas, maxKB)
-}
