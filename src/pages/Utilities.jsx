@@ -18,7 +18,6 @@ export default function Utilities() {
   const { t } = useLanguage()
   const [params] = useSearchParams()
   const [tab, setTab] = useState(params.get('tab') || 'cv')
-  const Active = TABS.find((t) => t.key === tab).Comp
 
   return (
     <>
@@ -31,7 +30,11 @@ export default function Utilities() {
           </button>
         ))}
       </div>
-      <Active />
+      {TABS.map(({ key, Comp }) => (
+        <div key={key} style={{ display: tab === key ? 'block' : 'none' }}>
+          <Comp />
+        </div>
+      ))}
     </>
   )
 }

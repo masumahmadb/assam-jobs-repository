@@ -20,11 +20,20 @@ export default function DocumentVault() {
   const { user } = useAuth()
   const { showToast } = useToast()
   const [docs, setDocs] = useState(null)
+  const [loadError, setLoadError] = useState(null)
   const [busy, setBusy] = useState(false)
 
   async function load() {
     if (!user) return
-    setDocs(await getVaultDocuments(user.uid))
+    setLoadError(null)
+    try {
+      const result = await getVaultDocuments(user.uid)
+      setDocs(result)
+    } catch (err) {
+      console.error('Vault load failed:', err)
+      setLoadError(err.message || 'Failed to load vault')
+      setDocs([])
+    }
   }
 
   useEffect(() => { load() }, [user])
@@ -49,9 +58,10 @@ export default function DocumentVault() {
         sizeKB: Math.round(file.size / 1024)
       })
       showToast('Uploaded to Vault')
-      load()
+      await load()
     } catch (err) {
-      showToast('Upload failed')
+      console.error('Upload failed:', err)
+      showToast(err.message || 'Upload failed')
     } finally {
       setBusy(false)
       e.target.value = ''
@@ -73,7 +83,6 @@ export default function DocumentVault() {
   async function handleDelete(doc) {
     try {
       await deleteVaultDocument(doc.id)
-      // Best-effort removal of the underlying storage file
       const pathMatch = doc.url.match(/\/o\/([^?]+)/)
       if (pathMatch) {
         try {
@@ -100,8 +109,15 @@ export default function DocumentVault() {
 
       {busy && <p className="text-sm text-tea-900/60">Uploading...</p>}
 
+      {loadError && (
+        <div className="card text-center space-y-2 bg-red-50 border-red-200">
+          <p className="text-sm text-red-600">Couldn't load your vault: {loadError}</p>
+          <button onClick={load} className="btn-outline">Retry</button>
+        </div>
+      )}
+
       {docs === null ? <ListSkeleton count={3} /> : docs.length === 0 ? (
-        <p className="text-tea-900/50 text-center py-10">No documents saved yet.</p>
+        !loadError && <p className="text-tea-900/50 text-center py-10">No documents saved yet.</p>
       ) : (
         docs.map((d) => (
           <div key={d.id} className="card flex items-center gap-3">
