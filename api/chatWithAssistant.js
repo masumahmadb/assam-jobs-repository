@@ -10,7 +10,7 @@ export default async function handler(req, res) {
   try {
     const { message, language = 'en', history = [] } = req.body
     const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY)
-    const model = genAI.getGenerativeModel({ model: 'gemini-2.5-flash' })
+    const model = genAI.getGenerativeModel({ model: 'gemini-3.6-flash' })
 
     const langNames = { en: 'English', as: 'Assamese', hi: 'Hindi', bn: 'Bengali' }
     const historyText = history.map((h) => `${h.role}: ${h.text}`).join('\n')
