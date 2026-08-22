@@ -12,6 +12,7 @@
     "scrape": "node scripts/scrapeGovtJobs.js"
   },
   "dependencies": {
+    "@google/generative-ai": "^0.24.1",
     "cheerio": "^1.2.0",
     "core-js": "^3.49.0",
     "firebase": "^10.13.0",
