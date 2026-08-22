@@ -1,13 +1,9 @@
 import React, { useState } from 'react'
 import { PHOTO_PRESETS, resizeImageToPreset } from '../../utils/imageResize.js'
-import { uploadFile } from '../../firebase/storage.js'
-import { addVaultDocument } from '../../firebase/firestore.js'
-import { useAuth } from '../../contexts/AuthContext.jsx'
 import { useToast } from '../common/Toast.jsx'
 import { saveToDevice } from '../../utils/download.js'
 
 export default function PhotoResizer() {
-  const { user } = useAuth()
   const { showToast } = useToast()
   const [preset, setPreset] = useState('passport')
   const [preview, setPreview] = useState(null)
@@ -32,16 +28,6 @@ export default function PhotoResizer() {
     await saveToDevice(resultBlob, `${preset}_${Date.now()}.jpg`)
     setBusy(false)
     showToast('Saved to Phone')
-  }
-
-  async function saveToVault() {
-    if (!resultBlob || !user) return
-    setBusy(true)
-    const path = `vault/${user.uid}/${preset}_${Date.now()}.jpg`
-    const { url } = await uploadFile(path, resultBlob)
-    await addVaultDocument(user.uid, { name: `${PHOTO_PRESETS[preset].label}`, url, type: 'image', sizeKB: resultKB })
-    setBusy(false)
-    showToast('Added to Vault')
   }
 
   return (
@@ -72,10 +58,7 @@ export default function PhotoResizer() {
         <div className="card text-center space-y-3">
           <img src={preview} alt="Resized preview" className="mx-auto border" />
           <p className="text-sm text-tea-900/60">Final size: {resultKB} KB (limit {PHOTO_PRESETS[preset].maxKB} KB)</p>
-          <div className="flex gap-2">
-            <button onClick={saveToPhone} className="btn-outline flex-1">Save to Phone</button>
-            <button onClick={saveToVault} className="btn-primary flex-1">Save to Vault</button>
-          </div>
+          <button onClick={saveToPhone} className="btn-primary w-full">Save to Phone</button>
         </div>
       )}
     </div>

@@ -4,14 +4,12 @@ import TopBar from '../components/common/TopBar.jsx'
 import CVBuilder from '../components/cv/CVBuilder.jsx'
 import PhotoResizer from '../components/vault/PhotoResizer.jsx'
 import DocumentScanner from '../components/vault/DocumentScanner.jsx'
-import DocumentVault from '../components/vault/DocumentVault.jsx'
 import { useLanguage } from '../contexts/LanguageContext.jsx'
 
 const TABS = [
   { key: 'cv', label: 'CV Builder', Comp: CVBuilder },
   { key: 'resizer', label: 'Photo Resizer', Comp: PhotoResizer },
-  { key: 'scanner', label: 'Scanner', Comp: DocumentScanner },
-  { key: 'vault', label: 'Vault', Comp: DocumentVault }
+  { key: 'scanner', label: 'Scanner', Comp: DocumentScanner }
 ]
 
 export default function Utilities() {

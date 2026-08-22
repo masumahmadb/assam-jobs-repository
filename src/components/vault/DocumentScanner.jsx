@@ -1,7 +1,4 @@
 import React, { useRef, useState } from 'react'
-import { uploadFile } from '../../firebase/storage.js'
-import { addVaultDocument } from '../../firebase/firestore.js'
-import { useAuth } from '../../contexts/AuthContext.jsx'
 import { useToast } from '../common/Toast.jsx'
 import { saveToDevice } from '../../utils/download.js'
 
@@ -12,7 +9,6 @@ const FILTERS = {
 }
 
 export default function DocumentScanner() {
-  const { user } = useAuth()
   const { showToast } = useToast()
   const canvasRef = useRef(null)
   const [image, setImage] = useState(null)
@@ -56,17 +52,6 @@ export default function DocumentScanner() {
     showToast('Saved to Phone')
   }
 
-  async function saveToVault() {
-    if (!image || !user) return
-    setBusy(true)
-    const blob = await canvasToBlob()
-    const path = `vault/${user.uid}/scan_${Date.now()}.jpg`
-    const { url } = await uploadFile(path, blob)
-    await addVaultDocument(user.uid, { name: 'Scanned Document', url, type: 'scan', sizeKB: Math.round(blob.size / 1024) })
-    setBusy(false)
-    showToast('Added to Vault')
-  }
-
   return (
     <div className="p-4 space-y-4">
       <h2 className="text-lg font-semibold text-tea-800">Document Scanner</h2>
@@ -103,10 +88,7 @@ export default function DocumentScanner() {
               onChange={(e) => applySettings(filter, brightness, Number(e.target.value))} className="w-full" />
           </label>
           {busy && <p className="text-sm text-tea-900/60">Processing...</p>}
-          <div className="flex gap-2">
-            <button onClick={saveToPhone} className="btn-outline flex-1">Save to Phone</button>
-            <button onClick={saveToVault} className="btn-primary flex-1">Save to Vault</button>
-          </div>
+          <button onClick={saveToPhone} className="btn-primary w-full">Save to Phone</button>
         </div>
       )}
     </div>
