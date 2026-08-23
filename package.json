@@ -9,7 +9,8 @@
     "build": "vite build",
     "preview": "vite preview",
     "lint": "eslint .",
-    "scrape": "node scripts/scrapeGovtJobs.js"
+    "scrape": "node scripts/scrapeGovtJobs.js",
+    "scrapegraph-test": "python scripts/scrapegraph/run_scraper.py"
   },
   "dependencies": {
     "@google/generative-ai": "^0.24.1",

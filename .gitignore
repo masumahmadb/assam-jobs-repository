@@ -6,3 +6,6 @@ dist
 android/
 .DS_Store
 firebase-debug.log
+scripts/scrapegraph/.env
+scripts/scrapegraph/output/
+__pycache__/

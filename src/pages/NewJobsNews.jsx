@@ -2,8 +2,17 @@ import React, { useEffect, useState } from 'react'
 import TopBar from '../components/common/TopBar.jsx'
 import { useLanguage } from '../contexts/LanguageContext.jsx'
 import { useSearchParams } from 'react-router-dom'
-import { FiRefreshCw, FiSearch, FiFilter } from 'react-icons/fi'
+import { FiRefreshCw, FiSearch, FiFilter, FiArrowRight } from 'react-icons/fi'
 import { useToast } from '../components/common/Toast.jsx'
+import { collection, getDocs, limit, orderBy, query } from 'firebase/firestore'
+import { db } from '../firebase/config.js'
+
+// Feature flag: point NewJobsNews at the ScrapeGraphAI test collection.
+// Enable with VITE_NEWS_COLLECTION=scrapegraph_test in .env.local. Default: production data only.
+const NEWS_COLLECTION =
+  import.meta.env.VITE_NEWS_COLLECTION === 'scrapegraph_test'
+    ? 'new_jobs_news_scrapegraph_test'
+    : 'updates'
 
 export default function NewJobsNews() {
   const { t } = useLanguage()
@@ -20,10 +29,8 @@ export default function NewJobsNews() {
     const fetchNews = async () => {
       setLoading(true)
       try {
-        const { getUpdates } = require('../firebase/firestore.js')
-        // Get updates from Firestore and treat as news
         const q = query(
-          collection(db, 'updates'),
+          collection(db, NEWS_COLLECTION),
           orderBy('postedAt', 'desc'),
           limit(50)
         )
@@ -71,9 +78,8 @@ export default function NewJobsNews() {
       // Re-fetch
       const fetchNews = async () => {
         try {
-          const { getUpdates } = require('../firebase/firestore.js')
           const q = query(
-            collection(db, 'updates'),
+            collection(db, NEWS_COLLECTION),
             orderBy('postedAt', 'desc'),
             limit(50)
           )
