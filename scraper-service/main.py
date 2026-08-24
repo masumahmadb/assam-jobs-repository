@@ -12,6 +12,7 @@ Run locally:
 """
 import os
 
+import ftfy
 import uvicorn
 from crawl4ai import AsyncWebCrawler, CacheMode, CrawlerRunConfig
 from fastapi import FastAPI, HTTPException
@@ -49,7 +50,7 @@ async def scrape(req: ScrapeRequest):
         raise HTTPException(status_code=502, detail="crawl_failed")
     if not result.success:
         raise HTTPException(status_code=502, detail="crawl_failed")
-    content = (result.markdown or "").strip()
+    content = ftfy.fix_text((result.markdown or "").strip())
     return JSONResponse(
         {
             "success": True,

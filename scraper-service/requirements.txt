@@ -2,3 +2,4 @@ crawl4ai>=0.9.2
 fastapi>=0.115.0
 uvicorn>=0.30.0
 pydantic>=2.10
+ftfy>=6.3.0
