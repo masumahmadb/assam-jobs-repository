@@ -12,6 +12,7 @@ Run locally:
 """
 import os
 
+import uvicorn
 from crawl4ai import AsyncWebCrawler, CacheMode, CrawlerRunConfig
 from fastapi import FastAPI, HTTPException
 from fastapi.responses import JSONResponse
@@ -24,6 +25,11 @@ MAX_CONTENT_CHARS = int(os.environ.get("SCRAPER_MAX_CHARS", "60000"))
 
 class ScrapeRequest(BaseModel):
     url: str
+
+
+@app.get("/")
+async def root():
+    return {"ok": True, "service": "scraper", "endpoints": ["/health", "/scrape"]}
 
 
 @app.get("/health")
@@ -53,3 +59,7 @@ async def scrape(req: ScrapeRequest):
             "truncated": len(content) > MAX_CONTENT_CHARS,
         }
     )
+
+
+if __name__ == "__main__":
+    uvicorn.run(app, host="0.0.0.0", port=int(os.environ.get("PORT", 8080)))
