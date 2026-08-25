@@ -14,20 +14,45 @@ function staticFetch(url, timeoutMs, agent) {
 }
 
 // Fetch cleaned page content for scraping commands.
-// Primary: local Crawl4AI service (SCRAPER_SERVICE_URL) — handles JS-rendered pages.
-// Fallback: plain fetch + naive HTML-to-text strip (static pages only).
+// Tiered chain (auto-escalating):
+//   1. /static  — Crawl4AI service's trafilatura endpoint: no browser, cheapest.
+//   2. /scrape  — real-browser rendering, only when tier 1 is thin/missing
+//                 (JS shells, bot-guarded pages).
+//   3. Local strip — plain fetch + naive HTML-to-text, last resort.
 // allowInsecureTls: retry once with relaxed cert verification on TLS chain errors
 // (many NIC/gov sites ship incomplete cert chains). Only enable for curated sources.
 export async function fetchPageContent(url, { timeoutMs = 30000, serviceTimeoutMs, allowInsecureTls = false } = {}) {
   const serviceUrl = process.env.SCRAPER_SERVICE_URL
+
   if (serviceUrl) {
+    // Tier 1: static trafilatura extraction — cheap, fast, good enough for
+    // server-rendered pages (all *.assam.gov.in Drupal portals).
     const svcWait = Math.max(3000, Math.min(serviceTimeoutMs ?? timeoutMs, timeoutMs))
+    try {
+      const res = await fetch(`${serviceUrl}/static`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ url }),
+        signal: AbortSignal.timeout(svcWait)
+      })
+      if (res.ok) {
+        const data = await res.json()
+        if (data.success && !data.thin && data.content) {
+          return { ...data, fallback: false, links: data.links || [] }
+        }
+        if (data.thin) console.log(`[crawl] static tier thin for ${url}, escalating to browser`)
+      }
+    } catch {
+      // fall through to browser tier
+    }
+
+    // Tier 2: real-browser rendering.
     try {
       const res = await fetch(`${serviceUrl.replace(/\/$/, '')}/scrape`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ url }),
-        signal: AbortSignal.timeout(svcWait)
+        signal: AbortSignal.timeout(Math.max(3000, timeoutMs))
       })
       if (res.ok) {
         const data = await res.json()
@@ -40,7 +65,7 @@ export async function fetchPageContent(url, { timeoutMs = 30000, serviceTimeoutM
         }
       }
     } catch {
-      // fall through to static fetch
+      // fall through to local static fetch
     }
   }
 
