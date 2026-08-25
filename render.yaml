@@ -1,0 +1,17 @@
+# Render.com Blueprint — deploys the Crawl4AI scraper service on the free plan.
+# Deploy: Render dashboard → New → Blueprint → point at this repo (branch: master).
+# Free-tier notes: service spins down after ~15 min idle (~50s cold start);
+# keep it warm with a free UptimeRobot ping every 10 min, or accept cold starts.
+services:
+  - type: web
+    name: assam-scraper-service
+    runtime: docker
+    dockerfilePath: ./scraper-service/Dockerfile
+    dockerContext: ./scraper-service
+    plan: free
+    region: singapore            # closest free region to India; falls back to oregon if unavailable
+    healthCheckPath: /health
+    autoDeploy: true
+    envVars:
+      - key: SCRAPER_MAX_CHARS
+        value: "60000"
