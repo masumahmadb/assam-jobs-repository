@@ -43,10 +43,26 @@ function renderValue(v) {
   return String(v)
 }
 
-function ResultCard({ result, title }) {
+function ResultCard({ result, title, onPdf }) {
   const [open, setOpen] = useState(true)
-  if (!result?.data) return null
-  const entries = Object.entries(result.data).filter(([, v]) => renderValue(v) != null)
+  if (!result || result.status === undefined && !result.data) return null
+  if (result.status === 'reasoned') {
+    return (
+      <div className="mt-2 bg-white border border-tea-100 rounded-xl2 p-3 text-sm">
+        <p className="font-medium">{title}</p>
+        <p className="mt-1.5 text-xs text-tea-900/80">{result.reason}</p>
+        {result.sourceUrl && <p className="mt-2 text-[11px] text-tea-900/50 break-all">Source: <a href={result.sourceUrl} target="_blank" rel="noreferrer" className="underline">{result.sourceUrl}</a></p>}
+      </div>
+    )
+  }
+  if ((result.status === 'contact' || result.status === 'not_found')) {
+    return (
+      <div className="mt-2 bg-white border border-tea-100 rounded-xl2 p-3 text-sm">
+        <p className="text-xs text-tea-900/80">{result.message}</p>
+      </div>
+    )
+  }
+  const entries = Object.entries(result.data || {}).filter(([, v]) => renderValue(v) != null)
   if (!entries.length) return <p className="text-xs text-tea-900/60 mt-2">No structured data found on that page.</p>
   return (
     <div className="mt-2 bg-white border border-tea-100 rounded-xl2 p-3 text-sm">
@@ -54,6 +70,7 @@ function ResultCard({ result, title }) {
         {title}
         {open ? <FiChevronUp size={14} /> : <FiChevronDown size={14} />}
       </button>
+      {result.notice && <p className="mt-1.5 text-[11px] text-amber-700">{result.notice}</p>}
       {open && (
         <ul className="mt-2 space-y-1.5 list-none">
           {entries.map(([k, v]) => (
@@ -65,6 +82,11 @@ function ResultCard({ result, title }) {
             </li>
           ))}
         </ul>
+      )}
+      {result.pdfUrl && (
+        <button onClick={() => onPdf(result.pdfUrl)} className="mt-2 btn-outline px-3 py-1.5 text-xs flex items-center gap-1">
+          <FiDownload size={12} /> Download PDF
+        </button>
       )}
       {result.sourceUrl && <p className="mt-2 text-[11px] text-tea-900/50 break-all">Source: <a href={result.sourceUrl} target="_blank" rel="noreferrer" className="underline">{result.sourceUrl}</a></p>}
     </div>
@@ -109,15 +131,24 @@ export default function SyllabusScraper() {
   async function handlePdf(type) {
     const url = links[type].trim()
     if (!url || busy) return
-    setBusy(`${type}-pdf`)
-    setStatus((s) => ({ ...s, [type]: { kind: 'info', msg: t('downloading') } }))
+    await downloadToDevice(url, `${type}-pdf`)
+  }
+
+  async function handlePdfUrl(url) {
+    if (busy) return
+    await downloadToDevice(url, 'pdf')
+  }
+
+  async function downloadToDevice(url, busyKey) {
+    setBusy(busyKey)
+    setStatus((s) => ({ ...s, [busyKey.split('-')[0]]: { kind: 'info', msg: t('downloading') } }))
     try {
       const { blob, filename } = await downloadPdf(url)
       await saveToDevice(blob, filename || 'document.pdf')
-      setStatus((s) => ({ ...s, [type]: { kind: 'success', msg: t('pdf_saved') } }))
+      setStatus((s) => ({ ...s, [busyKey.split('-')[0]]: { kind: 'success', msg: t('pdf_saved') } }))
     } catch (err) {
       const msg = PDF_ERROR_MESSAGES[err.message] || err.message || 'Download failed.'
-      setStatus((s) => ({ ...s, [type]: { kind: 'error', msg } }))
+      setStatus((s) => ({ ...s, [busyKey.split('-')[0]]: { kind: 'error', msg } }))
     } finally {
       setBusy(null)
     }
@@ -153,7 +184,7 @@ export default function SyllabusScraper() {
               {status[sec.type].msg}
             </p>
           )}
-          <ResultCard result={results[sec.type]} title={sec.resultTitle} />
+          <ResultCard result={results[sec.type]} title={sec.resultTitle} onPdf={handlePdfUrl} />
         </div>
       ))}
     </div>
