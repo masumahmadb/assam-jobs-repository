@@ -1,4 +1,11 @@
 {
+  "functions": {
+    "api/**/*.js": { "maxDuration": 60 }
+  },
+  "crons": [
+    { "path": "/api/watch?max=5", "schedule": "0 3 * * *" },
+    { "path": "/api/watch?max=5&cursor=5", "schedule": "0 4 * * *" }
+  ],
   "rewrites": [
     { "source": "/((?!api/).*)", "destination": "/index.html" }
   ]

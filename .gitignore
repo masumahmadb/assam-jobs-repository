@@ -9,3 +9,8 @@ firebase-debug.log
 scripts/scrapegraph/.env
 scripts/scrapegraph/output/
 __pycache__/
+
+.vercel
+.env*
+
+logs/

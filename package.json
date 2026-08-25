@@ -10,6 +10,7 @@
     "preview": "vite preview",
     "lint": "eslint .",
     "scrape": "node scripts/scrapeGovtJobs.js",
+    "watch": "node scripts/watchCron.mjs",
     "scrapegraph-test": "python scripts/scrapegraph/run_scraper.py"
   },
   "dependencies": {
