@@ -1,8 +1,7 @@
 """
-ScrapeGraphAI experiment: scrape job/recruitment news into structured records.
+Tiered NewJobsNews scraper: trafilatura -> Crawl4AI -> (later) Gemini structuring.
 
-Isolated from the production scraper (scripts/scrapeGovtJobs.js).
-Writes to a local JSON file and, only with --push AND valid Firebase Admin
+Writes a local JSON report and, only with --push AND valid Firebase Admin
 credentials, to the dedicated test collection new_jobs_news_scrapegraph_test.
 
 Usage:
@@ -12,6 +11,7 @@ Usage:
 import argparse
 import json
 import os
+import re
 import sys
 from datetime import datetime, timezone
 from urllib.parse import urljoin
@@ -19,20 +19,35 @@ from urllib.parse import urljoin
 from bs4 import BeautifulSoup
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "pylib"))
 
-import config
 import extract
-import fetcher
 from firestore_push import push_articles, save_local
 from pipeline import dedupe, doc_id_for, validate
+from smart_fetch import smart_fetch
 from sources import LINK_KEYWORDS, NEGATIVE_KEYWORDS, SOURCES
 
 OUTPUT_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "output")
 
 
-def find_article_links(listing_html, listing_url, max_links):
-    """Shortlist candidate article URLs from a listing page."""
-    soup = BeautifulSoup(listing_html, "html.parser")
+def find_article_links(page, listing_url, max_links):
+    """Shortlist candidate article URLs from a fetched listing page."""
+    # Browser-rendered pages already come with extracted links.
+    if page.engine == "crawl4ai":
+        scored = []
+        for link in page.links:
+            low = (link["text"] + " " + link["href"]).lower()
+            if any(neg in low for neg in NEGATIVE_KEYWORDS):
+                continue
+            if len(link["text"]) < 10:
+                continue
+            if not any(kw in low for kw in LINK_KEYWORDS):
+                continue
+            scored.append(link)
+        return scored[:max_links]
+
+    html = page.html or ""
+    soup = BeautifulSoup(html, "html.parser")
     candidates = []
     seen = set()
 
@@ -79,9 +94,7 @@ def main():
         selected = [s for s in selected if s["id"] in ids]
 
     os.makedirs(OUTPUT_DIR, exist_ok=True)
-    models = config.select_openrouter_models(config.get_openrouter_key(), limit=3)
-    graph_configs = [config.build_graph_config(m) for m in models]
-    print(f"OpenRouter models (primary + fallbacks): {', '.join(models)}")
+    engine_stats = {"trafilatura": 0, "crawl4ai": 0, "failed": 0}
 
     stats = {"sources_ok": [], "sources_failed": [], "candidates": 0,
              "accepted": 0, "rejected": 0, "duplicates": 0}
@@ -92,15 +105,16 @@ def main():
             break
         print(f"\n=== Source: {source['name']} ({source['url']}) ===")
         try:
-            html = fetcher.fetch(source["url"])
+            listing = smart_fetch(source["url"])
         except Exception as exc:
-            html = None
+            listing = None
             print(f"  [source] error: {exc}")
-        if not html:
+        if not listing or not listing.ok:
             stats["sources_failed"].append(source["id"])
             continue
+        engine_stats[listing.engine] = engine_stats.get(listing.engine, 0) + 1
 
-        links = find_article_links(html, source["url"], args.max_per_source)
+        links = find_article_links(listing, source["url"], args.max_per_source)
         print(f"  Candidate links: {len(links)}")
         stats["sources_ok"].append(source["id"])
 
@@ -112,12 +126,19 @@ def main():
                 print(f"   - {link['text'][:70]} -> {link['url']}")
                 continue
 
-            article_html = fetcher.fetch(link["url"])
-            if not article_html:
+            article = smart_fetch(link["url"])
+            if not article or not article.ok:
                 stats["rejected"] += 1
                 continue
+            engine_stats[article.engine] = engine_stats.get(article.engine, 0) + 1
 
-            item = extract.extract_article(graph_configs, link["url"], article_html)
+            # trafilatura path needs raw HTML; browser pages give markdown text.
+            item = extract.extract_article(
+                None,
+                link["url"],
+                article.html if article.engine == "trafilatura" else article.content,
+                fallback_title=link["text"],
+            )
             clean, reason = validate(item, source)
             if not clean:
                 print(f"   x Rejected ({reason}): {link['text'][:60]}")
@@ -133,10 +154,10 @@ def main():
     stats["accepted"] = len(unique)
 
     timestamp = datetime.now(timezone.utc).strftime("%Y%m%d_%H%M%S")
-    out_path = os.path.join(OUTPUT_DIR, f"scrapegraph_{timestamp}.json")
+    out_path = os.path.join(OUTPUT_DIR, f"scrape_{timestamp}.json")
     payload = {
         "run_at": datetime.now(timezone.utc).isoformat(),
-        "model": models[0],
+        "engines": engine_stats,
         "stats": stats,
         "articles": [
             {**a, "doc_id": doc_id_for(a.get("article_url", ""), a.get("title") or "")}

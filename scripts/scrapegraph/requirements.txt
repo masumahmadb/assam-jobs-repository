@@ -1,5 +1,5 @@
-scrapegraphai>=2.2
 requests
 beautifulsoup4
 python-dotenv
 firebase-admin>=12
+trafilatura>=2.0

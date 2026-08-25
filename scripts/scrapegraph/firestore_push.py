@@ -43,7 +43,7 @@ def push_articles(articles):
         if not doc_id:
             continue
         data = {k: v for k, v in item.items() if v is not None}
-        data["engine"] = "scrapegraphai"
+        data["engine"] = "trafilatura+crawl4ai"
         data["test"] = True
         batch.set(db.collection(FIRESTORE_TEST_COLLECTION).document(doc_id), data)
         written += 1
