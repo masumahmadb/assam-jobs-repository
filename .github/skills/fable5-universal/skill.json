@@ -1,0 +1,78 @@
+{
+  "name": "fable5-universal",
+  "version": "1.0.0",
+  "description": "Fable-5 (Claude 5) coding agent patterns - universal skill for Assam Jobs Repository. Works on any platform (opencode, Cursor, Claude Code, VS Code, etc.) with auto-detection.",
+  "author": "Assam Jobs Repository",
+  "license": "MIT",
+  "platforms": ["opencode", "cursor", "claude-code", "vscode", "windsurf", "generic"],
+  "autoLoad": {
+    "opencode": "/skill fable5-universal",
+    "cursor": "@.github/skills/fable5-universal/SKILL.md",
+    "claude-code": "Read .github/skills/fable5-universal/SKILL.md",
+    "vscode": "extensions.skill.paths"
+  },
+  "project": {
+    "name": "assam-jobs-repository",
+    "type": "react-vite-tailwind-firebase",
+    "stack": {
+      "frontend": "React 18 + Vite 5",
+      "styling": "Tailwind CSS + Custom Design Tokens",
+      "ui": "21st.dev (13 components in src/components/ui/21st/)",
+      "icons": "react-icons/fi",
+      "routing": "React Router DOM v6",
+      "state": "React Context (Auth, Language, Theme)",
+      "backend": "Firebase Auth + Firestore",
+      "pwa": "vite-plugin-pwa + Workbox"
+    },
+    "conventions": {
+      "imports": {
+        "ui": "@/components/ui/21st",
+        "icons": "react-icons/fi",
+        "contexts": "@/contexts",
+        "hooks": "@/hooks"
+      },
+      "designTokens": ["tea", "muga", "sand"],
+      "darkMode": "dark: prefix + CSS variables",
+      "routes": {
+        "public": ["/login", "/signup", "/employer/login"],
+        "private": ["/", "/jobs", "/newjobsnews", "/utilities", "/assistant", "/profile", "/profile-setup"],
+        "employer": ["/employer/dashboard"],
+        "admin": ["/admin"]
+      }
+    }
+  },
+  "entry": "SKILL.md",
+  "commands": [
+    {
+      "name": "fable5:init",
+      "description": "Initialize Fable-5 patterns for this project",
+      "usage": "fable5:init"
+    },
+    {
+      "name": "fable5:read-skill",
+      "description": "Read relevant skill before coding task",
+      "usage": "fable5:read-skill <skill-name>"
+    },
+    {
+      "name": "fable5:create-file",
+      "description": "Create actual files instead of chat text",
+      "usage": "fable5:create-file <path> <content>"
+    },
+    {
+      "name": "fable5:batch-ops",
+      "description": "Batch related operations",
+      "usage": "fable5:batch-ops <type>"
+    },
+    {
+      "name": "fable5:verify",
+      "description": "Run build and lint verification",
+      "usage": "fable5:verify"
+    }
+  ],
+  "hooks": {
+    "pre_task": "Read SKILL.md + project conventions before ANY coding",
+    "pre_edit": "Check imports in neighboring files",
+    "post_edit": "Run fable5:verify (npm run build && npm run lint)",
+    "pre_commit": "Verify build passes"
+  }
+}
