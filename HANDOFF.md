@@ -162,6 +162,36 @@ npm run typecheck
 - **FOCUS ONLY** on fixing syntax errors to achieve successful build
 - After build passes, only do verification/testing - no redesign
 
+## Fable-5 Patterns Skill (NEW)
+The project includes a reusable **opencode skill** with Fable-5 (Claude 5) coding agent patterns:
+
+```
+.opencode/skill/fable5-patterns/
+├── skill.json          # Skill manifest
+├── SKILL.md            # Detailed patterns (read before coding)
+└── index.md            # Quick reference
+```
+
+**Reference document:** `docs/ai-prompts/CLAUDE-FABLE-5.md` (full Fable-5 system prompt)
+
+### How Next Agent Should Use It:
+```bash
+# Load the skill (recommended first step)
+/skill fable5-patterns
+
+# Or read directly
+cat .opencode/skill/fable5-patterns/SKILL.md
+```
+
+### Key Patterns to Apply:
+- **File-first:** Create actual files, not chat text
+- **Skill reading:** Read SKILL.md before ANY coding task
+- **Batch operations:** Group related edits/searches/storage
+- **Explicit tools:** Call tools naturally when helpful
+- **Verify builds:** `npm run build && npm run lint` after changes
+
+---
+
 ## MCP Configuration
 The project includes `.mcp.json` for 21st.dev component access. Use `21st-dev` MCP server for any additional UI components needed.
 

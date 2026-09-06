@@ -1,0 +1,30 @@
+{
+  "name": "fable5-patterns",
+  "version": "1.0.0",
+  "description": "Fable-5 (Claude 5) coding agent patterns adapted for any AI agent - tool usage, file creation, skill reading, and workflow optimization",
+  "author": "Assam Jobs Repository",
+  "license": "MIT",
+  "tags": ["coding-agent", "workflow", "patterns", "fable5", "anthropic"],
+  "entry": "index.md",
+  "commands": [
+    {
+      "name": "fable5:read-skill",
+      "description": "Read a skill file before starting any coding task",
+      "usage": "fable5:read-skill <skill-name>"
+    },
+    {
+      "name": "fable5:create-file",
+      "description": "Create actual files instead of just outputting text",
+      "usage": "fable5:create-file <path> <content>"
+    },
+    {
+      "name": "fable5:batch-operations",
+      "description": "Batch related operations (storage, edits, searches) into single calls",
+      "usage": "fable5:batch-operations <operation-type>"
+    }
+  ],
+  "hooks": {
+    "pre_task": "Read relevant SKILL.md files before writing code or creating files",
+    "post_edit": "Verify changes with build/lint commands"
+  }
+}
