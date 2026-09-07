@@ -1,14 +1,5 @@
 import React from 'react'
 
-interface AvatarProps extends React.HTMLAttributes<HTMLDivElement> {
-  src?: string | null
-  alt?: string
-  fallback?: string
-  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl'
-  shape?: 'circle' | 'square'
-  status?: 'online' | 'offline' | 'busy' | 'away'
-}
-
 const sizeClasses = {
   xs: 'w-6 h-6 text-[10px]',
   sm: 'w-8 h-8 text-xs',
@@ -46,7 +37,7 @@ export function Avatar({
   status,
   className = '',
   ...props
-}: AvatarProps) {
+}) {
   const [imageError, setImageError] = React.useState(false)
 
   const showFallback = !src || imageError
@@ -68,7 +59,7 @@ export function Avatar({
       {showFallback && (
         <div
           className={[
-            "flex items-center justify-center bg-tea-100 text-tea-600 font-medium",
+            "flex items-center justify-center bg-tea-100 dark:bg-tea-800 text-tea-600 dark:text-tea-300 font-medium",
             "w-full h-full",
             shapeClasses[shape],
           ].join(" ")}
@@ -79,7 +70,7 @@ export function Avatar({
       {status && (
         <span
           className={[
-            "absolute bottom-0 right-0 border-2 border-white",
+            "absolute bottom-0 right-0 border-2 border-white dark:border-tea-900",
             "rounded-full",
             statusColors[status],
             statusSizes[size],
@@ -90,12 +81,6 @@ export function Avatar({
   )
 }
 
-interface AvatarGroupProps extends React.HTMLAttributes<HTMLDivElement> {
-  max?: number
-  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl'
-  overlap?: number
-}
-
 export function AvatarGroup({
   children,
   max = 5,
@@ -103,27 +88,27 @@ export function AvatarGroup({
   overlap = 8,
   className = '',
   ...props
-}: AvatarGroupProps) {
+}) {
   const childrenArray = React.Children.toArray(children)
   const visibleChildren = childrenArray.slice(0, max)
   const remaining = childrenArray.length - max
 
   const overlapStyles = {
     '--avatar-overlap': `${overlap}px`,
-  } as React.CSSProperties
+  }
 
   return (
     <div className={["flex -space-x-[var(--avatar-overlap)]", className].join(" ")} style={overlapStyles} {...props}>
       {visibleChildren.map((child, index) => (
-        <div key={index} className="relative z-[auto]" style={{ zIndex: visibleChildren.length - index }}>
+        <div key={index} className="relative" style={{ zIndex: visibleChildren.length - index }}>
           {child}
         </div>
       ))}
       {remaining > 0 && (
         <div
           className={[
-            "flex items-center justify-center bg-tea-100 text-tea-600 font-medium font-mono",
-            "border-2 border-white",
+            "flex items-center justify-center bg-tea-100 dark:bg-tea-800 text-tea-600 dark:text-tea-300 font-medium font-mono",
+            "border-2 border-white dark:border-tea-900",
             "rounded-full",
             "flex-shrink-0",
             size === 'xs' && 'w-6 h-6 text-[10px]',
@@ -139,5 +124,3 @@ export function AvatarGroup({
     </div>
   )
 }
-
-export { Avatar, AvatarGroup }

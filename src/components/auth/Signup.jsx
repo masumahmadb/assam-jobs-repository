@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import { signUpWithEmail, signInWithGoogle } from '../../firebase/auth.js'
 import { useLanguage } from '../../contexts/LanguageContext.jsx'
-import { FiMail, FiLock, FiEye, FiEyeOff, FiGoogle, FiUser, FiArrowRight, FiShield, FiZap, FiHeart, FiStar, FiUserPlus, FiCheckCircle, FiPhone, FiMapPin } from 'react-icons/fi'
+import { FiMail, FiLock, FiEye, FiEyeOff, FiChrome, FiUser, FiArrowRight, FiShield, FiZap, FiHeart, FiStar, FiUserPlus, FiCheckCircle, FiPhone, FiMapPin } from 'react-icons/fi'
 import { Button, Input, Card, CardHeader, CardTitle, CardContent, CardFooter, Select } from '../../components/ui/21st'
 
 const educationLevels = [

@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
-import { useLanguage } from '../../contexts/LanguageContext.jsx'
-import { FiMail, FiLock, FiEye, FiEyeOff, FiBuilding2, FiUsers, FiBriefcase, FiShield, FiZap, FiHeart, FiStar } from 'react-icons/fi'
-import { Button, Input, Card, CardHeader, CardTitle, CardContent, CardFooter } from '../../components/ui/21st'
+import { useLanguage } from '../contexts/LanguageContext.jsx'
+import { FiMail, FiLock, FiEye, FiEyeOff, FiHome, FiUsers, FiBriefcase, FiShield, FiZap, FiHeart, FiStar, FiAlertCircle, FiArrowRight } from 'react-icons/fi'
+import { Button, Input, Card, CardHeader, CardTitle, CardContent, CardFooter } from '../components/ui/21st'
 
 export default function EmployerLogin() {
   const [email, setEmail] = useState('')
@@ -53,7 +53,7 @@ export default function EmployerLogin() {
 
         <div className="flex items-center justify-center gap-3 mb-6 animate-slide-up">
           <span className="px-3 py-1 bg-tea-100 dark:bg-tea-800 text-tea-700 dark:text-tea-300 text-xs font-medium rounded-full flex items-center gap-1">
-            <FiBuilding2 size={12} /> Employer Portal
+            <FiHome size={12} /> Employer Portal
           </span>
           <span className="px-3 py-1 bg-tea-100 dark:bg-tea-800 text-tea-700 dark:text-tea-300 text-xs font-medium rounded-full flex items-center gap-1">
             <FiShield size={12} /> Verified Employers
@@ -64,7 +64,7 @@ export default function EmployerLogin() {
         <Card className="animate-scale-in">
           <CardHeader className="text-center pb-2">
             <div className="w-12 h-12 rounded-xl bg-tea-100 dark:bg-tea-800 flex items-center justify-center mx-auto mb-4 text-tea-600 dark:text-tea-400">
-              <FiBuilding2 size={24} />
+              <FiHome size={24} />
             </div>
             <CardTitle className="text-2xl font-display font-bold text-tea-900 dark:text-tea-100">Employer Sign In</CardTitle>
             <p className="text-tea-600 dark:text-tea-400 mt-1">Access your employer dashboard</p>
@@ -191,5 +191,3 @@ export default function EmployerLogin() {
     </div>
   )
 }
-
-export default EmployerLogin

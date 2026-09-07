@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useAuth } from '../../contexts/AuthContext.jsx'
-import { useLanguage } from '../../contexts/LanguageContext.jsx'
-import { FiArrowRight, FiArrowLeft, FiUser, FiGraduationCap, FiCalendar, FiMapPin, FiShield, FiCheckCircle, FiArrowRight, FiUser, FiGraduationCap, FiCalendar, FiMapPin, FiShield, FiCheckCircle } from 'react-icons/fi'
+import { useAuth } from '../contexts/AuthContext.jsx'
+import { useLanguage } from '../contexts/LanguageContext.jsx'
+import { FiArrowRight, FiArrowLeft, FiGraduationCap, FiCalendar, FiMapPin, FiShield, FiCheckCircle, FiPhone, FiAlertCircle } from 'react-icons/fi'
 import { Button, Input, Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter, Badge, Select, Progress } from '../components/ui/21st'
 import TopBar from '../components/common/TopBar.jsx'
 
@@ -127,11 +127,6 @@ export default function ProfileSetup() {
     }
   }
 
-  const handleChange = (field, value) => {
-    setFormData(prev => ({ ...prev, [field]: value }))
-    if (errors[field]) setErrors(prev => ({ ...prev, [field]: '' }))
-  }
-
   const progress = (step / 4) * 100
 
   return (
@@ -180,13 +175,14 @@ export default function ProfileSetup() {
           <CardHeader className="border-b border-tea-100 dark:border-tea-700">
             <div className="flex items-center gap-3 mb-2">
               <div className="w-10 h-10 rounded-xl bg-tea-100 dark:bg-tea-800 flex items-center justify-center text-tea-600 dark:text-tea-400">
-                <STEPS[step - 1].icon size={22} />
+                {React.createElement(STEPS[step - 1].icon, { size: 22 })}
               </div>
               <div>
                 <CardTitle>{STEPS[step - 1].title}</CardTitle>
                 <CardDescription>{STEPS[step - 1].desc}</CardDescription>
               </div>
-            </CardHeader>
+            </div>
+          </CardHeader>
 
             <CardContent>
               {/* Step 1: Education */}
@@ -369,8 +365,5 @@ export default function ProfileSetup() {
           </Card>
         </div>
       </div>
-    </div>
   )
 }
-
-export default ProfileSetup

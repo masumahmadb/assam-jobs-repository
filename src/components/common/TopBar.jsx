@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link, useLocation } from 'react-router-dom'
-import { FiMenu, FiX, FiBell, FiUser, FiLogOut, FiSettings, FiHelpCircle, FiMoon, FiSun } from 'react-icons/fi'
+import { FiMenu, FiX, FiBell, FiUser, FiLogOut, FiSettings, FiHelpCircle, FiMoon, FiSun, FiTool, FiMessageSquare, FiWifiOff } from 'react-icons/fi'
 import { useAuth } from '../../contexts/AuthContext.jsx'
 import { useLanguage } from '../../contexts/LanguageContext.jsx'
 import { useOffline } from '../../hooks/useOffline.js'
@@ -19,7 +19,7 @@ const NAV_ITEMS = [
   { path: '/jobs', label: 'Jobs', icon: 'FiBriefcase' },
   { path: '/newjobsnews', label: 'News', icon: 'FiFileText' },
   { path: '/utilities', label: 'Tools', icon: 'FiTool' },
-  { path: '/assistant', label: 'Assistant', icon: 'FiMessageSquare' },
+  { path: '/material', label: 'Material', icon: 'FiBookOpen' },
 ]
 
 export default function TopBar({ title }) {
@@ -37,7 +37,6 @@ export default function TopBar({ title }) {
     { path: '/jobs', label: 'Jobs', icon: 'FiBriefcase' },
     { path: '/newjobsnews', label: 'News', icon: 'FiFileText' },
     { path: '/utilities', label: 'Tools', icon: 'FiTool' },
-    { path: '/assistant', label: 'Assistant', icon: 'FiMessageSquare' },
   ]
 
   const handleSignOut = async () => {
@@ -105,7 +104,6 @@ export default function TopBar({ title }) {
               onClick={toggleTheme}
               className="p-2 rounded-xl text-white/80 hover:text-white hover:bg-white/10 transition-colors"
               aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
-              aria-label="Toggle theme"
             >
               {theme === 'dark' ? <FiSun size={20} /> : <FiMoon size={20} />}
             </button>
@@ -160,8 +158,8 @@ export default function TopBar({ title }) {
                         <Link to="/utilities" className="flex items-center gap-3 px-4 py-2.5 text-tea-700 hover:bg-tea-50 transition-colors" onClick={() => setUserMenuOpen(false)}>
                           <FiTool size={18} /> Tools
                         </Link>
-                        <Link to="/assistant" className="flex items-center gap-3 px-4 py-2.5 text-tea-700 hover:bg-tea-50 transition-colors" onClick={() => setUserMenuOpen(false)}>
-                          <FiMessageSquare size={18} /> Assistant
+                        <Link to="/material" className="flex items-center gap-3 px-4 py-2.5 text-tea-700 hover:bg-tea-50 transition-colors" onClick={() => setUserMenuOpen(false)}>
+                          <FiBookOpen size={18} /> Material
                         </Link>
                         <Link to="/profile" className="flex items-center gap-3 px-4 py-2.5 text-tea-700 hover:bg-tea-50 transition-colors" onClick={() => setUserMenuOpen(false)}>
                           <FiHelpCircle size={18} /> Help
@@ -172,7 +170,7 @@ export default function TopBar({ title }) {
                         </button>
                       </nav>
                     </div>
-                  </>
+                  </div>
                 </>
               )}
             </div>
@@ -234,5 +232,3 @@ export default function TopBar({ title }) {
     </header>
   )
 }
-
-export default TopBar

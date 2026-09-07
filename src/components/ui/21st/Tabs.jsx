@@ -1,57 +1,40 @@
-import React from 'react'
+import React, { createContext, useContext, useState } from 'react'
 
-interface TabsProps {
-  defaultValue?: string
-  value?: string
-  onValueChange?: (value: string) => void
-  children: React.ReactNode
-  className?: string
-  orientation?: 'horizontal' | 'vertical'
-}
+const TabsContext = createContext(null)
 
 export function Tabs({
   defaultValue,
   value,
   onValueChange,
   children,
-  className = "",
-  orientation = "horizontal",
-}: TabsProps) {
-  const [valueState, setValueState] = React.useState(defaultValue || "")
+  className = '',
+  orientation = 'horizontal',
+}) {
+  const [valueState, setValueState] = useState(defaultValue || '')
   const controlled = value !== undefined
   const currentValue = controlled ? value : valueState
 
-  const handleChange = (value: string) => {
-    if (!controlled) setValueState(value)
-    onValueChange?.(value)
+  const handleChange = (val) => {
+    if (!controlled) setValueState(val)
+    if (onValueChange) onValueChange(val)
   }
 
   return (
-    <div className={className} data-orientation={orientation}>
-      {React.Children.map(children, (child) => {
-        if (!React.isValidElement(child)) return child
-        return React.cloneElement(child, {
-          value: currentValue,
-          onValueChange: handleChange,
-        } as any)
-      })}
-    </div>
+    <TabsContext.Provider value={{ value: currentValue, onValueChange: handleChange, orientation }}>
+      <div className={className} data-orientation={orientation}>
+        {children}
+      </div>
+    </TabsContext.Provider>
   )
 }
 
-interface TabsListProps {
-  children: React.ReactNode
-  className?: string
-  "aria-label"?: string
-}
-
-export function TabsList({ children, className = "", "aria-label": ariaLabel }: TabsListProps) {
+export function TabsList({ children, className = '', 'aria-label': ariaLabel }) {
   return (
     <div
       role="tablist"
       aria-label={ariaLabel}
       className={[
-        "inline-flex items-center gap-1 bg-tea-100 p-1 rounded-xl",
+        "inline-flex flex-wrap items-center gap-1 bg-tea-100 dark:bg-tea-800 p-1 rounded-xl",
         className,
       ].join(" ")}
     >
@@ -60,27 +43,19 @@ export function TabsList({ children, className = "", "aria-label": ariaLabel }: 
   )
 }
 
-interface TabsTriggerProps {
-  value: string
-  children: React.ReactNode
-  disabled?: boolean
-  className?: string
-}
-
-export function TabsTrigger({ value, children, disabled, className = "" }: TabsTriggerProps) {
-  const context = React.useContext(TabsContext)
+export function TabsTrigger({ value, children, disabled, className = '' }) {
+  const context = useContext(TabsContext)
   if (!context) throw new Error("TabsTrigger must be used within Tabs")
 
-  const { value: currentValue, onValueChange, orientation } = context
-  const selected = currentValue === value
+  const selected = context.value === value
 
   return (
     <button
       role="tab"
+      type="button"
       aria-selected={selected}
       aria-disabled={disabled}
       disabled={disabled}
-      type="button"
       onClick={() => !disabled && context.onValueChange(value)}
       className={[
         "inline-flex items-center justify-center whitespace-nowrap rounded-xl px-4 py-2.5 text-sm font-medium transition-all duration-200",
@@ -88,27 +63,17 @@ export function TabsTrigger({ value, children, disabled, className = "" }: TabsT
         "disabled:pointer-events-none disabled:opacity-50",
         selected
           ? "bg-tea-600 text-white shadow-sm"
-          : "text-tea-700 hover:bg-tea-100 hover:text-tea-900",
-        "disabled:opacity-50",
+          : "text-tea-700 dark:text-tea-300 hover:bg-tea-200/60 dark:hover:bg-tea-700 hover:text-tea-900 dark:hover:text-tea-100",
         className,
-      ].join(" "))
-      aria-selected={selected}
-      aria-disabled={disabled}
+      ].join(" ")}
     >
       {children}
     </button>
   )
 }
 
-interface TabsContentProps {
-  value: string
-  children: React.ReactNode
-  className?: string
-  forceMount?: boolean
-}
-
-export function TabsContent({ value, children, className = "", forceMount }: TabsContentProps) {
-  const context = React.useContext(TabsContext)
+export function TabsContent({ value, children, className = '', forceMount }) {
+  const context = useContext(TabsContext)
   if (!context) throw new Error("TabsContent must be used within Tabs")
 
   const selected = context.value === value
@@ -128,47 +93,3 @@ export function TabsContent({ value, children, className = "", forceMount }: Tab
     </div>
   )
 }
-
-const TabsContext = React.createContext<{
-  value: string
-  onValueChange: (value: string) => void
-  orientation: 'horizontal' | 'vertical'
-} | null>(null)
-
-function TabsProvider({ children, value, onValueChange, orientation }: {
-  value: string
-  onValueChange: (value: string) => void
-  orientation: 'horizontal' | 'vertical'
-  children: React.ReactNode
-}) {
-  return (
-    <TabsContext.Provider value={{ value, onValueChange, orientation }}>
-      {children}
-    </TabsContext.Provider>
-  )
-}
-
-// Update Tabs to use provider
-const TabsWithProvider = ({ defaultValue, value, onValueChange, children, className = "", orientation = "horizontal" }: TabsProps) => {
-  const [valueState, setValueState] = React.useState(defaultValue || "")
-  const controlled = value !== undefined
-  const currentValue = controlled ? value : valueState
-
-  const handleChange = (val: string) => {
-    if (!controlled) setValueState(val)
-    onValueChange?.(val)
-  }
-
-  return (
-    <TabsProvider value={currentValue} onValueChange={handleChange} orientation={orientation}>
-      <div className={className} data-orientation={orientation}>
-        {React.Children.map(children, (child) => {
-          if (!React.isValidElement(child)) return child
-          return React.cloneElement(child) // No need to pass props as they use context
-        })}
-    </TabsProvider>
-  )
-}
-
-// Override the exports
-export { TabsWithProvider as Tabs, TabsList, TabsTrigger, TabsContent }

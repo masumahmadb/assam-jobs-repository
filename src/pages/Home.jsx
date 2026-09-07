@@ -1,9 +1,9 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { FiBriefcase, FiFileText, FiCamera, FiBookOpen, FiTarget, FiTrendingUp, FiAward, FiZap, FiShield, FiHeart, FiStar, FiClock, FiMessageSquare, FiTool, FiArrowRight } from 'react-icons/fi'
-import { useAuth } from '../../contexts/AuthContext.jsx'
-import UpdatesTicker from '../common/UpdatesTicker.jsx'
-import { Card, CardContent, CardHeader, CardTitle, Button, Badge, Avatar, AvatarGroup } from '../ui/21st'
+import { useAuth } from '../contexts/AuthContext.jsx'
+import UpdatesTicker from '../components/common/UpdatesTicker.jsx'
+import { Card, CardContent, CardHeader, CardTitle, Button, Badge, Avatar, AvatarGroup } from '../components/ui/21st'
 
 const shortcuts = [
   { to: '/jobs', icon: FiBriefcase, label: 'Latest Jobs', color: 'bg-tea-600', description: 'Browse 10,000+ govt & private jobs' },

@@ -19,31 +19,33 @@ const buttonVariants = {
   },
 }
 
-export interface ButtonProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: keyof typeof buttonVariants.variants
-  size?: keyof typeof buttonVariants.sizes
-  asChild?: boolean
-}
-
-const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant = "default", size = "default", asChild = false, children, ...props }, ref) => {
-    const Comp = asChild ? React.Fragment : "button"
-    const className = [
+const Button = React.forwardRef(
+  ({ className, variant = "default", size = "default", asChild = false, loading = false, disabled, children, ...props }, ref) => {
+    const classes = [
       buttonVariants.base,
       buttonVariants.variants[variant],
       buttonVariants.sizes[size],
       className,
     ].filter(Boolean).join(" ")
 
+    if (asChild && React.isValidElement(children)) {
+      return React.cloneElement(children, {
+        className: [classes, children.props.className].filter(Boolean).join(" "),
+        ref,
+        ...props,
+      })
+    }
+
     return (
-      <Comp
-        className={className}
+      <button
         ref={ref}
+        className={classes}
+        disabled={disabled || loading}
+        aria-busy={loading || undefined}
         {...props}
       >
         {children}
-      </Comp>
+      </button>
     )
   }
 )

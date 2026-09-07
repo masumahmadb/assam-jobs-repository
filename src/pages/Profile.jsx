@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { FiUser, FiMail, FiMapPin, FiCalendar, FiSettings, FiLogOut, FiEdit, FiShield, FiBookOpen, FiAward, FiClock, FiCheckCircle } from 'react-icons/fi'
-import { useAuth } from '../../contexts/AuthContext.jsx'
-import { useLanguage } from '../../contexts/LanguageContext.jsx'
-import { logOut } from '../../firebase/auth.js'
+import { useAuth } from '../contexts/AuthContext.jsx'
+import { useLanguage } from '../contexts/LanguageContext.jsx'
+import { logOut } from '../firebase/auth.js'
 import { Card, CardHeader, CardTitle, CardContent, CardFooter, Button, Badge, Avatar, AvatarGroup, Accordion, AccordionItem, AccordionTrigger, AccordionContent, Input, Select } from '../components/ui/21st'
 import TopBar from '../components/common/TopBar.jsx'
 

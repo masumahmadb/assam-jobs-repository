@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import TopBar from '../components/common/TopBar.jsx'
 import { useLanguage } from '../contexts/LanguageContext.jsx'
-import { SectorExplorer } from '../components/jobs/SectorExplorer.jsx'
+import SectorExplorer from '../components/jobs/SectorExplorer.jsx'
 import JobList from '../components/jobs/JobList.jsx'
 import { Card, CardHeader, CardTitle, Input, Select, Button, Badge, SelectOption } from '../components/ui/21st'
 

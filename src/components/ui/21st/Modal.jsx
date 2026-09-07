@@ -1,18 +1,6 @@
 import React, { useEffect, useRef } from 'react'
 import { createPortal } from 'react-dom'
-import { X } from 'react-icons/fi'
-
-export interface ModalProps {
-  open: boolean
-  onClose: () => void
-  title?: string
-  description?: string
-  children: React.ReactNode
-  size?: 'sm' | 'md' | 'lg' | 'xl' | 'full'
-  showClose?: boolean
-  closeOnOverlayClick?: boolean
-  closeOnEscape?: boolean
-}
+import { FiX } from 'react-icons/fi'
 
 const sizeClasses = {
   sm: 'max-w-sm',
@@ -32,14 +20,13 @@ export function Modal({
   showClose = true,
   closeOnOverlayClick = true,
   closeOnEscape = true,
-}: ModalProps) {
-  const overlayRef = useRef<HTMLDivElement>(null)
-  const contentRef = useRef<HTMLDivElement>(null)
+}) {
+  const contentRef = useRef(null)
 
   useEffect(() => {
     if (!open) return
 
-    const handleEscape = (e: KeyboardEvent) => {
+    const handleEscape = (e) => {
       if (e.key === 'Escape' && closeOnEscape) {
         onClose()
       }
@@ -50,15 +37,14 @@ export function Modal({
 
     return () => {
       document.removeEventListener('keydown', handleEscape)
-      document.body.style.overflow = 'unset'
+      document.body.style.overflow = ''
     }
-  }, [open, closeOnEscape])
+  }, [open, closeOnEscape, onClose])
 
   if (!open) return null
 
   return createPortal(
     <div
-      ref={overlayRef}
       className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm"
       onClick={closeOnOverlayClick ? onClose : undefined}
       role="dialog"
@@ -70,23 +56,23 @@ export function Modal({
         ref={contentRef}
         onClick={(e) => e.stopPropagation()}
         className={[
-          "relative w-full bg-white rounded-2xl shadow-xl overflow-hidden",
-          "animate-in fade-in zoom-in-95 duration-200",
+          "relative w-full bg-white dark:bg-tea-900 rounded-2xl shadow-xl overflow-hidden",
+          "animate-scale-in",
           "max-h-[90vh] overflow-y-auto",
           sizeClasses[size],
         ].join(' ')}
         role="document"
       >
         {(title || showClose) && (
-          <div className="flex items-start justify-between p-6 border-b border-tea-100">
+          <div className="flex items-start justify-between p-6 border-b border-tea-100 dark:border-tea-800">
             <div>
               {title && (
-                <h2 id="modal-title" className="text-lg font-semibold text-tea-900">
+                <h2 id="modal-title" className="text-lg font-semibold text-tea-900 dark:text-tea-100">
                   {title}
                 </h2>
               )}
               {description && (
-                <p id="modal-description" className="mt-1 text-sm text-tea-600">
+                <p id="modal-description" className="mt-1 text-sm text-tea-600 dark:text-tea-400">
                   {description}
                 </p>
               )}
@@ -94,10 +80,10 @@ export function Modal({
             {showClose && (
               <button
                 onClick={onClose}
-                className="p-1 rounded-lg text-tea-400 hover:text-tea-600 hover:bg-tea-100 transition-colors"
+                className="p-1 rounded-lg text-tea-400 hover:text-tea-600 dark:hover:text-tea-300 hover:bg-tea-100 dark:hover:bg-tea-800 transition-colors"
                 aria-label="Close modal"
               >
-                <X size={20} />
+                <FiX size={20} />
               </button>
             )}
           </div>
@@ -107,6 +93,4 @@ export function Modal({
     </div>,
     document.body
   )
-)
-
-export { Modal }
+}

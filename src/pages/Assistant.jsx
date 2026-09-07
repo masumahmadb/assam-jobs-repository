@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react'
 import TopBar from '../components/common/TopBar.jsx'
 import { useLanguage } from '../contexts/LanguageContext.jsx'
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, Button, Input, Badge, Avatar, AvatarGroup, Tabs, TabsList, TabsTrigger, TabsContent, Accordion, AccordionItem, AccordionTrigger, AccordionContent, CardFooter } from '../components/ui/21st'
-import { FiSend, FiMic, FiFileText, FiBookOpen, FiTarget, FiTrendingUp, FiZap, FiSparkles, FiMessageSquare, FiLoader, FiCopy, FiCheckCircle, FiArrowUpRight, FiBrain, FiMessageCircle, FiSettings, FiHistory } from 'react-icons/fi'
+import { FiSend, FiMic, FiFileText, FiBookOpen, FiTarget, FiTrendingUp, FiZap, FiStar, FiMessageSquare, FiLoader, FiCopy, FiCheckCircle, FiArrowUpRight, FiBrain, FiMessageCircle, FiSettings, FiHistory } from 'react-icons/fi'
 import SyllabusScraper from '../components/assistant/SyllabusScraper.jsx'
 import AIAssistant from '../components/assistant/AIAssistant.jsx'
 
@@ -12,7 +12,7 @@ const quickPrompts = [
   { icon: FiBookOpen, label: 'Exam Prep', prompt: 'Create a 30-day study plan for APSC Prelims', category: 'Preparation' },
   { icon: FiMessageSquare, label: 'CV Review', prompt: 'Review my CV for a Software Developer position at AMTRON', category: 'Career' },
   { icon: FiZap, label: 'Mock Interview', prompt: 'Simulate an interview for Junior Engineer position at PWD', category: 'Interview' },
-  { icon: FiSparkles, label: 'Career Guidance', prompt: 'What are the best government job options for B.Tech Civil graduates in Assam?', category: 'Guidance' },
+  { icon: FiStar, label: 'Career Guidance', prompt: 'What are the best government job options for B.Tech Civil graduates in Assam?', category: 'Guidance' },
 ]
 
 const chatHistory = [
@@ -92,7 +92,7 @@ function Assistant() {
           <div className="flex items-center justify-between mb-4">
             <div>
               <h1 className="text-2xl font-display font-bold text-tea-900 dark:text-tea-100 flex items-center gap-2">
-                <FiSparkles size={24} className="text-tea-600 dark:text-tea-400" />
+                <FiStar size={24} className="text-tea-600 dark:text-tea-400" />
                 AI Career Assistant
               </h1>
               <p className="text-tea-600 dark:text-tea-400 text-sm mt-1">
@@ -150,7 +150,7 @@ function Assistant() {
                       {message.role === 'user' ? (
                         <FiUser size={16} />
                       ) : (
-                        <FiSparkles size={16} className="text-tea-600" />
+                        <FiStar size={16} className="text-tea-600" />
                       )}
                     </div>
                     <div className={`max-w-[75%] ${message.role === 'user' ? 'text-right' : ''}`}>
@@ -171,7 +171,7 @@ function Assistant() {
                 {isLoading && (
                   <div className="flex gap-3 animate-pulse">
                     <div className="w-8 h-8 rounded-full bg-tea-100 dark:bg-tea-800 flex items-center justify-center text-tea-600 dark:text-tea-400">
-                      <FiSparkles size={18} />
+                      <FiStar size={18} />
                     </div>
                     <div className="bg-tea-100 dark:bg-tea-800 text-tea-900 dark:text-tea-100 rounded-2xl rounded-tl-none px-4 py-3 max-w-[75%]">
                       <div className="flex gap-1">
@@ -196,7 +196,7 @@ function Assistant() {
                       onChange={(e) => setInputValue(e.target.value)}
                       onKeyDown={(e) => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); handleSend(e); } }}
                       placeholder="Ask me about jobs, syllabus, career advice..."
-                      leftIcon={<FiSparkles size={18} className="text-tea-400" />}
+                      leftIcon={<FiStar size={18} className="text-tea-400" />}
                       className="pr-12"
                     />
                     <div className="absolute right-3 bottom-3 flex items-center gap-1">

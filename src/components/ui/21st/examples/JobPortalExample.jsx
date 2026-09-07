@@ -14,7 +14,6 @@ import {
   TableRow,
   TableHead,
   TableCell,
-  TableHeader as TableHeaderComp,
   Modal,
   DropdownMenu,
   DropdownMenuTrigger,
@@ -32,13 +31,7 @@ import {
   AccordionContent,
   Avatar,
   AvatarGroup,
-  Pagination,
   JobCard,
-  DropdownMenu,
-  DropdownMenuTrigger,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuLabel,
 } from '../index'
 
 // Example: Complete Job Portal Page using 21st.dev components
@@ -46,9 +39,9 @@ export function JobPortalExample() {
   const [searchQuery, setSearchQuery] = useState('')
   const [activeTab, setActiveTab] = useState('all')
   const [currentPage, setCurrentPage] = useState(1)
-  const [selectedJobs, setSelectedJobs] = useState<Set<string>>(new Set())
+  const [selectedJobs, setSelectedJobs] = useState(new Set())
   const [modalOpen, setModalOpen] = useState(false)
-  const [selectedJob, setSelectedJob] = useState<any>(null)
+  const [selectedJob, setSelectedJob] = useState(null)
   const [filters, setFilters] = useState({
     category: '',
     jobType: '',
@@ -341,7 +334,7 @@ function JobListings({ jobs, onRowClick }: { jobs: any[]; onRowClick: (job: any)
 }
 
 // Icon components (inline for demo)
-function Search({ size = 18, className = "" }: { size?: number; className?: string }) {
+function Search({ size = 18, className = "" }) {
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className={className}>
       <circle cx="11" cy="11" r="8" />
@@ -350,7 +343,7 @@ function Search({ size = 18, className = "" }: { size?: number; className?: stri
   )
 }
 
-function Filter({ size = 18, className = "" }: { size?: number; className?: string }) {
+function Filter({ size = 18, className = "" }) {
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className={className}>
       <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3" />

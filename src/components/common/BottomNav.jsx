@@ -1,6 +1,6 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
-import { FiHome, FiBriefcase, FiTool, FiMessageCircle, FiUser } from 'react-icons/fi'
+import { FiHome, FiBriefcase, FiTool, FiMessageCircle, FiUser, FiBookOpen } from 'react-icons/fi'
 import { useLanguage } from '../../contexts/LanguageContext.jsx'
 
 const items = [
@@ -8,7 +8,7 @@ const items = [
   { to: '/jobs', icon: FiBriefcase, key: 'jobs' },
   { to: '/utilities', icon: FiTool, key: 'utilities' },
   { to: '/newjobsnews', icon: FiMessageCircle, key: 'newjobsnews' },
-  { to: '/assistant', icon: FiMessageCircle, key: 'assistant' },
+  { to: '/material', icon: FiBookOpen, key: 'material' },
   { to: '/profile', icon: FiUser, key: 'profile' }
 ]
 

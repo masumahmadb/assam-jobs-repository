@@ -5,9 +5,8 @@ import { useLanguage } from '../contexts/LanguageContext.jsx'
 import { useToast } from '../components/common/Toast.jsx'
 import { collection, getDocs, limit, orderBy, query } from 'firebase/firestore'
 import { db } from '../firebase/config.js'
-import { FiRefreshCw, FiSearch, FiFilter, FiArrowRight, FiFilterOff, FiGrid, FiList, FiExternalLink, FiBookmark, FiShare2 } from 'react-icons/fi'
-import { Card, CardHeader, CardTitle, CardDescription, CardContent, Button, Badge, Input, Select, DropdownMenu, DropdownMenuTrigger, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuLabel, Modal, Avatar, AvatarGroup, Pagination } from '../components/ui/21st'
-import { formatDate, getCategoryColor } from '../components/ui/21st'
+import { FiRefreshCw, FiSearch, FiFilter, FiArrowRight, FiGrid, FiList, FiExternalLink, FiBookmark, FiShare2, FiCalendar, FiTag } from 'react-icons/fi'
+import { Card, CardHeader, CardTitle, CardDescription, CardContent, Button, Badge, Input, Select, DropdownMenu, DropdownMenuTrigger, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuLabel, DropdownMenuContent, Modal, Avatar, AvatarGroup, Pagination } from '../components/ui/21st'
 
 const NEWS_COLLECTION = import.meta.env.VITE_NEWS_COLLECTION === 'scrapegraph_test' ? 'new_jobs_news_scrapegraph_test' : 'updates'
 
@@ -108,7 +107,7 @@ export default function NewJobsNews() {
     if (newsItems.length === 0) {
       return (
         <div className="text-center py-12">
-          <FiFilterOff size={48} className="text-tea-400 mx-auto mb-4" />
+          <FiFilter size={48} className="text-tea-400 mx-auto mb-4" />
           <h3 className="text-xl font-semibold text-tea-900 dark:text-tea-100 mb-2">
             No matching news found
           </h3>
@@ -143,7 +142,7 @@ export default function NewJobsNews() {
         {/* Grid View */}
         {viewMode === 'grid' && (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {newsItems.map((item) => (
+            {newsItems.map((item) => {
               const title = item.title || item.role || 'Untitled'
               const summary = item.summary || item.body || ''
               const date = item.postedAt ? formatDate(item.postedAt) : ''
@@ -213,7 +212,7 @@ export default function NewJobsNews() {
                   </div>
 </article>
               )
-            )}
+            })}
           </div>
         )}
 
@@ -286,12 +285,11 @@ export default function NewJobsNews() {
                   </div>
 </article>
                 )
-              )}
+              })}
             </div>
           )}
-        )}
-      )
-    }
+          </>
+        )
   }
 
   return (
@@ -312,7 +310,7 @@ export default function NewJobsNews() {
             <div className="flex items-center gap-3">
               <DropdownMenu>
                 <DropdownMenuTrigger className="w-full sm:w-auto">
-                  <Filter size={18} className="mr-2" />
+                  <FiFilter size={18} className="mr-2" />
                   Filters
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end" className="w-80 p-4">
@@ -361,5 +359,3 @@ export default function NewJobsNews() {
     </div>
   )
 }
-
-export default NewJobsNews

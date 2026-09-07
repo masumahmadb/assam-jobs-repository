@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import { signInWithEmail, signInWithGoogle } from '../../firebase/auth.js'
 import { useLanguage } from '../../contexts/LanguageContext.jsx'
-import { FiMail, FiLock, FiEye, FiEyeOff, FiGoogle, FiUser, FiArrowRight, FiShield, FiZap, FiHeart, FiStar, FiBuilding2, FiUsers, FiBriefcase } from 'react-icons/fi'
+import { FiMail, FiLock, FiEye, FiEyeOff, FiArrowRight, FiShield, FiZap, FiHeart, FiAlertCircle } from 'react-icons/fi'
 import { Button, Input, Card, CardHeader, CardTitle, CardContent, CardFooter } from '../../components/ui/21st'
 
 function Login() {
@@ -207,6 +207,8 @@ function Login() {
               </svg>
               <span>Continue with Google</span>
             </Button>
+          </CardContent>
+
           <CardFooter className="pt-4">
             <p className="text-center text-sm text-tea-600 dark:text-tea-400">
               Don't have an account?{' '}
@@ -221,8 +223,7 @@ function Login() {
               </Link>
             </p>
           </CardFooter>
-        </CardContent>
-      </Card>
+        </Card>
 
       {/* Features highlight */}
       <div className="mt-8 grid grid-cols-3 gap-4 animate-slide-up">

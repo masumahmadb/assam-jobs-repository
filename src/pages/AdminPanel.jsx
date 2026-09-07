@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
+import { Link } from 'react-router-dom'
 import { Card, CardHeader, CardTitle, CardContent, Button, Badge, Table, TableHeader, TableBody, TableRow, TableHead, TableCell, Input, Select, Tabs, TabsList, TabsTrigger, TabsContent, Avatar, AvatarGroup, Pagination, Modal, DropdownMenu, DropdownMenuTrigger, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuLabel } from '../components/ui/21st'
-import { FiUsers, FiBriefcase, FiFileText, FiSettings, FiShield, FiActivity, FiTrendingUp, FiDatabase, FiBell, FiSearch, FiFilter, FiPlus, FiEdit, FiTrash2, FiEye, FiDownload, FiMoreHorizontal, FiUserPlus, FiCheckCircle, FiXCircle, FiClock, FiBuilding2 } from 'react-icons/fi'
+import { FiUsers, FiBriefcase, FiFileText, FiSettings, FiShield, FiActivity, FiTrendingUp, FiDatabase, FiBell, FiSearch, FiFilter, FiPlus, FiEdit, FiTrash2, FiEye, FiDownload, FiMoreHorizontal, FiUserPlus, FiCheckCircle, FiXCircle, FiClock, FiHome } from 'react-icons/fi'
 
 const mockUsers = [
   { id: '1', name: 'Priya Sharma', email: 'priya@email.com', role: 'user', status: 'active', joined: '2026-01-15', applications: 12 },
@@ -23,7 +24,7 @@ const stats = [
   { label: 'Total Users', value: '52,341', change: '+12%', trend: 'up', icon: FiUsers, color: 'text-blue-600 dark:text-blue-400' },
   { label: 'Active Jobs', value: '1,247', change: '+8%', trend: 'up', icon: FiBriefcase, color: 'text-emerald-600 dark:text-emerald-400' },
   { label: 'Total Applications', value: '1,42,356', change: '+15%', trend: 'up', icon: FiFileText, color: 'text-purple-600 dark:text-purple-400' },
-  { label: 'Employers', value: '234', change: '+5%', trend: 'up', icon: FiBuilding2, color: 'text-amber-600 dark:text-amber-400' },
+  { label: 'Employers', value: '234', change: '+5%', trend: 'up', icon: FiHome, color: 'text-amber-600 dark:text-amber-400' },
   { label: 'Pending Reviews', value: '23', change: '-5', trend: 'down', icon: FiClock, color: 'text-amber-600 dark:text-amber-400' },
   { label: 'System Health', value: '99.9%', change: '0%', trend: 'neutral', icon: FiShield, color: 'text-emerald-600 dark:text-emerald-400' },
 ]
@@ -142,7 +143,7 @@ export default function AdminPanel() {
             </div>
           </header>
 
-          <main className="p-6 lg:p-8">
+          <div className="p-6 lg:p-8">
             {activeTab === 'overview' && (
               <div className="space-y-6 animate-fade-in">
                 {/* Stats Grid */}
@@ -235,13 +236,12 @@ export default function AdminPanel() {
                       </CardContent>
                   </Card>
                 </div>
-              )}
+              </div>
             </div>
           )}
+            </div>
         </main>
       </div>
     </div>
   )
 }
-
-export default AdminPanel

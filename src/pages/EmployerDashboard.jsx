@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
-import TopBar from '../../components/common/TopBar.jsx'
-import { useLanguage } from '../../contexts/LanguageContext.jsx'
-import { Card, CardHeader, CardTitle, CardContent, Button, Badge, Table, TableHeader, TableBody, TableRow, TableHead, TableCell, Input, Select, Tabs, TabsList, TabsTrigger, TabsContent, Card, CardHeader, CardTitle, CardContent, Button, Badge, Table, TableHeader, TableBody, TableRow, TableHead, TableCell, Modal, Input, DropdownMenu, DropdownMenuTrigger, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuLabel, Avatar, AvatarGroup, Pagination } from '../../components/ui/21st'
-import { FiPlus, FiSearch, FiFilter, FiEdit, FiTrash2, FiEye, FiDownload, FiClock, FiUsers, FiBriefcase, FiDollarSign, FiActivity, FiCheckCircle, FiXCircle, FiClock, FiEdit, FiTrash2, FiEye, FiDownload, FiMoreHorizontal } from 'react-icons/fi'
+import TopBar from '../components/common/TopBar.jsx'
+import { useLanguage } from '../contexts/LanguageContext.jsx'
+import { Card, CardHeader, CardTitle, CardDescription, CardContent, Button, Badge, Table, TableHeader, TableBody, TableRow, TableHead, TableCell, Input, Select, Tabs, TabsList, TabsTrigger, TabsContent, Modal, DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuLabel, Avatar, AvatarGroup, Pagination } from '../components/ui/21st'
+import { FiPlus, FiSearch, FiFilter, FiEdit, FiTrash2, FiEye, FiDownload, FiClock, FiUsers, FiBriefcase, FiDollarSign, FiActivity, FiCheckCircle, FiXCircle, FiMoreHorizontal, FiCalendar } from 'react-icons/fi'
 
 const mockJobs = [
   { id: '1', title: 'Medical Officer', department: 'Health Dept', vacancies: 50, status: 'active', applications: 245, posted: '2026-08-01', deadline: '2026-09-15', type: 'government' },
@@ -207,7 +207,8 @@ function EmployerDashboard() {
                     </TableBody>
                   </Table>
                 </div>
-              </Card>
+              </CardContent>
+            </Card>
 
               {/* Pagination */}
               {totalPages > 1 && (
@@ -332,7 +333,6 @@ function EmployerDashboard() {
             </TabsContent>
           </Tabs>
         </div>
-      </div>
     </>
   )
 }

@@ -10,7 +10,7 @@ import Home from './pages/Home.jsx'
 import Jobs from './pages/Jobs.jsx'
 import NewJobsNews from './pages/NewJobsNews'
 import Utilities from './pages/Utilities.jsx'
-import Assistant from './pages/Assistant.jsx'
+import Material from './pages/Material.jsx'
 import Profile from './pages/Profile.jsx'
 import EmployerLogin from './pages/EmployerLogin.jsx'
 import EmployerVerify from './pages/EmployerVerify.jsx'
@@ -47,7 +47,7 @@ export default function App() {
         <Route path="/jobs" element={<PrivateRoute><Jobs /></PrivateRoute>} />
         <Route path="/newjobsnews" element={<PrivateRoute><NewJobsNews /></PrivateRoute>} />
         <Route path="/utilities" element={<PrivateRoute><Utilities /></PrivateRoute>} />
-        <Route path="/assistant" element={<PrivateRoute><Assistant /></PrivateRoute>} />
+        <Route path="/material" element={<PrivateRoute><Material /></PrivateRoute>} />
         <Route path="/profile" element={<PrivateRoute><Profile /></PrivateRoute>} />
 
         {/* Employer routes */}

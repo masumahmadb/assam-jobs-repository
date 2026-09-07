@@ -6,7 +6,7 @@ import PhotoResizer from '../components/vault/PhotoResizer.jsx'
 import DocumentScanner from '../components/vault/DocumentScanner.jsx'
 import { useLanguage } from '../contexts/LanguageContext.jsx'
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter, Button, Tabs, TabsList, TabsTrigger, TabsContent, Badge } from '../components/ui/21st'
-import { FiFileText, FiCamera, FiScan, FiFile, FiDownload, FiUpload, FiEdit, FiImage, FiRotateCw, FiCrop, FiSave, FiShare2, FiArrowRight, FiCheckCircle } from 'react-icons/fi'
+import { FiFileText, FiCamera, FiSearch, FiFile, FiDownload, FiUpload, FiEdit, FiImage, FiRotateCw, FiCrop, FiSave, FiShare2, FiArrowRight, FiArrowLeft, FiCheckCircle, FiAward, FiStar, FiLock, FiX, FiShield, FiZap } from 'react-icons/fi'
 
 const TOOLS = [
   {
@@ -34,7 +34,7 @@ const TOOLS = [
   {
     id: 'scanner',
     label: 'Document Scanner',
-    icon: FiScan,
+    icon: FiSearch,
     color: 'bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300',
     description: 'Scan & enhance documents with OCR',
     features: ['Auto-crop', 'Perspective correction', 'OCR text extraction', 'PDF export'],
@@ -78,6 +78,12 @@ const TOOLS = [
     badgeColor: 'bg-tea-100 text-tea-700 dark:bg-tea-800 dark:text-tea-300',
     disabled: true,
   },
+]
+
+const FEATURES = [
+  { icon: FiCheckCircle, title: '100% Free', desc: 'Every tool is free for all Assam students — no hidden charges, no limits.' },
+  { icon: FiShield, title: 'Private & Secure', desc: 'Your documents and photos stay on your device. Nothing is uploaded to servers.' },
+  { icon: FiZap, title: 'Works Offline', desc: 'Built with offline-first design so tools keep working on slow networks.' },
 ]
 
 export default function Utilities() {
@@ -204,7 +210,7 @@ export default function Utilities() {
               Why Use Our Tools?
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              {features.map((feature, i) => {
+              {FEATURES.map((feature, i) => {
             return (
               <div key={i} className="card-hover p-6 text-center group" style={{animationDelay: `${i * 100}ms`}}>
                 <div className="w-12 h-12 rounded-xl bg-tea-100 dark:bg-tea-800 flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform text-tea-600 dark:text-tea-400">
@@ -244,5 +250,3 @@ export default function Utilities() {
     </div>
   )
 }
-
-export default Utilities

@@ -19,14 +19,7 @@ const badgeVariants = {
   },
 }
 
-export interface BadgeProps extends React.HTMLAttributes<HTMLSpanElement> {
-  variant?: keyof typeof badgeVariants.variants
-  size?: keyof typeof badgeVariants.sizes
-  dot?: boolean
-  dotColor?: string
-}
-
-const Badge = React.forwardRef<HTMLSpanElement, BadgeProps>(
+const Badge = React.forwardRef(
   ({ className, variant = "default", size = "default", dot, dotColor, children, ...props }, ref) => {
     return (
       <span
@@ -38,7 +31,6 @@ const Badge = React.forwardRef<HTMLSpanElement, BadgeProps>(
           className,
         ].filter(Boolean).join(" ")}
         {...props}
-        ref={ref}
       >
         {dot && (
           <span
