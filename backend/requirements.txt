@@ -1,0 +1,31 @@
+# Python requirements for PDF Suite Backend Workers
+
+# OCR
+ocrmypdf==16.0.0
+pytesseract==0.3.10
+
+# PDF Processing
+pymupdf==1.23.0
+pdfplumber==0.11.0
+camelot-py[cv2]==0.11.0
+pdf-lib
+
+# Table Extraction
+camelot-py[cv2]==0.11.0
+
+# OCR/Conversion
+docling==2.0.0
+
+# Digital Signatures
+# dss-client==3.0.0  # Requires Java
+
+# Utilities
+opencv-python-headless==4.8.0
+pillow==10.0.0
+img2pdf==0.7.0
+
+# Async
+asyncio
+
+# Redis (for workers)
+redis==5.0.0

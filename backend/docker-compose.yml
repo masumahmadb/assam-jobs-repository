@@ -1,0 +1,160 @@
+version: '3.8'
+
+services:
+  redis:
+    image: redis:7-alpine
+    container_name: pdf-suite-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+    restart: unless-stopped
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: pdf-suite-backend
+    ports:
+      - "3001:3001"
+    environment:
+      - REDIS_URL=redis://redis:6379
+      - PORT=3001
+      - NODE_ENV=production
+      - FRONTEND_URL=http://localhost:5173
+      - MAX_FILE_SIZE=209715200
+      - PYTHON_PATH=python3
+      - LIBREOFFICE_PATH=/usr/bin/libreoffice
+    volumes:
+      - ./backend:/app
+      - pdf_temp:/app/temp
+    depends_on:
+      redis:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3001/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+    restart: unless-stopped
+
+  # Optional: Separate worker containers for heavy operations
+  worker-ocr:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: pdf-suite-worker-ocr
+    command: node workers/ocr-worker.js
+    environment:
+      - REDIS_URL=redis://redis:6379
+      - NODE_ENV=production
+    volumes:
+      - ./backend:/app
+      - pdf_temp:/app/temp
+    depends_on:
+      redis:
+        condition: service_healthy
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: '2'
+          memory: 4G
+
+  worker-convert:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: pdf-suite-worker-convert
+    command: node workers/convert-worker.js
+    environment:
+      - REDIS_URL=redis://redis:6379
+      - NODE_ENV=production
+    volumes:
+      - ./backend:/app
+      - pdf_temp:/app/temp
+    depends_on:
+      redis:
+        condition: service_healthy
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: '2'
+          memory: 4G
+
+  worker-compress:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: pdf-suite-worker-compress
+    command: node workers/compress-worker.js
+    environment:
+      - REDIS_URL=redis://redis:6379
+      - NODE_ENV=production
+    volumes:
+      - ./backend:/app
+      - pdf_temp:/app/temp
+    depends_on:
+      redis:
+        condition: service_healthy
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: '2'
+          memory: 4G
+
+  worker-table:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: pdf-suite-worker-table
+    command: node workers/table-worker.js
+    environment:
+      - REDIS_URL=redis://redis:6379
+      - NODE_ENV=production
+    volumes:
+      - ./backend:/app
+      - pdf_temp:/app/temp
+    depends_on:
+      redis:
+        condition: service_healthy
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: '2'
+          memory: 4G
+
+  worker-optimize:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: pdf-suite-worker-optimize
+    command: node workers/optimize-worker.js
+    environment:
+      - REDIS_URL=redis://redis:6379
+      - NODE_ENV=production
+    volumes:
+      - ./backend:/app
+      - pdf_temp:/app/temp
+    depends_on:
+      redis:
+        condition: service_healthy
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: '2'
+          memory: 4G
+
+volumes:
+  redis_data:
+  pdf_temp:
