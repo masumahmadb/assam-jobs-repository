@@ -4,6 +4,7 @@ import TopBar from '../components/common/TopBar.jsx'
 import CVBuilder from '../components/cv/CVBuilder.jsx'
 import PhotoResizer from '../components/vault/PhotoResizer.jsx'
 import DocumentScanner from '../components/vault/DocumentScanner.jsx'
+import PDFEditor from '../components/utilities/PDFEditor.jsx'
 import { useLanguage } from '../contexts/LanguageContext.jsx'
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter, Button, Tabs, TabsList, TabsTrigger, TabsContent, Badge } from '../components/ui/21st'
 import { FiFileText, FiCamera, FiSearch, FiFile, FiDownload, FiUpload, FiEdit, FiImage, FiRotateCw, FiCrop, FiSave, FiShare2, FiArrowRight, FiArrowLeft, FiCheckCircle, FiAward, FiStar, FiLock, FiX, FiShield, FiZap } from 'react-icons/fi'
@@ -41,6 +42,17 @@ const TOOLS = [
     component: DocumentScanner,
     badge: 'Beta',
     badgeColor: 'bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-300',
+  },
+  {
+    id: 'pdf-editor',
+    label: 'PDF Editor',
+    icon: FiFileText,
+    color: 'bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-300',
+    description: 'Merge, split, rotate, reorder & edit PDFs',
+    features: ['Merge multiple PDFs', 'Rotate/delete/reorder pages', 'Add blank pages', 'Offline & private'],
+    component: PDFEditor,
+    badge: 'New',
+    badgeColor: 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-300',
   },
   {
     id: 'converter',
