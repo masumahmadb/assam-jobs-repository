@@ -1,13 +1,14 @@
-import React, { useState } from 'react'
+import React, { useState, lazy, Suspense } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import TopBar from '../components/common/TopBar.jsx'
-import CVBuilder from '../components/cv/CVBuilder.jsx'
-import PhotoResizer from '../components/vault/PhotoResizer.jsx'
-import DocumentScanner from '../components/vault/DocumentScanner.jsx'
-import PDFEditor from '../components/utilities/PDFEditor.jsx'
 import { useLanguage } from '../contexts/LanguageContext.jsx'
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter, Button, Tabs, TabsList, TabsTrigger, TabsContent, Badge } from '../components/ui/21st'
-import { FiFileText, FiCamera, FiSearch, FiFile, FiDownload, FiUpload, FiEdit, FiImage, FiRotateCw, FiCrop, FiSave, FiShare2, FiArrowRight, FiArrowLeft, FiCheckCircle, FiAward, FiStar, FiLock, FiX, FiShield, FiZap } from 'react-icons/fi'
+import { FiFileText, FiCamera, FiSearch, FiFile, FiDownload, FiUpload, FiEdit, FiImage, FiRotateCw, FiCrop, FiSave, FiShare2, FiArrowRight, FiArrowLeft, FiCheckCircle, FiAward, FiStar, FiLock, FiX, FiShield, FiZap, FiLoader } from 'react-icons/fi'
+
+const CVBuilder = lazy(() => import('../components/cv/CVBuilder.jsx'))
+const PhotoResizer = lazy(() => import('../components/vault/PhotoResizer.jsx'))
+const DocumentScanner = lazy(() => import('../components/vault/DocumentScanner.jsx'))
+const PDFEditor = lazy(() => import('../components/utilities/PDFEditor.jsx'))
 
 const TOOLS = [
   {
@@ -254,7 +255,17 @@ export default function Utilities() {
                 </Button>
               </div>
               <div className="card p-6">
-                <currentTool.component />
+                <Suspense fallback={
+                  <div className="flex items-center justify-center h-64">
+                    <div className="text-center">
+                      <FiLoader className="w-8 h-8 text-tea-500 animate-spin mx-auto mb-3" />
+                      <p className="text-tea-600 dark:text-tea-400">Loading PDF Editor...</p>
+                      <p className="text-xs text-tea-400 dark:text-tea-500 mt-1">Initializing tools, please wait</p>
+                    </div>
+                  </div>
+                }>
+                  <currentTool.component />
+                </Suspense>
               </div>
             </section>
         )}
