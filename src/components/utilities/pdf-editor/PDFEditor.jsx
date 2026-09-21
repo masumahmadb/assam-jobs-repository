@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect, lazy, Suspense } from 'react'
 import { PDFEditorProvider, usePDFEditor } from '../../context/PDFEditorContext'
-import { FiFilePlus, FiRotateCw, FiTrash2, FiArrowUp, FiArrowDown, FiDownload, FiSave, FiX, FiPlus, FiUpload, FiEye, FiEdit, FiPrinter, FiCopy, FiSearch, FiFileText, FiImage, FiLock, FiUnlock, FiScissors, FiCopy, FiStamp, FiPenTool, FiType, FiSignature, FiFile, FiArrowUpRight, FiFileMinus, FiFilePlus2, FiLayers, FiGrid, FiShield, FiKey, FiEraser, FiWand2, FiCamera, FiRotateCcw, FiMove, FiZoomIn, FiZoomOut, FiUndo, FiRedo } from 'react-icons/fi'
+import { FiFilePlus, FiRotateCw, FiTrash2, FiArrowUp, FiArrowDown, FiDownload, FiSave, FiX, FiPlus, FiUpload, FiEye, FiEdit, FiPrinter, FiCopy, FiSearch, FiFileText, FiImage, FiLock, FiUnlock, FiScissors, FiStamp, FiPenTool, FiType, FiSignature, FiFile, FiArrowUpRight, FiFileMinus, FiFilePlus2, FiLayers, FiGrid, FiShield, FiKey, FiEraser, FiWand2, FiCamera, FiRotateCcw, FiMove, FiZoomIn, FiZoomOut, FiUndo, FiRedo, FiGitCompare } from 'react-icons/fi'
 
 // Lazy load heavy tool components
 const EditTools = lazy(() => import('./tools/EditTools'))
@@ -33,16 +33,6 @@ const TOOL_CATEGORIES = [
   { id: 'header-footer', label: 'Header/Footer', icon: FiMove, description: 'Page numbers, dates, custom text', color: 'bg-sky-100 dark:bg-sky-900/30 text-sky-700 dark:text-sky-300' },
   { id: 'compare', label: 'Compare', icon: FiGitCompare, description: 'A vs B page/text diff', color: 'bg-rose-100 dark:bg-rose-900/30 text-rose-700 dark:text-rose-300' },
   { id: 'images', label: 'PDF ↔ Images', icon: FiImage, description: 'PDF ↔ JPG/PNG/WebP, images → PDF', color: 'bg-fuchsia-100 dark:bg-fuchsia-900/30 text-fuchsia-700 dark:text-fuchsia-300' },
-  { id: 'clean', label: 'Clean', icon: FiEraser, description: 'Optimize, repair, PDF/A, remove blank', color: 'bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-300' },
-  { id: 'watermark', label: 'Watermark', icon: FiStamp, description: 'Text/image watermarks, presets', color: 'bg-lime-100 dark:bg-lime-900/30 text-lime-700 dark:text-lime-300' },
-  { id: 'header-footer', label: 'Header/Footer', icon: FiMove, description: 'Page numbers, dates, custom text', color: 'bg-sky-100 dark:bg-sky-900/30 text-sky-700 dark:text-sky-300' },
-  { id: 'compare', label: 'Compare', icon: FiGitCompare, description: 'A vs B page/text diff', color: 'bg-rose-100 dark:bg-rose-900/30 text-rose-700 dark:text-rose-300' },
-  { id: 'images', label: 'PDF ↔ Images', icon: FiImage, description: 'PDF ↔ JPG/PNG/WebP, images → PDF', color: 'bg-fuchsia-100 dark:bg-fuchsia-900/30 text-fuchsia-700 dark:text-fuchsia-300' },
-  { id: 'secure', label: 'Secure', icon: FiShield, description: 'Encrypt, redact, permissions', color: 'bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-300' },
-  { id: 'sign', label: 'Sign', icon: FiSignature, description: 'e-Signatures & PAdES certificates', color: 'bg-indigo-100 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300' },
-  { id: 'ocr', label: 'OCR', icon: FiSearch, description: 'Make scanned PDFs searchable', color: 'bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300' },
-  { id: 'convert', label: 'Convert', icon: FiArrowUpRight, description: 'PDF ↔ Word, Excel, Images, HTML', color: 'bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-orange-300' },
-  { id: 'compress', label: 'Compress', icon: FiFileMinus, description: 'Reduce file size with presets', color: 'bg-pink-100 dark:bg-pink-900/30 text-pink-700 dark:text-pink-300' },
 ]
 
 function CategorySidebar() {

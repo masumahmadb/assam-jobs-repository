@@ -1,0 +1,443 @@
+# Tool Registry - Assam Jobs Repository
+# Format: name, category, purpose, integration_type, official_repo, install_method, free_open_source, api_key_needed, resource_needs, security_notes, activation_conditions, alternative, status
+
+tools:
+  # Frontend Development
+  - name: "Vite"
+    category: "build"
+    purpose: "Fast dev server and production bundler for React"
+    integration_type: "cli"
+    official_repo: "https://github.com/vitejs/vite"
+    install_method: "npm install -D vite @vitejs/plugin-react"
+    free_open_source: true
+    api_key_needed: false
+    resource_needs: "low"
+    security_notes: "No known issues; keep updated"
+    activation_conditions: "Always active for dev/build"
+    alternative: "webpack, rsbuild"
+    status: "active"
+
+  - name: "React 18"
+    category: "framework"
+    purpose: "UI library with concurrent features"
+    integration_type: "library"
+    official_repo: "https://github.com/facebook/react"
+    install_method: "npm install react react-dom"
+    free_open_source: true
+    api_key_needed: false
+    resource_needs: "low"
+    security_notes: "Keep updated for security patches"
+    activation_conditions: "Core framework"
+    alternative: "Preact, Solid"
+    status: "active"
+
+  - name: "Tailwind CSS 3"
+    category: "styling"
+    purpose: "Utility-first CSS framework with custom design tokens"
+    integration_type: "cli + postcss"
+    official_repo: "https://github.com/tailwindlabs/tailwindcss"
+    install_method: "npm install -D tailwindcss postcss autoprefixer"
+    free_open_source: true
+    api_key_needed: false
+    resource_needs: "low"
+    security_notes: "No runtime; compile-time only"
+    activation_conditions: "All styling"
+    alternative: "UnoCSS, vanilla CSS"
+    status: "active"
+
+  - name: "React Router v6"
+    category: "routing"
+    purpose: "Client-side routing with route protection"
+    integration_type: "library"
+    official_repo: "https://github.com/remix-run/react-router"
+    install_method: "npm install react-router-dom"
+    free_open_source: true
+    api_key_needed: false
+    resource_needs: "low"
+    security_notes: "No known issues"
+    activation_conditions: "All navigation"
+    alternative: "wouter, tanstack-router"
+    status: "active"
+
+  - name: "21st.dev Components"
+    category: "ui-library"
+    purpose: "Accessible pre-built components (Button, Card, Modal, etc.)"
+    integration_type: "local components + MCP"
+    official_repo: "https://21st.dev"
+    install_method: "Copy components to src/components/ui/21st/"
+    free_open_source: true
+    api_key_needed: false
+    resource_needs: "low"
+    security_notes: "Audit copied code; no external deps"
+    activation_conditions: "All UI"
+    alternative: "Radix UI, shadcn/ui, Headless UI"
+    status: "active"
+
+  - name: "react-icons (Fi)"
+    category: "icons"
+    purpose: "Feather icons for UI"
+    integration_type: "library"
+    official_repo: "https://github.com/react-icons/react-icons"
+    install_method: "npm install react-icons"
+    free_open_source: true
+    api_key_needed: false
+    resource_needs: "low"
+    security_notes: "Tree-shakeable; only import used icons"
+    activation_conditions: "All icons"
+    alternative: "lucide-react, heroicons"
+    status: "active"
+
+  - name: "vite-plugin-pwa / Workbox"
+    category: "pwa"
+    purpose: "Service worker, offline caching, install prompt"
+    integration_type: "vite plugin"
+    official_repo: "https://github.com/vite-pwa/vite-plugin-pwa"
+    install_method: "npm install -D vite-plugin-pwa"
+    free_open_source: true
+    api_key_needed: false
+    resource_needs: "low"
+    security_notes: "Cache only HTTPS; configure runtimeCaching carefully"
+    activation_conditions: "Production build"
+    alternative: "custom SW"
+    status: "active"
+
+  # Firebase / Backend
+  - name: "Firebase SDK v10"
+    category: "backend"
+    purpose: "Auth, Firestore, Storage, Messaging, Functions"
+    integration_type: "library"
+    official_repo: "https://github.com/firebase/firebase-js-sdk"
+    install_method: "npm install firebase firebase-admin"
+    free_open_source: true
+    api_key_needed: true
+    resource_needs: "low (client), medium (admin)"
+    security_notes: "Never commit API keys; use .env; Admin SDK server-side only"
+    activation_conditions: "All backend operations"
+    alternative: "Supabase, Appwrite, custom"
+    status: "active"
+
+  - name: "Express.js"
+    category: "backend"
+    purpose: "PDF processing API server"
+    integration_type: "library"
+    official_repo: "https://github.com/expressjs/express"
+    install_method: "npm install express"
+    free_open_source: true
+    api_key_needed: false
+    resource_needs: "low"
+    security_notes: "Use helmet, cors, rate-limit; validate all inputs"
+    activation_conditions: "Backend API"
+    alternative: "Fastify, Hono, NestJS"
+    status: "active"
+
+  - name: "BullMQ"
+    category: "queue"
+    purpose: "Job queue for heavy PDF operations (Redis-backed)"
+    integration_type: "library"
+    official_repo: "https://github.com/taskforcesh/bullmq"
+    install_method: "npm install bullmq ioredis"
+    free_open_source: true
+    api_key_needed: false
+    resource_needs: "medium (Redis required)"
+    security_notes: "Redis AUTH required in production; TLS"
+    activation_conditions: "Heavy PDF ops"
+    alternative: "Celery, RabbitMQ, Inngest"
+    status: "active"
+
+  - name: "Redis"
+    category: "infrastructure"
+    purpose: "BullMQ queue backend, caching, sessions"
+    integration_type: "service"
+    official_repo: "https://github.com/redis/redis"
+    install_method: "Docker / Upstash / Redis Cloud"
+    free_open_source: true
+    api_key_needed: false
+    resource_needs: "medium"
+    security_notes: "Require AUTH, TLS, rename dangerous commands"
+    activation_conditions: "Backend workers"
+    alternative: "Dragonfly, KeyDB, Upstash"
+    status: "planned"
+
+  # PDF Processing (Client)
+  - name: "pdf-lib"
+    category: "pdf"
+    purpose: "Client-side PDF manipulation (merge, split, watermark, forms)"
+    integration_type: "library"
+    official_repo: "https://github.com/Hopding/pdf-lib"
+    install_method: "npm install pdf-lib"
+    free_open_source: true
+    api_key_needed: false
+    resource_needs: "medium (WASM)"
+    security_notes: "Runs in browser; no server exposure"
+    activation_conditions: "Quick PDF ops"
+    alternative: "PDF.js (read-only), pdfjs-dist"
+    status: "active"
+
+  - name: "pdfjs-dist"
+    category: "pdf"
+    purpose: "PDF rendering, text extraction, page preview in browser"
+    integration_type: "library"
+    official_repo: "https://github.com/mozilla/pdf.js"
+    install_method: "npm install pdfjs-dist"
+    free_open_source: true
+    api_key_needed: false
+    resource_needs: "medium (worker)"
+    security_notes: "Use worker for off-main-thread rendering"
+    activation_conditions: "PDF preview, text extract"
+    alternative: "pdf-lib (limited render)"
+    status: "active"
+
+  # PDF Processing (Server - Python)
+  - name: "OCRmyPDF"
+    category: "pdf-ocr"
+    purpose: "OCR scanned PDFs → searchable PDF (Tesseract wrapper)"
+    integration_type: "cli + python wrapper"
+    official_repo: "https://github.com/ocrmypdf/OCRmyPDF"
+    install_method: "pip install ocrmypdf + system: tesseract, ghostscript, qpdf"
+    free_open_source: true
+    api_key_needed: false
+    resource_needs: "high (CPU, RAM)"
+    security_notes: "Run in isolated container; validate input PDFs"
+    activation_conditions: "OCR tool category"
+    alternative: "Tesseract directly, PaddleOCR"
+    status: "planned"
+
+  - name: "Tesseract OCR"
+    category: "pdf-ocr"
+    purpose: "OCR engine (100+ languages including Assamese, Hindi)"
+    integration_type: "system binary + python wrapper"
+    official_repo: "https://github.com/tesseract-ocr/tesseract"
+    install_method: "apt install tesseract-ocr + tessdata"
+    free_open_source: true
+    api_key_needed: false
+    resource_needs: "high"
+    security_notes: "No network; local only"
+    activation_conditions: "OCR, deskew, clean"
+    alternative: "PaddleOCR, EasyOCR"
+    status: "planned"
+
+  - name: "LibreOffice"
+    category: "pdf-convert"
+    purpose: "Headless PDF ↔ Office (docx, xlsx, pptx) conversion"
+    integration_type: "system binary"
+    official_repo: "https://github.com/LibreOffice/libreoffice"
+    install_method: "apt install libreoffice"
+    free_open_source: true
+    api_key_needed: false
+    resource_needs: "very high (~500MB install)"
+    security_notes: "Run headless in container; no macros; timeout"
+    activation_conditions: "Convert tool category"
+    alternative: "Docling, pandoc, unoconv"
+    status: "planned"
+
+  - name: "Docling"
+    category: "pdf-convert"
+    purpose: "ML-based PDF → docx/md/html with layout preservation"
+    integration_type: "python library"
+    official_repo: "https://github.com/docling-project/docling"
+    install_method: "pip install docling"
+    free_open_source: true
+    api_key_needed: false
+    resource_needs: "very high (2GB+ models)"
+    security_notes: "Models downloaded at runtime; cache in Docker"
+    activation_conditions: "Convert (complex layouts)"
+    alternative: "LibreOffice, pdfplumber"
+    status: "planned"
+
+  - name: "Camelot / pdfplumber"
+    category: "pdf-table"
+    purpose: "Table extraction from PDFs (lattice + stream)"
+    integration_type: "python library"
+    official_repo: "https://github.com/camelot-dev/camelot"
+    install_method: "pip install 'camelot-py[cv2]' pdfplumber"
+    free_open_source: true
+    api_key_needed: false
+    resource_needs: "medium"
+    security_notes: "Requires ghostscript; validate PDFs"
+    activation_conditions: "Extract → Tables"
+    alternative: "Tabula, pdf-table-extract"
+    status: "planned"
+
+  - name: "PyMuPDF (fitz)"
+    category: "pdf"
+    purpose: "Fast PDF analysis, optimization, repair, PDF/A"
+    integration_type: "python library"
+    official_repo: "https://github.com/pymupdf/PyMuPDF"
+    install_method: "pip install pymupdf"
+    free_open_source: true
+    api_key_needed: false
+    resource_needs: "low-medium"
+    security_notes: "C extension; validate inputs"
+    activation_conditions: "Clean, Optimize, Info tools"
+    alternative: "pdf-lib, pikepdf"
+    status: "planned"
+
+  - name: "img2pdf"
+    category: "pdf-convert"
+    purpose: "Lossless images → PDF conversion"
+    integration_type: "python library"
+    official_repo: "https://github.com/josch/img2pdf"
+    install_method: "pip install img2pdf"
+    free_open_source: true
+    api_key_needed: false
+    resource_needs: "low"
+    security_notes: "No re-encoding; safe"
+    activation_conditions: "Images → PDF"
+    alternative: "pdflatex, pdf-lib"
+    status: "planned"
+
+  # AI / LLM
+  - name: "Google Gemini 2.5 Flash"
+    category: "ai"
+    purpose: "Job extraction from PDFs, chat assistant, summarization"
+    integration_type: "api (Cloud Functions only)"
+    official_repo: "https://ai.google.dev"
+    install_method: "npm install @google/generative-ai (server only)"
+    free_open_source: false
+    api_key_needed: true
+    resource_needs: "low (API call)"
+    security_notes: "API key ONLY in Cloud Functions secret; never in client"
+    activation_conditions: "Scraper, AI Assistant, PDF summarizer"
+    alternative: "OpenAI, Anthropic, local LLMs"
+    status: "planned"
+
+  # Scraping
+  - name: "trafilatura"
+    category: "scraping"
+    purpose: "Fast, deterministic HTML → text extraction"
+    integration_type: "python library"
+    official_repo: "https://github.com/adbar/trafilatura"
+    install_method: "pip install trafilatura"
+    free_open_source: true
+    api_key_needed: false
+    resource_needs: "low"
+    security_notes: "No JS execution; safe"
+    activation_conditions: "Govt job scraping"
+    alternative: "readability-lxml, newspaper3k"
+    status: "active"
+
+  - name: "cheerio"
+    category: "scraping"
+    purpose: "Server-side jQuery-like HTML parsing"
+    integration_type: "library"
+    official_repo: "https://github.com/cheeriojs/cheerio"
+    install_method: "npm install cheerio"
+    free_open_source: true
+    api_key_needed: false
+    resource_needs: "low"
+    security_notes: "No network; parse only"
+    activation_conditions: "Scraping scripts"
+    alternative: "jsdom, parse5"
+    status: "active"
+
+  # Code Quality
+  - name: "ESLint 9 (flat config)"
+    category: "lint"
+    purpose: "JavaScript/JSX linting"
+    integration_type: "cli"
+    official_repo: "https://github.com/eslint/eslint"
+    install_method: "npm install -D eslint @eslint/js eslint-plugin-react"
+    free_open_source: true
+    api_key_needed: false
+    resource_needs: "low"
+    security_notes: "No known issues"
+    activation_conditions: "Pre-commit, CI"
+    alternative: "Oxlint, Biome"
+    status: "pending"
+
+  - name: "Oxlint"
+    category: "lint"
+    purpose: "Fast Rust-based linter (optional supplement)"
+    integration_type: "cli"
+    official_repo: "https://github.com/oxc-project/oxc"
+    install_method: "npm install -D oxlint"
+    free_open_source: true
+    api_key_needed: false
+    resource_needs: "low"
+    security_notes: "Newer; less rules than ESLint"
+    activation_conditions: "Fast CI checks"
+    alternative: "ESLint"
+    status: "available"
+
+  # Testing
+  - name: "Playwright"
+    category: "testing"
+    purpose: "E2E browser testing for critical flows"
+    integration_type: "cli"
+    official_repo: "https://github.com/microsoft/playwright"
+    install_method: "npm install -D @playwright/test"
+    free_open_source: true
+    api_key_needed: false
+    resource_needs: "medium (browsers)"
+    security_notes: "Run in CI only; no prod credentials"
+    activation_conditions: "Pre-deploy verification"
+    alternative: "Cypress, Puppeteer"
+    status: "planned"
+
+  # Containerization
+  - name: "Docker"
+    category: "infrastructure"
+    purpose: "Containerize backend with all system deps"
+    integration_type: "cli + daemon"
+    official_repo: "https://github.com/docker/docker"
+    install_method: "Docker Desktop / Docker Engine"
+    free_open_source: true
+    api_key_needed: false
+    resource_needs: "high (daemon)"
+    security_notes: "Rootless mode; scan images; no secrets in layers"
+    activation_conditions: "Backend deployment"
+    alternative: "Podman, buildpacks"
+    status: "planned"
+
+  - name: "Multi-stage Dockerfile"
+    category: "infrastructure"
+    purpose: "Separate build (heavy deps) from runtime (minimal)"
+    integration_type: "dockerfile pattern"
+    official_repo: "N/A (pattern)"
+    install_method: "Write Dockerfile"
+    free_open_source: true
+    api_key_needed: false
+    resource_needs: "medium"
+    security_notes: "Copy only artifacts; no dev deps in final"
+    activation_conditions: "Production image"
+    alternative: "Nixpacks, Buildpacks"
+    status: "planned"
+
+  # Monitoring / Observability (Future)
+  - name: "Sentry"
+    category: "monitoring"
+    purpose: "Error tracking, performance monitoring"
+    integration_type: "sdk + service"
+    official_repo: "https://github.com/getsentry/sentry-javascript"
+    install_method: "npm install @sentry/react @sentry/node"
+    free_open_source: false
+    api_key_needed: true
+    resource_needs: "low"
+    security_notes: "DSN public; scrub PII; use release tracking"
+    activation_conditions: "Production"
+    alternative: "LogRocket, Datadog, self-hosted"
+    status: "available"
+
+  - name: "Firebase Analytics"
+    category: "analytics"
+    purpose: "User behavior, events, conversions"
+    integration_type: "library"
+    official_repo: "https://firebase.google.com/docs/analytics"
+    install_method: "npm install firebase/analytics"
+    free_open_source: true
+    api_key_needed: false
+    resource_needs: "low"
+    security_notes: "GDPR/privacy compliance; consent mode"
+    activation_conditions: "Production"
+    alternative: "Plausible, Matomo, custom"
+    status: "available"
+
+# Tool Installation Policy
+policy:
+  - "Verify official source (GitHub/npm/PyPI) before adding"
+  - "Prefer libraries over services for offline/low-cost"
+  - "No paid APIs unless free tier exhausted and justified"
+  - "Audit dependencies quarterly for vulnerabilities (npm audit, pip-audit)"
+  - "Pin versions in package.json/requirements.txt"
+  - "Document why each tool was chosen in DECISIONS.md"
+  - "Remove unused tools immediately"
