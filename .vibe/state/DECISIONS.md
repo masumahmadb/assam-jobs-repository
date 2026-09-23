@@ -62,6 +62,15 @@
 - ❌ Paid OCR APIs - Cost, privacy; using OCRmyPDF + Tesseract
 - ❌ Electron - Web-first PWA wraps to Android via Capacitor
 
+## Decisions Made This Session (2026-09-24)
+- ✅ **ESLint 9 flat config** - Added `eslint.config.js` with React/recommended, react-hooks/recommended, custom rules for no-unused-vars (underscore prefix), no-console (warn only for warn/error)
+- ✅ **Code splitting** - Confirmed working for PDF Editor (440 kB), CV Builder (361 kB), Photo Resizer (2.8 kB), Document Scanner (2.5 kB)
+- ✅ **Duplicate removal** - Removed duplicate tool categories in PDFEditor.jsx (lines 36-45), 14 duplicate export statements in PDF Editor tools, 6 duplicate imports
+- ✅ **Import hygiene** - Added missing imports (FiBookOpen, FiRefreshCw, FiUser, FiFilter, FiSearch, FiMapPin, Badge, FiX), removed unused imports
+- ✅ **Entity escaping** - Fixed 15+ unescaped apostrophe/quote entities across 8 files using `&apos;`, `"`
+- ✅ **React hooks compliance** - Fixed Input.jsx `useId()` conditional call violation
+- ✅ **TypeScript syntax removal** - Fixed JobPortalExample.jsx `job: any` type annotation
+
 ## Open Decisions
 - [ ] Backend hosting: Cloud Run vs Render vs Railway vs VPS
 - [ ] Redis: Local Docker vs Upstash vs Redis Cloud
@@ -69,3 +78,5 @@
 - [ ] Admin claims: Custom claims vs Firestore `admins` collection
 - [ ] Analytics: Firebase Analytics vs Plausible vs custom
 - [ ] Error tracking: Sentry vs LogRocket vs custom
+- [ ] Bundle optimization: manualChunks for vendor/firebase/pdf-lib
+- [ ] PDF Editor parsing errors: Fix 10 tool components with JSX parsing issues

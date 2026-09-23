@@ -22,6 +22,11 @@
 - **Status**: Current rule: `allow write: if request.auth != null;`
 - **Resolution**: Restrict to admin UIDs or custom claim
 
+### 5. PDF Editor Tool Parsing Errors (12 lint errors)
+- **Impact**: 10 PDF Editor tool components have JSX parsing errors blocking clean lint
+- **Status**: CompareTools, ConvertTools, EditTools, ExtractTools, FormsTools, ImageTools, OCRTools, OrganizeTools, SecureTools, SignTools have issues
+- **Resolution**: Fix adjacent JSX elements, duplicate declarations, unexpected tokens, missing closing tags
+
 ## Technical Risks
 
 ### 1. Large Bundle Size
@@ -53,7 +58,7 @@
 ### Outdated / Vulnerable Packages
 - `firebase@10.13.0` - Check for v11 migration
 - `pdfjs-dist@6.3.289` - Frequent updates, verify compatibility
-- `eslint@8.57.0` - v9 is current, flat config required
+- `eslint@8.57.0` - ✅ RESOLVED: Upgraded to ESLint 9.17 with flat config
 
 ### Python Worker Dependencies
 - `ocrmypdf==16.0.0` - Requires system: tesseract, ghostscript, qpdf, unpaper

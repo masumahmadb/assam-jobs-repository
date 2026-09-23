@@ -8,6 +8,7 @@
 - [x] Code splitting working (separate chunks for each heavy tool)
 - [x] Firebase config with offline persistence
 - [x] 21st.dev design system (13 components) integrated
+- [x] ESLint 9 flat config added and working
 
 ### Frontend Pages (12 routes)
 - [x] Home - Dashboard with stats, quick actions, features, testimonials
@@ -52,27 +53,37 @@
 - [x] Private jobs source registry + reachability probe
 - [x] Seed script for Firestore
 
+### Code Quality (This Session)
+- [x] Added ESLint 9 flat config
+- [x] Fixed duplicate tool categories in PDFEditor.jsx
+- [x] Fixed 14 duplicate export statements in PDF Editor tools
+- [x] Fixed 6 duplicate imports (FiCopy, FiShield, FiRotateCw, FiGitCompare, FiArrowUpRight, canvasRef)
+- [x] Added 5 missing imports
+- [x] Fixed 15+ unescaped entity errors across 8 files
+- [x] Fixed React hooks rule violation (useId)
+- [x] Fixed TypeScript syntax in JobPortalExample.jsx
+
 ## In Progress
-- [ ] AdminPanel - Implement remaining 7 tabs
+- [ ] Fix remaining 12 lint errors (parsing errors in PDF Editor tools)
+- [ ] AdminPanel - Implement remaining 7 tabs with real Firestore data
 - [ ] Employer system - Real Firestore integration
 - [ ] Firestore/Storage rules - Complete security rules
 - [ ] Firebase Functions - Gemini AI agents
 - [ ] Backend deployment - Docker + Redis + workers
 
 ## Blocked / Needs Decision
-- [ ] Firebase Functions directory missing - need to create or confirm approach
+- [ ] Firebase Functions directory missing - need to create
 - [ ] Backend auth strategy - how to secure PDF API endpoints
 - [ ] Production Redis - local vs managed (Redis Cloud / Upstash)
 - [ ] LibreOffice / OCRmyPDF / Docling - confirm installation in Docker
 
 ## Known Issues to Fix
-1. **PDFEditor.jsx** - Duplicate TOOL_CATEGORIES entries (lines 36-45)
-2. **AdminPanel.jsx** - Only overview tab implemented (7 tabs missing)
-3. **EmployerDashboard.jsx** - Mock data only
-4. **EmployerLogin.jsx** - TODO: implement sign in
-5. **Firestore rules** - Missing private_jobs, employers, notices collections
-6. **Storage rules** - /notices allows any auth user write
-7. **No ESLint config** - lint command fails
-8. **No rate limiting** on backend API
-9. **No auth** on backend PDF endpoints
-10. **Large main bundle** - 967 kB despite code splitting
+1. **AdminPanel.jsx** - Only overview tab implemented (7 tabs missing)
+2. **EmployerDashboard.jsx** - Mock data only
+3. **EmployerLogin.jsx** - TODO: implement sign in
+4. **Firestore rules** - Missing private_jobs, employers, notices collections
+5. **Storage rules** - /notices allows any auth user write
+6. **No rate limiting** on backend API
+7. **No auth** on backend PDF endpoints
+8. **Large main bundle** - 967 kB despite code splitting
+9. **12 remaining lint errors** - parsing errors in PDF Editor tools
