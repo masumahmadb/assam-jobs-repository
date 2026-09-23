@@ -1,8 +1,19 @@
 # Next Steps (Priority Order)
 
 ## Immediate (Next 1-2 hours)
-1. **Fix remaining 12 lint errors** - Parsing errors in PDF Editor tools (CompareTools, ConvertTools, EditTools, ExtractTools, FormsTools, ImageTools, OCRTools, OrganizeTools, SecureTools, SignTools) and JobPortalExample.tsx
+1. **Fix 12 remaining lint parsing errors** in PDF Editor tools:
+   - CompareTools: Adjacent JSX elements (line 158)
+   - ConvertTools: Adjacent JSX elements (line 189)
+   - EditTools: Unexpected token (line 93)
+   - ExtractTools: Adjacent JSX elements (line 286)
+   - FormsTools: Unexpected token (line 188)
+   - ImageTools: Expected JSX closing tag for <h4> (line 136)
+   - OCRTools: Unexpected token `>` (line 247)
+   - OrganizeTools: Duplicate FiArrowUpRight (line 3)
+   - SecureTools: Adjacent JSX elements (line 140)
+   - SignTools: Duplicate canvasRef (line 15)
 2. **Verify build still passes** after fixes
+3. **Verify lint passes** (or only warnings remain)
 
 ## Short Term (Next 1-2 days)
 
@@ -31,40 +42,43 @@
 20. **CORS** - Configure production frontend URL
 
 ### Firebase Functions (Gemini AI Agents)
-21. **Create `functions/` directory** with package.json
-22. **extractJobFromUpload** - Storage trigger for `notices/` PDFs
-23. **synthesizeAndNotify** - Firestore trigger for new jobs → FCM push
-24. **cleanupExpiredJobs** - Daily scheduled function
-25. **chatWithAssistant** - HTTPS endpoint for AI Assistant page
-26. **summarizeNotification** - HTTPS endpoint for PDF summarizer
-27. **Deploy functions** with `GEMINI_API_KEY` secret
+21. **Deploy functions** with `GEMINI_API_KEY` secret:
+    - `firebase functions:secrets:set GEMINI_API_KEY`
+    - `firebase deploy --only functions`
+22. **Verify deployed functions**:
+    - extractJobFromUpload (Storage trigger for `notices/`)
+    - synthesizeAndNotify (Firestore trigger for new jobs → FCM)
+    - cleanupExpiredJobs (daily scheduled)
+    - chatWithAssistant (HTTPS endpoint for AI Assistant)
+    - summarizeNotification (HTTPS endpoint for PDF summarizer)
 
 ## Medium Term (Next Week)
 
 ### Backend Deployment
-28. **Test Docker build** locally with all workers
-29. **Verify Redis connection** - Local vs managed
-30. **Install system deps** in Docker: LibreOffice, OCRmyPDF, Tesseract, Docling, Poppler, Ghostscript
-31. **Health checks** - Verify all 7 queues process jobs
-32. **Deploy to Cloud Run / Render / Railway** with Redis
+22. **Test Docker build** locally with all workers:
+    - `cd backend && docker build -t pdf-suite-backend .`
+23. **Configure Redis** - Upstash/Redis Cloud for production
+24. **Install system deps** in Docker: LibreOffice, OCRmyPDF, Tesseract, Docling, Poppler, Ghostscript
+25. **Health checks** - Verify all 7 queues process jobs
+26. **Deploy to Cloud Run / Render / Railway** with Redis
 
 ### Testing & Verification
-33. **E2E test all 12 routes** - Auth flows, data persistence, offline
-34. **Playwright tests** for critical paths (login → job apply, employer post → approve → view)
-35. **Load test** PDF backend with concurrent uploads
-36. **Accessibility audit** - WCAG 2.1 AA
-37. **Performance audit** - Lighthouse CI
+27. **E2E test all 12 routes** - Auth flows, data persistence, offline
+28. **Playwright tests** for critical paths (login → job apply, employer post → approve → view)
+29. **Load test** PDF backend with concurrent uploads
+30. **Accessibility audit** - WCAG 2.1 AA
+31. **Performance audit** - Lighthouse CI
 
 ### Code Quality
-38. **Remove dead code** - Unused imports, commented blocks
-39. **Consolidate duplicate logic** - PDF operations, auth checks
-40. **Add TypeScript** (optional) or JSDoc types
-41. **Bundle analysis** - Reduce main chunk below 500 kB with manualChunks
+32. **Remove dead code** - Unused imports, commented blocks
+33. **Consolidate duplicate logic** - PDF operations, auth checks
+34. **Add TypeScript** (optional) or JSDoc types
+35. **Bundle analysis** - Reduce main chunk below 500 kB with manualChunks
 
 ## Long Term (Before Launch)
-42. **Play Store publishing** - Capacitor build, signing, store listing
-43. **AdMob integration** - Ad units, consent management
-44. **Analytics** - Firebase Analytics + custom events
-45. **Monitoring** - Sentry for errors, UptimeRobot for uptime
-46. **Backup strategy** - Firestore export, Storage backup
-47. **Documentation** - API docs, deployment guide, contributor guide
+36. **Play Store publishing** - Capacitor build, signing, store listing
+37. **AdMob integration** - Ad units, consent management
+38. **Analytics** - Firebase Analytics + custom events
+39. **Monitoring** - Sentry for errors, UptimeRobot for uptime
+40. **Backup strategy** - Firestore export, Storage backup
+41. **Documentation** - API docs, deployment guide, contributor guide

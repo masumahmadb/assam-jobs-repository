@@ -1,0 +1,386 @@
+# Capability Definitions - What Each Tool Can Actually Do
+# Maps tool name → list of capabilities it provides
+# Used by tool-router to match tasks to tools
+
+capabilities:
+  # ─── Frontend Development ───
+  Vite:
+    - dev-server
+    - production-build
+    - hmr
+    - code-splitting
+    - pwa-generation
+    - preview-server
+
+  React18:
+    - component-authoring
+    - hooks
+    - concurrent-features
+    - suspense
+    - server-components
+
+  TailwindCSS:
+    - utility-classes
+    - design-tokens
+    - dark-mode
+    - responsive-design
+    - custom-colors
+    - animations
+
+  ReactRouter:
+    - client-routing
+    - route-guards
+    - lazy-loading
+    - nested-routes
+    - search-params
+
+  "21st.dev Components":
+    - accessible-components
+    - design-system
+    - button
+    - card
+    - modal
+    - input
+    - dropdown
+    - tabs
+    - table
+    - pagination
+    - badge
+    - avatar
+    - accordion
+    - job-card
+    - toast
+    - skeleton-loader
+
+  "react-icons (Fi)":
+    - icon-library
+    - feather-icons
+    - tree-shaking
+
+  "vite-plugin-pwa / Workbox":
+    - service-worker
+    - offline-caching
+    - install-prompt
+    - precache
+    - runtime-caching
+    - background-sync
+
+  # ─── Firebase / Backend ───
+  "Firebase SDK":
+    - auth-email-password
+    - auth-google-oauth
+    - auth-custom-claims
+    - firestore-crud
+    - firestore-queries
+    - firestore-offline
+    - storage-upload
+    - storage-download
+    - fcm-messaging
+    - auth-state-persistence
+
+  Express.js:
+    - rest-api
+    - middleware
+    - cors
+    - helmet
+    - compression
+    - file-upload
+    - rate-limiting
+    - request-validation
+
+  BullMQ:
+    - job-queue
+    - scheduled-jobs
+    - job-retry
+    - job-priority
+    - job-status
+    - worker-scaling
+
+  # ─── PDF Processing ───
+  "pdf-lib":
+    - pdf-merge
+    - pdf-split
+    - pdf-rotate
+    - pdf-watermark
+    - pdf-forms
+    - pdf-metadata
+    - pdf-flatten
+    - page-manipulation
+    - client-side-only
+
+  "pdfjs-dist":
+    - pdf-rendering
+    - text-extraction
+    - page-preview
+    - thumbnail-generation
+    - search-in-pdf
+    - worker-off-main-thread
+
+  "OCRmyPDF":
+    - ocr-scanned-pdf
+    - deskew
+    - clean-image
+    - multi-language-ocr
+    - searchable-pdf
+    - force-ocr
+    - skip-text
+    - tesseract-wrapper
+
+  "Tesseract OCR":
+    - ocr-engine
+    - 100-languages
+    - assamese-support
+    - hindi-support
+    - image-to-text
+
+  LibreOffice:
+    - pdf-to-office
+    - office-to-pdf
+    - headless-conversion
+    - docx-xlsx-pptx
+
+  Docling:
+    - ml-pdf-conversion
+    - layout-preservation
+    - table-structure
+    - ocr-integration
+    - docx-md-html-output
+
+  "Camelot / pdfplumber":
+    - table-extraction
+    - lattice-mode
+    - stream-mode
+    - csv-xlsx-json-output
+    - ocr-scanned-tables
+
+  "PyMuPDF (fitz)":
+    - pdf-analysis
+    - pdf-optimization
+    - pdf-repair
+    - pdf-a-conversion
+    - remove-blank-pages
+    - fast-processing
+
+  img2pdf:
+    - images-to-pdf
+    - lossless-conversion
+    - no-reencoding
+
+  # ─── AI / LLM ───
+  "Firebase Functions":
+    - serverless-functions
+    - storage-triggers
+    - firestore-triggers
+    - https-endpoints
+    - scheduled-functions
+    - secrets-management
+    - admin-sdk
+
+  "Google Gemini 2.5 Flash":
+    - job-extraction
+    - chat-assistant
+    - summarization
+    - syllabus-finder
+    - multi-language
+    - structured-output
+
+  # ─── Scraping ───
+  trafilatura:
+    - html-to-text
+    - deterministic-extraction
+    - no-js-execution
+    - metadata-extraction
+
+  cheerio:
+    - server-side-dom
+    - jquery-api
+    - html-parsing
+    - scraping-scripts
+
+  # ─── Code Quality ───
+  "ESLint 9":
+    - lint-js-jsx
+    - react-rules
+    - hooks-rules
+    - unused-vars
+    - console-warnings
+    - flat-config
+    - custom-rules
+
+  Oxlint:
+    - fast-linting
+    - rust-based
+    - ci-checks
+    - eslint-compatible
+
+  # ─── Testing ───
+  Playwright:
+    - e2e-testing
+    - browser-automation
+    - multi-browser
+    - playwright-test
+    - trace-viewer
+    - ci-integration
+
+  # ─── Containerization ───
+  Docker:
+    - containerization
+    - multi-stage-builds
+    - system-dependencies
+    - production-images
+    - docker-compose
+
+  "Multi-stage Dockerfile":
+    - build-separation
+    - minimal-runtime
+    - artifact-copying
+    - dev-vs-prod
+
+  # ─── Monitoring ───
+  Sentry:
+    - error-tracking
+    - performance-monitoring
+    - release-tracking
+    - pii-scrubbing
+    - source-maps
+
+  "Firebase Analytics":
+    - user-behavior
+    - event-tracking
+    - conversions
+    - consent-mode
+    - gdpr-compliance
+
+  # ─── OpenCode Skills ───
+  "fable5-patterns":
+    - file-first-workflow
+    - skill-loading
+    - batch-operations
+    - anti-pattern-enforcement
+    - verification-requirements
+    - project-conventions
+
+  # ─── MCP Servers ───
+  "21st.dev MCP":
+    - component-discovery
+    - component-documentation
+    - design-token-access
+
+  # ─── Codebase Understanding ───
+  "Codebase Memory":
+    - semantic-search
+    - file-indexing
+    - cross-references
+    - symbol-definition
+
+  "MCP Language Server":
+    - go-to-definition
+    - find-references
+    - hover-info
+    - diagnostics
+
+  "Context7":
+    - library-documentation
+    - version-specific-docs
+    - api-reference
+    - quick-lookup
+
+  # ─── Workflow/Process ───
+  "Superpowers/GSD":
+    - task-decomposition
+    - iterative-development
+    - test-driven
+    - verification-loop
+
+  "ECC":
+    - explicit-checklist
+    - task-tracking
+    - progress-verification
+
+  "Ponytail (YAGNI)":
+    - scope-control
+    - unnecessary-complexity-check
+    - minimal-implementation
+
+  # ─── Security ───
+  "Security Review":
+    - vulnerability-scanning
+    - dependency-audit
+    - auth-review
+    - input-validation-check
+    - secrets-detection
+
+  "Cloudflare Security Audit":
+    - waf-rules
+    - ddos-protection
+    - bot-management
+    - ssl-tls
+
+  "Strix":
+    - code-security
+    - static-analysis
+    - secret-detection
+
+  # ─── Browser Testing ───
+  "Page Agent":
+    - ai-browser-interaction
+    - page-object-model
+    - visual-regression
+
+  "Agent Browser":
+    - autonomous-browsing
+    - form-filling
+    - navigation
+
+  # ─── Research ───
+  "DeerFlow":
+    - deep-research
+    - multi-source-synthesis
+    - citation-tracking
+
+  "Graphify":
+    - knowledge-graph
+    - entity-extraction
+    - relationship-mapping
+
+  "HyperResearch":
+    - comprehensive-search
+    - academic-sources
+    - evidence-grading
+
+  # ─── Review ───
+  "Anti-slop":
+    - quality-review
+    - pattern-enforcement
+    - standard-compliance
+
+  "Deep Code Review":
+    - architecture-review
+    - maintainability
+    - performance-review
+
+  # ─── Context Management ───
+  "Headroom":
+    - context-optimization
+    - token-management
+    - focus-preservation
+
+  # ─── Skills ───
+  "frontend-design":
+    - ui-patterns
+    - accessibility
+    - responsive-design
+    - component-library
+
+  "UI/UX Pro Max":
+    - advanced-ui-patterns
+    - design-systems
+    - user-research
+
+  "taste-skill":
+    - aesthetic-judgment
+    - polish
+    - micro-interactions
+
+capability_to_tool: {}
+# Reverse mapping will be generated by tool-router

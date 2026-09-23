@@ -2,15 +2,19 @@
 
 ## Active Blockers
 
-### 1. Firebase Functions Directory Missing
-- **Impact**: Cannot deploy Gemini AI agents (extractJobFromUpload, synthesizeAndNotify, chatWithAssistant)
-- **Status**: Need to create `functions/` directory with package.json and index.js
-- **Resolution**: Create minimal Functions structure, deploy with `GEMINI_API_KEY` secret
+### 1. Firebase Functions Not Deployed
+- **Impact**: Cannot use Gemini AI agents (extractJobFromUpload, synthesizeAndNotify, chatWithAssistant, cleanupExpiredJobs, summarizeNotification)
+- **Status**: Code exists in `functions/`, needs `GEMINI_API_KEY` secret and deploy
+- **Resolution**: 
+  1. `firebase functions:secrets:set GEMINI_API_KEY`
+  2. `firebase deploy --only functions`
+- **Blocked Features**: Job scraping automation, AI Assistant, PDF summarizer, push notifications
 
 ### 2. Backend Not Deployed / Tested
 - **Impact**: PDF Editor server-side tools (OCR, Convert, Compress, Table, PAdES) non-functional
 - **Status**: Dockerfile exists but untested; requires Redis, LibreOffice, OCRmyPDF, Docling, Poppler
 - **Resolution**: Build Docker image locally, test all 7 workers, then deploy
+- **Note**: Docker not in PATH on current machine - need Docker Desktop or Codespaces
 
 ### 3. Firestore Rules Incomplete
 - **Impact**: `private_jobs` and `employers` collections have no rules (open or denied)

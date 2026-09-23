@@ -1,0 +1,478 @@
+# Integration Definitions - How Each Tool Connects to OpenCode
+# Defines the integration type, configuration, and availability
+
+integrations:
+  # ─── Core Development (Always Available) ───
+  Vite:
+    type: "cli"
+    opencode_available: true
+    config_files: ["vite.config.js", "package.json"]
+    commands: ["npm run dev", "npm run build", "npm run preview"]
+    auto_discover: true
+    notes: "Core build tool, always active via npm scripts"
+
+  React18:
+    type: "library"
+    opencode_available: true
+    config_files: ["package.json", "src/main.jsx"]
+    auto_discover: true
+    notes: "Core framework, imports determine usage"
+
+  TailwindCSS:
+    type: "cli+postcss"
+    opencode_available: true
+    config_files: ["tailwind.config.js", "postcss.config.js", "src/index.css"]
+    auto_discover: true
+    notes: "Compile-time only, no runtime integration needed"
+
+  ReactRouter:
+    type: "library"
+    opencode_available: true
+    config_files: ["src/App.jsx", "package.json"]
+    auto_discover: true
+    notes: "Routing via App.jsx imports"
+
+  "21st.dev Components":
+    type: "local-components+mcp"
+    opencode_available: true
+    config_files: ["src/components/ui/21st/index.js", ".mcp.json"]
+    mcp_server: "21st"
+    commands: ["/skill 21st-dev-components"]
+    auto_discover: true
+    notes: "Local components + MCP server for discovery. Use MCP for new components."
+
+  "react-icons (Fi)":
+    type: "library"
+    opencode_available: true
+    config_files: ["package.json"]
+    auto_discover: true
+    notes: "Tree-shakeable, import only used icons"
+
+  "vite-plugin-pwa / Workbox":
+    type: "vite-plugin"
+    opencode_available: true
+    config_files: ["vite.config.js"]
+    auto_discover: true
+    notes: "Activated via Vite config, no direct agent interaction"
+
+  # ─── Firebase / Backend ───
+  "Firebase SDK":
+    type: "library"
+    opencode_available: true
+    config_files: ["src/firebase/config.js", "firestore.rules", "storage.rules", "package.json"]
+    env_vars: ["VITE_FIREBASE_*"]
+    auto_discover: true
+    notes: "Client SDK only. Admin SDK in Functions/backend."
+
+  Express.js:
+    type: "library"
+    opencode_available: true
+    config_files: ["backend/server.js", "backend/package.json"]
+    working_dir: "backend/"
+    auto_discover: true
+    notes: "Backend API server. Run from backend/ directory."
+
+  BullMQ:
+    type: "library"
+    opencode_available: true
+    config_files: ["backend/queue/bullmq.js", "backend/package.json"]
+    requires: ["Redis"]
+    working_dir: "backend/"
+    auto_discover: true
+    notes: "Queue system for backend workers. Requires Redis connection."
+
+  # ─── PDF Processing (Client) ───
+  "pdf-lib":
+    type: "library"
+    opencode_available: true
+    config_files: ["package.json", "backend/package.json"]
+    auto_discover: true
+    notes: "Used in frontend (quick ops) and backend (Node.js ops)"
+
+  "pdfjs-dist":
+    type: "library"
+    opencode_available: true
+    config_files: ["package.json", "src/components/utilities/pdf-editor/PDFEditor.jsx"]
+    auto_discover: true
+    notes: "Worker-based rendering. Worker path configured in PDFEditor."
+
+  # ─── PDF Processing (Server - Python) ───
+  "OCRmyPDF":
+    type: "cli+python-wrapper"
+    opencode_available: false
+    config_files: ["backend/requirements.txt", "backend/workers/python/ocr_worker.py"]
+    requires: ["tesseract", "ghostscript", "qpdf", "unpaper"]
+    working_dir: "backend/workers/python/"
+    install_method: "docker-only"
+    notes: "System deps required. Run only in Docker container. Not available locally."
+
+  "Tesseract OCR":
+    type: "system-binary+python-wrapper"
+    opencode_available: false
+    config_files: ["backend/requirements.txt"]
+    requires: ["tesseract-ocr", "tessdata"]
+    install_method: "docker-only"
+    notes: "System binary. Run only in Docker container."
+
+  LibreOffice:
+    type: "system-binary"
+    opencode_available: false
+    config_files: ["backend/requirements.txt", "backend/workers/python/convert_worker.py"]
+    requires: ["libreoffice"]
+    install_method: "docker-only"
+    notes: "~500MB install. Run only in Docker container."
+
+  Docling:
+    type: "python-library"
+    opencode_available: false
+    config_files: ["backend/requirements.txt", "backend/workers/python/convert_worker.py"]
+    requires: ["docling>=2.0", "2GB+ models"]
+    install_method: "docker-only"
+    notes: "Large ML models. Cache in Docker. Run only in container."
+
+  "Camelot / pdfplumber":
+    type: "python-library"
+    opencode_available: false
+    config_files: ["backend/requirements.txt", "backend/workers/python/table_worker.py"]
+    requires: ["ghostscript", "opencv"]
+    install_method: "docker-only"
+    notes: "Run only in Docker container."
+
+  "PyMuPDF (fitz)":
+    type: "python-library"
+    opencode_available: false
+    config_files: ["backend/requirements.txt", "backend/workers/python/optimize_worker.py"]
+    install_method: "docker-only"
+    notes: "C extension. Run only in Docker container."
+
+  img2pdf:
+    type: "python-library"
+    opencode_available: false
+    config_files: ["backend/requirements.txt"]
+    install_method: "docker-only"
+    notes: "Run only in Docker container."
+
+  # ─── AI / LLM ───
+  "Firebase Functions":
+    type: "library+cloud-service"
+    opencode_available: true
+    config_files: ["functions/index.js", "functions/package.json"]
+    working_dir: "functions/"
+    requires: ["GEMINI_API_KEY secret"]
+    commands: ["firebase deploy --only functions", "firebase functions:secrets:set GEMINI_API_KEY"]
+    env_vars: ["GEMINI_API_KEY (secret)"]
+    auto_discover: true
+    notes: "Deployed to Firebase. Local development via emulator."
+
+  "Google Gemini 2.5 Flash":
+    type: "api-cloud-functions"
+    opencode_available: false
+    config_files: ["functions/index.js", "functions/package.json"]
+    requires: ["GEMINI_API_KEY secret in Functions"]
+    notes: "Only accessible via deployed Functions. Not available directly to agent."
+
+  # ─── Scraping ───
+  trafilatura:
+    type: "python-library"
+    opencode_available: true
+    config_files: ["scripts/scrapegraph/requirements.txt", "scripts/scrapegraph/extract.py"]
+    working_dir: "scripts/scrapegraph/"
+    auto_discover: true
+    notes: "Used in scraping scripts. Can be invoked via Python."
+
+  cheerio:
+    type: "library"
+    opencode_available: true
+    config_files: ["package.json", "scripts/scrapeGovtJobs.js"]
+    auto_discover: true
+    notes: "Server-side scraping in Node.js scripts"
+
+  # ─── Code Quality ───
+  "ESLint 9":
+    type: "cli"
+    opencode_available: true
+    config_files: ["eslint.config.js", "package.json"]
+    commands: ["npm run lint"]
+    auto_discover: true
+    notes: "Flat config in eslint.config.js. Run via npm script."
+
+  Oxlint:
+    type: "cli"
+    opencode_available: false
+    config_files: ["package.json"]
+    commands: ["npx oxlint"]
+    install_method: "npm install -D oxlint"
+    notes: "Optional supplement. Not installed by default."
+
+  # ─── Testing ───
+  Playwright:
+    type: "cli"
+    opencode_available: false
+    config_files: ["package.json", "playwright.config.js"]
+    commands: ["npx playwright test", "npx playwright install"]
+    install_method: "npm install -D @playwright/test"
+    working_dir: "."
+    notes: "Install browsers on first run. Not installed by default."
+
+  # ─── Containerization ───
+  Docker:
+    type: "cli+daemon"
+    opencode_available: false
+    config_files: ["backend/Dockerfile", "backend/docker-compose.yml"]
+    working_dir: "backend/"
+    requires: ["Docker Desktop/Engine"]
+    commands: ["docker build", "docker-compose up"]
+    notes: "Docker not in PATH on current machine. Required for backend deployment."
+
+  "Multi-stage Dockerfile":
+    type: "dockerfile-pattern"
+    opencode_available: false
+    config_files: ["backend/Dockerfile"]
+    notes: "Pattern, not a tool. Defined in Dockerfile."
+
+  # ─── Monitoring ───
+  Sentry:
+    type: "sdk+service"
+    opencode_available: false
+    config_files: ["package.json"]
+    install_method: "npm install @sentry/react @sentry/node"
+    requires: ["SENTRY_DSN"]
+    notes: "Not installed. Add when production-ready."
+
+  "Firebase Analytics":
+    type: "library"
+    opencode_available: false
+    config_files: ["package.json"]
+    install_method: "npm install firebase/analytics"
+    notes: "Not installed. Add when production-ready."
+
+  # ─── OpenCode Skills ───
+  "fable5-patterns":
+    type: "opencode-skill"
+    opencode_available: true
+    config_files: [".opencode/skill/fable5-patterns/SKILL.md"]
+    commands: ["/skill fable5-patterns"]
+    auto_discover: true
+    notes: "Core workflow skill. Must be loaded first for any task."
+
+  # ─── MCP Servers ───
+  "21st.dev MCP":
+    type: "mcp-server"
+    opencode_available: true
+    config_files: [".mcp.json"]
+    mcp_server: "21st"
+    commands: ["/skill 21st-dev-components"]
+    auto_discover: true
+    notes: "MCP server for component discovery. Configured in .mcp.json"
+
+  # ─── Codebase Understanding ───
+  "Codebase Memory":
+    type: "mcp-server"
+    opencode_available: true
+    config_files: [".opencode/mcp.json"]
+    notes: "MCP server for semantic code search. Requires setup."
+
+  "MCP Language Server":
+    type: "mcp-server"
+    opencode_available: true
+    config_files: [".opencode/mcp.json"]
+    notes: "MCP server for LSP features. Requires setup."
+
+  "Context7":
+    type: "mcp-server"
+    opencode_available: true
+    config_files: [".opencode/mcp.json"]
+    notes: "MCP server for library documentation. Requires setup."
+
+  # ─── Workflow/Process ───
+  "Superpowers/GSD":
+    type: "coding-workflow"
+    opencode_available: true
+    config_files: [".opencode/skill/superpowers/SKILL.md"]
+    commands: ["/skill superpowers"]
+    notes: "Workflow skill. Load when needed for complex tasks."
+
+  "ECC":
+    type: "coding-workflow"
+    opencode_available: true
+    config_files: [".opencode/skill/ecc/SKILL.md"]
+    commands: ["/skill ecc"]
+    notes: "Explicit checklist workflow."
+
+  "Ponytail (YAGNI)":
+    type: "coding-workflow"
+    opencode_available: true
+    config_files: [".opencode/skill/ponytail/SKILL.md"]
+    commands: ["/skill ponytail"]
+    notes: "Scope control skill. Load when needed."
+
+  # ─── Security ───
+  "Security Review":
+    type: "coding-workflow"
+    opencode_available: true
+    config_files: [".opencode/skill/security/SKILL.md"]
+    commands: ["/skill security"]
+    notes: "Security review workflow."
+
+  "Cloudflare Security Audit":
+    type: "mcp-server"
+    opencode_available: false
+    config_files: [".opencode/mcp.json"]
+    notes: "MCP server. Requires setup."
+
+  "Strix":
+    type: "coding-workflow"
+    opencode_available: true
+    config_files: [".opencode/skill/strix/SKILL.md"]
+    commands: ["/skill strix"]
+    notes: "Security static analysis skill."
+
+  # ─── Browser Testing ───
+  "Page Agent":
+    type: "browser-agent"
+    opencode_available: false
+    config_files: [".opencode/skill/page-agent/SKILL.md"]
+    commands: ["/skill page-agent"]
+    notes: "AI browser interaction skill."
+
+  "Agent Browser":
+    type: "browser-agent"
+    opencode_available: false
+    config_files: [".opencode/skill/agent-browser/SKILL.md"]
+    commands: ["/skill agent-browser"]
+    notes: "Autonomous browsing skill."
+
+  # ─── Research ───
+  "DeerFlow":
+    type: "research-agent"
+    opencode_available: false
+    config_files: [".opencode/skill/deerflow/SKILL.md"]
+    notes: "Deep research agent."
+
+  "Graphify":
+    type: "research-agent"
+    opencode_available: false
+    config_files: [".opencode/skill/graphify/SKILL.md"]
+    notes: "Knowledge graph agent."
+
+  "HyperResearch":
+    type: "research-agent"
+    opencode_available: false
+    config_files: [".opencode/skill/hyperresearch/SKILL.md"]
+    notes: "Comprehensive research agent."
+
+  # ─── Review ───
+  "Anti-slop":
+    type: "coding-workflow"
+    opencode_available: true
+    config_files: [".opencode/skill/anti-slop/SKILL.md"]
+    commands: ["/skill anti-slop"]
+    notes: "Quality review skill."
+
+  "Deep Code Review":
+    type: "coding-workflow"
+    opencode_available: true
+    config_files: [".opencode/skill/deep-review/SKILL.md"]
+    commands: ["/skill deep-review"]
+    notes: "Architecture and maintainability review."
+
+  # ─── Context Management ───
+  "Headroom":
+    type: "context-tool"
+    opencode_available: false
+    config_files: [".opencode/skill/headroom/SKILL.md"]
+    notes: "Context optimization skill."
+
+  # ─── Design Skills ───
+  "frontend-design":
+    type: "opencode-skill"
+    opencode_available: true
+    config_files: [".opencode/skill/frontend-design/SKILL.md"]
+    commands: ["/skill frontend-design"]
+    notes: "Frontend design patterns and accessibility."
+
+  "UI/UX Pro Max":
+    type: "opencode-skill"
+    opencode_available: true
+    config_files: [".opencode/skill/ui-ux-pro-max/SKILL.md"]
+    commands: ["/skill ui-ux-pro-max"]
+    notes: "Advanced UI/UX patterns."
+
+  "taste-skill":
+    type: "opencode-skill"
+    opencode_available: true
+    config_files: [".opencode/skill/taste/SKILL.md"]
+    commands: ["/skill taste"]
+    notes: "Aesthetic judgment and polish."
+
+integration_categories:
+  always_available:
+    - Vite
+    - React18
+    - TailwindCSS
+    - ReactRouter
+    - "21st.dev Components"
+    - "react-icons (Fi)"
+    - "vite-plugin-pwa / Workbox"
+    - "Firebase SDK"
+    - "Firebase Functions"
+    - "ESLint 9"
+    - "fable5-patterns"
+    - "21st.dev MCP"
+
+  on_demand_frontend:
+    - "frontend-design"
+    - "UI/UX Pro Max"
+    - "taste-skill"
+    - Oxlint
+    - Playwright
+
+  on_demand_backend:
+    - Express.js
+    - BullMQ
+    - "Firebase Functions"
+    - trafilatura
+    - cheerio
+
+  on_demand_pdf:
+    - "pdf-lib"
+    - "pdfjs-dist"
+
+  docker_only:
+    - "OCRmyPDF"
+    - "Tesseract OCR"
+    - LibreOffice
+    - Docling
+    "Camelot / pdfplumber"
+    - "PyMuPDF (fitz)"
+    - img2pdf
+    - Docker
+
+  cloud_only:
+    - "Google Gemini 2.5 Flash"
+
+  not_configured:
+    - "Codebase Memory"
+    - "MCP Language Server"
+    - Context7
+    - "Superpowers/GSD"
+    - ECC
+    - "Ponytail (YAGNI)"
+    - "Security Review"
+    - "Cloudflare Security Audit"
+    - Strix
+    - "Page Agent"
+    - "Agent Browser"
+    - DeerFlow
+    - Graphify
+    - HyperResearch
+    - "Anti-slop"
+    - "Deep Code Review"
+    - Headroom
+    - "frontend-design"
+    - "UI/UX Pro Max"
+    - "taste-skill"
+
+  unavailable:
+    - Sentry
+    - "Firebase Analytics"

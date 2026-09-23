@@ -286,7 +286,20 @@ tools:
     alternative: "pdflatex, pdf-lib"
     status: "planned"
 
-  # AI / LLM
+  - name: "Firebase Functions"
+    category: "backend"
+    purpose: "Serverless functions for AI agents, triggers, scheduled tasks"
+    integration_type: "library + cloud service"
+    official_repo: "https://firebase.google.com/docs/functions"
+    install_method: "npm install firebase-functions firebase-admin (in functions/)"
+    free_open_source: true
+    api_key_needed: false
+    resource_needs: "low (serverless)"
+    security_notes: "Never commit API keys; use secrets manager; Admin SDK only"
+    activation_conditions: "AI agents, triggers, scheduled jobs"
+    alternative: "Cloud Run, Vercel Functions, custom"
+    status: "installed, needs deploy"
+
   - name: "Google Gemini 2.5 Flash"
     category: "ai"
     purpose: "Job extraction from PDFs, chat assistant, summarization"
@@ -299,7 +312,7 @@ tools:
     security_notes: "API key ONLY in Cloud Functions secret; never in client"
     activation_conditions: "Scraper, AI Assistant, PDF summarizer"
     alternative: "OpenAI, Anthropic, local LLMs"
-    status: "planned"
+    status: "installed, needs API key"
 
   # Scraping
   - name: "trafilatura"
@@ -343,7 +356,7 @@ tools:
     security_notes: "No known issues"
     activation_conditions: "Pre-commit, CI"
     alternative: "Oxlint, Biome"
-    status: "pending"
+    status: "active"
 
   - name: "Oxlint"
     category: "lint"

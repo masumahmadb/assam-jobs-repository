@@ -1,0 +1,449 @@
+# Tool Router Configuration - Maps Task Types to Tools
+# The router selects tools based on the current task type and context
+
+router:
+  version: "1.0"
+  description: "Capability-based tool selection for OpenCode agent"
+
+  # ─── Default Tool Sets ───
+  defaults:
+    always_load:
+      - skill: "fable5-patterns"
+      - mcp: "21st.dev MCP"
+    description: "Core workflow skill + component discovery MCP always active"
+
+  # ─── Task Type → Tool Mappings ───
+  task_routes:
+    # Frontend / UI Tasks
+    frontend:
+      description: "General frontend development, components, pages"
+      skills:
+        - "fable5-patterns"
+      mcps:
+        - "21st.dev MCP"
+      tools:
+        - Vite
+        - React18
+        - TailwindCSS
+        - ReactRouter
+        - "21st.dev Components"
+        - "react-icons (Fi)"
+        - "vite-plugin-pwa / Workbox"
+        - "Firebase SDK"
+        - "ESLint 9"
+      on_demand:
+        - "frontend-design"
+        - "UI/UX Pro Max"
+        - "taste-skill"
+        - Oxlint
+        - Playwright
+      activate_when:
+        - "creating/modifying React components"
+        - "working on pages, layouts, UI"
+        - "design system work"
+        - "responsive design"
+
+    frontend_design:
+      description: "UI/UX design, accessibility, design system, polish"
+      skills:
+        - "fable5-patterns"
+        - "frontend-design"
+        - "UI/UX Pro Max"
+        - "taste-skill"
+      mcps:
+        - "21st.dev MCP"
+      tools:
+        - TailwindCSS
+        - "21st.dev Components"
+        - "react-icons (Fi)"
+      activate_when:
+        - "design system changes"
+        - "accessibility audit"
+        - "visual polish"
+        - "micro-interactions"
+        - "color/typography decisions"
+
+    frontend_new_component:
+      description: "Creating new UI components from 21st.dev or custom"
+      skills:
+        - "fable5-patterns"
+      mcps:
+        - "21st.dev MCP"
+      tools:
+        - "21st.dev Components"
+        - TailwindCSS
+        - "react-icons (Fi)"
+      activate_when:
+        - "need new component from 21st.dev"
+        - "component doesn't exist in design system"
+
+    # Backend / API Tasks
+    backend:
+      description: "Backend API development, Express, BullMQ, workers"
+      skills:
+        - "fable5-patterns"
+      tools:
+        - Express.js
+        - BullMQ
+        - "Firebase SDK"
+        - "Firebase Functions"
+        - "ESLint 9"
+      on_demand:
+        - trafilatura
+        - cheerio
+      working_dir: "backend/"
+      activate_when:
+        - "modifying backend/server.js"
+        - "working on API endpoints"
+        - "queue/worker configuration"
+        - "database operations"
+
+    backend_pdf:
+      description: "PDF processing backend workers (Docker required)"
+      skills:
+        - "fable5-patterns"
+      tools: []
+      docker_tools:
+        - "OCRmyPDF"
+        - "Tesseract OCR"
+        - LibreOffice
+        - Docling
+        - "Camelot / pdfplumber"
+        - "PyMuPDF (fitz)"
+        - img2pdf
+      activate_when:
+        - "modifying Python workers"
+        - "Dockerfile changes"
+        - "requirements.txt updates"
+      notes: "These tools ONLY run in Docker. Not available locally."
+
+    backend_deploy:
+      description: "Backend deployment, Docker, Redis"
+      skills:
+        - "fable5-patterns"
+      tools:
+        - Docker
+        - "Multi-stage Dockerfile"
+      activate_when:
+        - "Dockerfile changes"
+        - "docker-compose.yml changes"
+        - "deployment configuration"
+
+    # PDF Editor Tasks
+    pdf_editor:
+      description: "Frontend PDF editor (pdf-lib, pdfjs-dist) - client-side ops"
+      skills:
+        - "fable5-patterns"
+      tools:
+        - "pdf-lib"
+        - "pdfjs-dist"
+        - "21st.dev Components"
+        - TailwindCSS
+        - "react-icons (Fi)"
+      activate_when:
+        - "modifying PDFEditor.jsx"
+        - "working on PDF tool components"
+        - "client-side PDF operations"
+
+    pdf_editor_tools:
+      description: "Specific PDF tool categories (organize, edit, OCR, convert, etc.)"
+      skills:
+        - "fable5-patterns"
+      tools:
+        - "pdf-lib"
+        - "pdfjs-dist"
+        - "21st.dev Components"
+        - TailwindCSS
+      on_demand:
+        - "OCRmyPDF"  # backend only
+        - LibreOffice  # backend only
+      activate_when:
+        - "working on specific tool: OrganizeTools, EditTools, OCRTools, etc."
+
+    # Firebase / Cloud Tasks
+    firebase_functions:
+      description: "Firebase Functions development and deployment"
+      skills:
+        - "fable5-patterns"
+      tools:
+        - "Firebase Functions"
+        - "Firebase SDK"
+        - "Google Gemini 2.5 Flash"  # cloud only
+      activate_when:
+        - "modifying functions/index.js"
+        - "deploying functions"
+        - "setting secrets"
+
+    firebase_rules:
+      description: "Firestore/Storage security rules"
+      skills:
+        - "fable5-patterns"
+      tools:
+        - "Firebase SDK"
+      config_files:
+        - "firestore.rules"
+        - "storage.rules"
+      activate_when:
+        - "modifying security rules"
+        - "adding new collections"
+
+    # Scraping Tasks
+    scraping:
+      description: "Government job scraping, HTML extraction"
+      skills:
+        - "fable5-patterns"
+      tools:
+        - trafilatura
+        - cheerio
+        - "Firebase Functions"  # for scheduled scraping
+      working_dir: "scripts/"
+      activate_when:
+        - "modifying scrapeGovtJobs.js"
+        - "working on scrapegraph scripts"
+        - "HTML parsing/extraction"
+
+    # Security Tasks
+    security_review:
+      description: "Security audit, vulnerability scanning, auth review"
+      skills:
+        - "fable5-patterns"
+        - "Security Review"
+        - Strix
+      tools:
+        - "ESLint 9"
+      on_demand:
+        - "Cloudflare Security Audit"
+      activate_when:
+        - "security review requested"
+        - "auth/authorization changes"
+        - "input validation audit"
+        - "secrets detection"
+
+    security_deps:
+      description: "Dependency vulnerability scanning"
+      skills:
+        - "fable5-patterns"
+      tools: []
+      commands:
+        - "npm audit"
+        - "pip-audit"
+      activate_when:
+        - "package.json changes"
+        - "requirements.txt changes"
+        - "dependency update"
+
+    # Testing Tasks
+    testing:
+      description: "E2E testing, browser automation"
+      skills:
+        - "fable5-patterns"
+      tools:
+        - Playwright
+      on_demand:
+        - "Page Agent"
+        - "Agent Browser"
+      activate_when:
+        - "writing/running E2E tests"
+        - "browser automation needed"
+
+    # Code Quality / Linting
+    linting:
+      description: "Code linting, style enforcement"
+      skills:
+        - "fable5-patterns"
+      tools:
+        - "ESLint 9"
+      on_demand:
+        - Oxlint
+      activate_when:
+        - "running npm run lint"
+        - "fixing lint errors"
+
+    # Code Review
+    code_review:
+      description: "Deep code review, architecture, maintainability"
+      skills:
+        - "fable5-patterns"
+        - "Anti-slop"
+        - "Deep Code Review"
+      tools:
+        - "ESLint 9"
+      activate_when:
+        - "code review requested"
+        - "architecture review"
+        - "maintainability assessment"
+
+    # Research Tasks
+    research:
+      description: "Library documentation, API lookup, technical research"
+      skills:
+        - "fable5-patterns"
+      mcps:
+        - Context7
+      tools: []
+      activate_when:
+        - "need library documentation"
+        - "API reference lookup"
+        - "version-specific details"
+
+    deep_research:
+      description: "Comprehensive research, multi-source synthesis"
+      skills:
+        - "fable5-patterns"
+        - DeerFlow
+        - Graphify
+        - HyperResearch
+      activate_when:
+        - "complex research task"
+        - "multi-source analysis"
+        - "evidence-based decisions"
+
+    # Context Management
+    context_management:
+      description: "Token optimization, focus preservation"
+      skills:
+        - "fable5-patterns"
+        - Headroom
+      activate_when:
+        - "context running low"
+        - "long-running complex task"
+
+    # Workflow/Process
+    task_execution:
+      description: "General task execution with workflow discipline"
+      skills:
+        - "fable5-patterns"
+        - "Superpowers/GSD"
+        - ECC
+        - "Ponytail (YAGNI)"
+      activate_when:
+        - "starting new task"
+        - "complex multi-step work"
+
+  # ─── Context-Based Activation ───
+  context_rules:
+    - context: "working in src/components/"
+      activate: ["21st.dev Components", "TailwindCSS", "react-icons (Fi)", "ESLint 9"]
+
+    - context: "working in src/pages/"
+      activate: ["Vite", "React18", "ReactRouter", "Firebase SDK", "ESLint 9"]
+
+    - context: "working in src/firebase/"
+      activate: ["Firebase SDK", "ESLint 9"]
+
+    - context: "working in backend/"
+      activate: ["Express.js", "BullMQ", "Firebase SDK", "ESLint 9"]
+
+    - context: "working in backend/workers/python/"
+      activate: ["docker_only tools", "Docker"]
+
+    - context: "working in functions/"
+      activate: ["Firebase Functions", "Google Gemini 2.5 Flash", "ESLint 9"]
+
+    - context: "working in scripts/"
+      activate: ["trafilatura", "cheerio", "Firebase SDK", "ESLint 9"]
+
+    - context: "working on PDFEditor or tools/"
+      activate: ["pdf-lib", "pdfjs-dist", "21st.dev Components", "TailwindCSS"]
+
+    - context: "security review or auth changes"
+      activate: ["Security Review", Strix, "ESLint 9"]
+
+    - context: "lint or build failing"
+      activate: ["ESLint 9", "fable5-patterns"]
+
+  # ─── Explicit Tool Invocation ───
+  explicit_tools:
+    description: "Tools that must be explicitly requested, never auto-activated"
+    tools:
+      - Playwright
+      - Oxlint
+      - Docker
+      - "Firebase Functions"  # deployment only
+      - "Google Gemini 2.5 Flash"  # cloud only
+      - "Page Agent"
+      - "Agent Browser"
+      - DeerFlow
+      - Graphify
+      - HyperResearch
+      - "Anti-slop"
+      - "Deep Code Review"
+      - Headroom
+      - "Cloudflare Security Audit"
+      - Sentry
+      - "Firebase Analytics"
+      - "Codebase Memory"
+      - "MCP Language Server"
+      - Context7
+      - "Superpowers/GSD"
+      - ECC
+      - "Ponytail (YAGNI)"
+      - "frontend-design"
+      - "UI/UX Pro Max"
+      - "taste-skill"
+
+  # ─── Verification ───
+  verification:
+    after_any_change:
+      - "npm run build"
+      - "npm run lint"
+    after_frontend_change:
+      - "npm run build"
+      - "npm run lint"
+    after_backend_change:
+      - "cd backend && npm run build 2>/dev/null || true"
+    after_functions_change:
+      - "firebase deploy --only functions --dry-run"
+    after_rules_change:
+      - "firebase firestore:rules get"
+      - "firebase storage:rules get"
+
+  # ─── Skill Loading Protocol ───
+  skill_protocol:
+    pre_task:
+      - "ls .opencode/skill/"
+      - "cat .opencode/skill/fable5-patterns/SKILL.md"
+      - "cat relevant skill SKILL.md if task matches"
+    during_task:
+      - "Load additional skills as task type requires"
+      - "Don't load unused skills"
+    post_task:
+      - "npm run build && npm run lint"
+      - "Update .vibe/state files"
+      - "Commit if changes are correct and verified"
+
+  # ─── Error Handling ───
+  fallback:
+    if_tool_unavailable:
+      - "Report unavailable with reason"
+      - "Suggest alternative from capabilities.yaml"
+      - "Don't pretend tool is active"
+    if_mcp_fails:
+      - "Report MCP connection issue"
+      - "Continue with local tools"
+    if_docker_unavailable:
+      - "Report Docker not in PATH"
+      - "Backend workers cannot run locally"
+      - "Suggest GitHub Codespaces or cloud shell"
+
+  # ─── Documentation ───
+  documentation:
+    tool_usage:
+      - "Check integrations.yaml for integration method"
+      - "Check capabilities.yaml for what tool can do"
+      - "Check this router for when to activate"
+    adding_new_tool:
+      - "Add to tools.yaml with full metadata"
+      - "Add to capabilities.yaml with capability list"
+      - "Add to integrations.yaml with integration details"
+      - "Add routes in tool-router.yaml"
+      - "Verify OpenCode can discover/use it"
+
+verification_checklist:
+  - "Verify all 'always_available' tools are installed and configured"
+  - "Verify on_demand tools can be installed when needed"
+  - "Verify docker_only tools work in container"
+  - "Verify cloud_only tools work via Functions"
+  - "Verify MCP servers connect"
+  - "Verify skills load correctly"
+  - "Verify router selects correct tools for sample tasks"

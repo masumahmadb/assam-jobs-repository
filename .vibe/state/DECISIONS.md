@@ -70,6 +70,12 @@
 - ✅ **Entity escaping** - Fixed 15+ unescaped apostrophe/quote entities across 8 files using `&apos;`, `"`
 - ✅ **React hooks compliance** - Fixed Input.jsx `useId()` conditional call violation
 - ✅ **TypeScript syntax removal** - Fixed JobPortalExample.jsx `job: any` type annotation
+- ✅ **Toolbox/router system** - Complete capability-based router with 4 config files:
+  - `.vibe/registry/tools.yaml` - Master tool registry
+  - `.vibe/registry/capabilities.yaml` - Tool → capability mapping
+  - `.vibe/registry/integrations.yaml` - Tool → OpenCode integration details
+  - `.vibe/config/tool-router.yaml` - Task-type → tool routing rules
+- ✅ **Verification report** - `.vibe/state/TOOL_SETUP.md` with full audit
 
 ## Open Decisions
 - [ ] Backend hosting: Cloud Run vs Render vs Railway vs VPS
