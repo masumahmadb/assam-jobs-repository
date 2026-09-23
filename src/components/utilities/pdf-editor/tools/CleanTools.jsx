@@ -352,7 +352,7 @@ export default function CleanTools() {
           </div>
           <div className="bg-green-50 dark:bg-green-900/30 rounded-xl p-3">
             <h5 className="font-medium text-green-800 dark:text-green-300 mb-1">Repair</h5>
-            <p className="text-xs">Fix corrupted PDFs that won't open</p>
+            <p className="text-xs">Fix corrupted PDFs that won&apos;t open</p>
           </div>
           <div className="bg-purple-50 dark:bg-purple-900/30 rounded-xl p-3">
             <h5 className="font-medium text-purple-800 dark:text-purple-300 mb-1">PDF/A</h5>
@@ -375,5 +375,3 @@ export default function CleanTools() {
     </div>
   )
 }
-
-export default CleanTools

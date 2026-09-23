@@ -223,5 +223,3 @@ export default function CompressTools() {
     </div>
   )
 }
-
-export default CompressTools

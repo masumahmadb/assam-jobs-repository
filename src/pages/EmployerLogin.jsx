@@ -149,7 +149,7 @@ export default function EmployerLogin() {
 
           <CardFooter className="pt-4">
             <p className="text-center text-sm text-tea-600 dark:text-tea-400">
-              Don't have an employer account?{' '}
+              Don&apos;t have an employer account?{' '}
               <Link to="/employer/signup" className="text-tea-600 dark:text-tea-400 font-medium hover:text-tea-700 dark:hover:text-tea-300 underline underline-offset-2">
                 Register as Employer
               </Link>

@@ -296,7 +296,7 @@ export default function ProfileSetup() {
                   </div>
                   <h2 className="text-2xl font-display font-bold text-tea-900 dark:text-tea-100 mb-2">Profile Complete!</h2>
                   <p className="text-tea-600 dark:text-tea-400 mb-6 max-w-md mx-auto">
-                    Your profile is now complete. We'll show you personalized job recommendations based on your profile.
+                    Your profile is now complete. We&apos;ll show you personalized job recommendations based on your profile.
                   </p>
                   <div className="card bg-tea-50 dark:bg-tea-800/50 p-4 mb-6">
                     <div className="grid grid-cols-2 gap-3 text-sm">

@@ -211,7 +211,7 @@ function Login() {
 
           <CardFooter className="pt-4">
             <p className="text-center text-sm text-tea-600 dark:text-tea-400">
-              Don't have an account?{' '}
+              Don&apos;t have an account?{' '}
               <Link to="/signup" className="text-tea-600 dark:text-tea-400 font-medium hover:text-tea-700 dark:hover:text-tea-300 underline underline-offset-2">
                 Sign up
               </Link>

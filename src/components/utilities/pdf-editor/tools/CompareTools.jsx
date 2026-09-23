@@ -159,5 +159,3 @@ export default function CompareTools() {
     </div>
   )
 }
-
-export default CompareTools

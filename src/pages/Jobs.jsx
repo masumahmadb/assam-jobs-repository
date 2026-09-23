@@ -5,6 +5,7 @@ import { useLanguage } from '../contexts/LanguageContext.jsx'
 import SectorExplorer from '../components/jobs/SectorExplorer.jsx'
 import JobList from '../components/jobs/JobList.jsx'
 import { Card, CardHeader, CardTitle, Input, Select, Button, Badge, SelectOption } from '../components/ui/21st'
+import { FiFilter, FiSearch, FiMapPin } from 'react-icons/fi'
 
 function Jobs() {
   const { t } = useLanguage()

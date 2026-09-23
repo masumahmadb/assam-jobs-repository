@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect, lazy, Suspense } from 'react'
 import { PDFEditorProvider, usePDFEditor } from '../../context/PDFEditorContext'
-import { FiFilePlus, FiRotateCw, FiTrash2, FiArrowUp, FiArrowDown, FiDownload, FiSave, FiX, FiPlus, FiUpload, FiEye, FiEdit, FiPrinter, FiCopy, FiSearch, FiFileText, FiImage, FiLock, FiUnlock, FiScissors, FiStamp, FiPenTool, FiType, FiSignature, FiFile, FiArrowUpRight, FiFileMinus, FiFilePlus2, FiLayers, FiGrid, FiShield, FiKey, FiEraser, FiWand2, FiCamera, FiRotateCcw, FiMove, FiZoomIn, FiZoomOut, FiUndo, FiRedo, FiGitCompare } from 'react-icons/fi'
+import { FiFilePlus, FiRotateCw, FiTrash2, FiArrowUp, FiArrowDown, FiDownload, FiSave, FiX, FiPlus, FiUpload, FiEye, FiPrinter, FiCopy, FiSearch, FiFileText, FiImage, FiLock, FiUnlock, FiScissors, FiStamp, FiPenTool, FiType, FiSignature, FiFile, FiArrowUpRight, FiFileMinus, FiFilePlus2, FiLayers, FiGrid, FiShield, FiKey, FiEraser, FiWand2, FiCamera, FiRotateCcw, FiMove, FiZoomIn, FiZoomOut, FiUndo, FiRedo, FiGitCompare } from 'react-icons/fi'
 
 // Lazy load heavy tool components
 const EditTools = lazy(() => import('./tools/EditTools'))
@@ -271,5 +271,3 @@ export default function PDFEditor() {
     </PDFEditorProvider>
   )
 }
-
-export default PDFEditor

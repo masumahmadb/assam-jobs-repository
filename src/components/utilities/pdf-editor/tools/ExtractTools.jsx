@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { usePDFEditor } from '../../context/PDFEditorContext'
-import { FiFileText, FiImage, FiTable, FiSearch, FiDownload, FiCopy, FiEye, FiFile, FiFilter, FiScissors, FiCopy, FiFileExcel, FiFilePowerpoint, FiCode, FiCheckCircle, FiAlertTriangle, FiInfo, FiHelpCircle, FiMagnifyingGlass, FiList, FiGrid, FiFileExcel, FiFilePowerpoint, FiCode, FiFileText as FiFileTextIcon } from 'react-icons/fi'
+import { FiFileText, FiImage, FiTable, FiSearch, FiDownload, FiCopy, FiEye, FiFile, FiFilter, FiScissors, FiFileExcel, FiFilePowerpoint, FiCode, FiCheckCircle, FiAlertTriangle, FiInfo, FiHelpCircle, FiMagnifyingGlass, FiList, FiGrid, FiFileText as FiFileTextIcon, FiArrowUp, FiArrowDown } from 'react-icons/fi'
 
 export default function ExtractTools() {
   const { state, actions } = usePDFEditor()
@@ -318,5 +318,3 @@ export default function ExtractTools() {
     </div>
   )
 }
-
-export default ExtractTools

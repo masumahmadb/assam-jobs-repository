@@ -153,5 +153,3 @@ export default function WatermarkTools() {
     </div>
   )
 }
-
-export default WatermarkTools

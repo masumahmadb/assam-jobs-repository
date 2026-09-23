@@ -275,5 +275,3 @@ export default function ConvertTools() {
     </div>
   )
 }
-
-export default ConvertTools

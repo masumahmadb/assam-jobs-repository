@@ -279,5 +279,3 @@ export default function FormsTools() {
     </div>
   )
 }
-
-export default FormsTools

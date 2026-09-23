@@ -135,7 +135,7 @@ export default function DocumentVault() {
 
       {loadError && (
         <div className="card text-center space-y-2 bg-red-50 border-red-200">
-          <p className="text-sm text-red-600">Couldn't load your vault: {loadError}</p>
+          <p className="text-sm text-red-600">Couldn&apos;t load your vault: {loadError}</p>
           <button onClick={load} className="btn-outline">Retry</button>
         </div>
       )}

@@ -1,10 +1,11 @@
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 import { usePDFEditor } from '../../context/PDFEditorContext'
-import { FiFilePlus, FiRotateCw, FiTrash2, FiArrowUp, FiArrowDown, FiDownload, FiSave, FiX, FiPlus, FiUpload, FiEye, FiEdit, FiPrinter, FiCopy, FiSearch, FiFileText, FiImage, FiLock, FiUnlock, FiScissors, FiCopy, FiStamp, FiPenTool, FiType, FiSignature, FiFile, FiArrowUpRight, FiFileMinus, FiLayers, FiGrid, FiShield, FiKey, FiEraser, FiWand2, FiCamera, FiRotateCcw, FiMove, FiZoomIn, FiZoomOut, FiUndo, FiRedo, FiFilePlus2, FiScissors, FiCopy, FiMinus, FiPlusSquare, FiMinimize2, FiMaximize2, FiAlignLeft, FiAlignCenter, FiAlignRight, FiList, FiGrid, FiFileMinus2, FiFilePlus2, FiArrowLeftRight, FiArrowUpDown, FiCornerUpLeft, FiCornerUpRight, FiCornerDownLeft, FiCornerDownRight, FiCrop, FiResize, FiArrowUpLeft, FiArrowUpRight, FiArrowDownLeft, FiArrowDownRight } from 'react-icons/fi'
+import { FiFilePlus, FiRotateCw, FiTrash2, FiArrowUp, FiArrowDown, FiDownload, FiSave, FiX, FiPlus, FiUpload, FiEye, FiEdit, FiPrinter, FiCopy, FiSearch, FiFileText, FiImage, FiLock, FiUnlock, FiScissors, FiStamp, FiPenTool, FiType, FiSignature, FiFile, FiArrowUpRight, FiFileMinus, FiLayers, FiGrid, FiShield, FiKey, FiEraser, FiWand2, FiCamera, FiRotateCcw, FiMove, FiZoomIn, FiZoomOut, FiUndo, FiRedo, FiFilePlus2, FiMinus, FiPlusSquare, FiMinimize2, FiMaximize2, FiAlignLeft, FiAlignCenter, FiAlignRight, FiList, FiFileMinus2, FiArrowLeftRight, FiArrowUpDown, FiCornerUpLeft, FiCornerUpRight, FiCornerDownLeft, FiCornerDownRight, FiCrop, FiResize, FiArrowUpLeft, FiArrowUpRight, FiArrowDownLeft, FiArrowDownRight } from 'react-icons/fi'
 import { PDFDocument, rgb, StandardFonts } from 'pdf-lib'
 
 export default function OrganizeTools() {
   const { state, actions } = usePDFEditor()
+  const mergeInputRef = useRef(null)
   const [splitMode, setSplitMode] = useState('range')
   const [splitRanges, setSplitRanges] = useState([{ start: 1, end: '' }])
   const [everyNPages, setEveryNPages] = useState(1)
@@ -234,5 +235,3 @@ export default function OrganizeTools() {
     </div>
   )
 }
-
-export default OrganizeTools

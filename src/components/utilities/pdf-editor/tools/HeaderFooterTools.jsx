@@ -150,5 +150,3 @@ export default function HeaderFooterTools() {
     </div>
   )
 }
-
-export default HeaderFooterTools

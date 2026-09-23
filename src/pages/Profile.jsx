@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { FiUser, FiMail, FiMapPin, FiCalendar, FiSettings, FiLogOut, FiEdit, FiShield, FiBookOpen, FiAward, FiClock, FiCheckCircle } from 'react-icons/fi'
+import { FiUser, FiMail, FiMapPin, FiCalendar, FiSettings, FiLogOut, FiEdit, FiShield, FiBookOpen, FiAward, FiClock, FiCheckCircle, FiFileText, FiHeart, FiBell } from 'react-icons/fi'
 import { useAuth } from '../contexts/AuthContext.jsx'
 import { useLanguage } from '../contexts/LanguageContext.jsx'
 import { logOut } from '../firebase/auth.js'

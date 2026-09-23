@@ -59,7 +59,7 @@ function Home() {
               {profile?.name ? `Namaskar, ${profile.name}` : 'Namaskar! 🙏'}
             </h1>
             <p className="text-lg lg:text-xl text-tea-600 dark:text-tea-400 max-w-3xl mx-auto animate-slide-up" style={{animationDelay: '100ms'}}>
-              Your one-stop hub for Assam's Sarkari & Private jobs. Smart matching, instant alerts, and tools built for Assam's students.
+              Your one-stop hub for Assam&apos;s Sarkari & Private jobs. Smart matching, instant alerts, and tools built for Assam&apos;s students.
             </p>
           </div>
 
@@ -163,7 +163,7 @@ function Home() {
             Why Choose Assam Jobs Repository?
           </h2>
           <p className="text-tea-600 dark:text-tea-400 text-lg max-w-2xl mx-auto">
-            Built specifically for Assam's students with features that matter
+            Built specifically for Assam&apos;s students with features that matter
           </p>
         </div>
 
@@ -202,7 +202,7 @@ function Home() {
                   <Avatar fallback="⭐" size="sm" className="bg-amber-100 text-amber-600" />
                 </div>
               </div>
-              <p className="text-tea-700 dark:text-tea-300 mb-4 italic">"{testimonial.quote}"</p>
+              <p className="text-tea-700 dark:text-tea-300 mb-4 italic">{testimonial.quote}</p>
               <div className="flex items-center gap-3">
                 <Avatar fallback={testimonial.avatar} size="sm" />
                 <div>

@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 import { usePDFEditor } from '../../context/PDFEditorContext'
-import { FiFilePlus, FiRotateCw, FiTrash2, FiArrowUp, FiArrowDown, FiDownload, FiSave, FiX, FiPlus, FiUpload, FiEye, FiEdit, FiPrinter, FiCopy, FiSearch, FiFileText, FiImage, FiLock, FiUnlock, FiScissors, FiCopy, FiStamp, FiPenTool, FiType, FiSignature, FiFile, FiArrowUpRight, FiFileMinus, FiLayers, FiGrid, FiShield, FiKey, FiEraser, FiWand2, FiCamera, FiRotateCcw, FiMove, FiZoomIn, FiZoomOut, FiUndo, FiRedo, FiAnchor, FiLink, FiHighlighter, FiImage as FiImageIcon, FiPen, FiEdit2, FiTrash, FiMousePointer, FiHelpCircle } from 'react-icons/fi'
+import { FiFilePlus, FiRotateCw, FiTrash2, FiArrowUp, FiArrowDown, FiDownload, FiSave, FiX, FiPlus, FiUpload, FiEye, FiEdit, FiPrinter, FiCopy, FiSearch, FiFileText, FiImage, FiLock, FiUnlock, FiScissors, FiStamp, FiPenTool, FiType, FiSignature, FiFile, FiArrowUpRight, FiFileMinus, FiLayers, FiGrid, FiShield, FiKey, FiEraser, FiWand2, FiCamera, FiRotateCcw, FiMove, FiZoomIn, FiZoomOut, FiUndo, FiRedo, FiAnchor, FiLink, FiHighlighter, FiImage as FiImageIcon, FiPen, FiEdit2, FiTrash, FiMousePointer, FiHelpCircle, FiUnderline, FiStrikethrough, FiStickyNote } from 'react-icons/fi'
 
 const TOOL_ICONS = {
   select: FiMousePointer,
@@ -169,5 +169,3 @@ export default function EditTools() {
     </div>
   )
 }
-
-export default EditTools

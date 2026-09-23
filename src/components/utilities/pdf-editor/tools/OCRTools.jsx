@@ -250,5 +250,3 @@ export default function OCRTools() {
     </div>
   )
 }
-
-export default OCRTools

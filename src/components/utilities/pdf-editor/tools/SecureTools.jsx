@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { usePDFEditor } from '../../context/PDFEditorContext'
-import { FiLock, FiUnlock, FiShield, FiKey, FiEye, FiEyeOff, FiUser, FiTrash2, FiEdit, FiAlertTriangle, FiCheckCircle, FiInfo, FiHelpCircle, FiFileText, FiSearch, FiUserCheck, FiUserX, FiClipboardCheck, FiClipboardX, FiCreditCard, FiIdCard, FiMail, FiPhone, FiMapPin, FiCalendar, FiHash, FiFingerprint, FiShield, FiLock as FiLockIcon } from 'react-icons/fi'
+import { FiLock, FiUnlock, FiShield, FiKey, FiEye, FiEyeOff, FiUser, FiTrash2, FiEdit, FiAlertTriangle, FiCheckCircle, FiInfo, FiHelpCircle, FiFileText, FiSearch, FiUserCheck, FiUserX, FiClipboardCheck, FiClipboardX, FiCreditCard, FiIdCard, FiMail, FiPhone, FiMapPin, FiCalendar, FiHash, FiFingerprint, FiLock as FiLockIcon } from 'react-icons/fi'
 
 export default function SecureTools() {
   const { state, actions } = usePDFEditor()
@@ -265,5 +265,3 @@ export default function SecureTools() {
     </div>
   )
 }
-
-export default SecureTools

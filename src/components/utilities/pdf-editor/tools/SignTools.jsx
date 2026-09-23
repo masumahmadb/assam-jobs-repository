@@ -1,9 +1,11 @@
 import React, { useState, useRef, useEffect } from 'react'
 import { usePDFEditor } from '../../context/PDFEditorContext'
-import { FiSignature, FiPenTool, FiType, FiImage, FiFilePlus, FiDownload, FiSave, FiCheckCircle, FiAlertTriangle, FiInfo, FiHelpCircle, FiUser, FiPen, FiEdit, FiEye, FiEyeOff, FiTrash2, FiPlus, FiMinus, FiRotateCw, FiMove, FiMousePointer, FiPenTool as FiPenToolIcon, FiType as FiTypeIcon, FiImage as FiImageIcon } from 'react-icons/fi'
+import { FiSignature, FiPenTool, FiType, FiImage, FiFilePlus, FiDownload, FiSave, FiCheckCircle, FiAlertTriangle, FiInfo, FiHelpCircle, FiUser, FiPen, FiEdit, FiEye, FiEyeOff, FiTrash2, FiPlus, FiMinus, FiRotateCw, FiMove, FiMousePointer, FiZoomIn, FiZoomOut, FiPenTool as FiPenToolIcon, FiType as FiTypeIcon, FiImage as FiImageIcon } from 'react-icons/fi'
 
 export default function SignTools() {
   const { state, actions } = usePDFEditor()
+  const fileInputRef = useRef(null)
+  const canvasRef = useRef(null)
   const [signMode, setSignMode] = useState('draw') // draw, type, upload
   const [signatureData, setSignatureData] = useState(null) // { type, data, ... }
   const [placedSignatures, setPlacedSignatures] = useState([])
@@ -306,5 +308,3 @@ export default function SignTools() {
     </div>
   )
 }
-
-export default SignTools

@@ -124,14 +124,14 @@ export default function SectorExplorer() {
       <RollingBar
         icon={<FiClock size={18} />}
         title="Upcoming Jobs"
-        subtitle="Notifications expected soon — before they're officially out"
+        subtitle="Notifications expected soon — before they&apos;re officially out"
         open={openPanel === 'upcoming'}
         onToggle={() => setOpenPanel(openPanel === 'upcoming' ? null : 'upcoming')}
       >
         <div className="flex items-center gap-3 rounded-xl border border-dashed border-tea-200 bg-tea-50/40 px-4 py-5">
           <FiLayers size={22} className="text-tea-600 shrink-0" />
           <p className="text-sm text-tea-900/70 leading-relaxed">
-            We're tracking official portals for upcoming notifications.
+            We&apos;re tracking official portals for upcoming notifications.
             As soon as a new recruitment is announced, it will appear here first.
           </p>
         </div>

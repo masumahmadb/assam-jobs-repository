@@ -148,7 +148,7 @@ export function JobPortalExample() {
   const paginatedJobs = filteredJobs.slice((currentPage - 1) * 10, currentPage * 10)
   const totalPages = Math.ceil(filteredJobs.length / 10)
 
-  const handleRowClick = (job: any) => {
+  const handleRowClick = (job) => {
     setSelectedJob(job)
     setModalOpen(true)
   }

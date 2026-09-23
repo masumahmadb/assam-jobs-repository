@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react'
 import TopBar from '../components/common/TopBar.jsx'
 import { useLanguage } from '../contexts/LanguageContext.jsx'
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, Button, Input, Badge, Avatar, AvatarGroup, Tabs, TabsList, TabsTrigger, TabsContent, Accordion, AccordionItem, AccordionTrigger, AccordionContent, CardFooter } from '../components/ui/21st'
-import { FiSend, FiMic, FiFileText, FiBookOpen, FiTarget, FiTrendingUp, FiZap, FiStar, FiMessageSquare, FiLoader, FiCopy, FiCheckCircle, FiArrowUpRight, FiBrain, FiMessageCircle, FiSettings, FiHistory } from 'react-icons/fi'
+import { FiSend, FiMic, FiFileText, FiBookOpen, FiTarget, FiTrendingUp, FiZap, FiStar, FiMessageSquare, FiLoader, FiCopy, FiCheckCircle, FiArrowUpRight, FiBrain, FiMessageCircle, FiSettings, FiHistory, FiRefreshCw, FiUser } from 'react-icons/fi'
 import SyllabusScraper from '../components/assistant/SyllabusScraper.jsx'
 import AIAssistant from '../components/assistant/AIAssistant.jsx'
 

@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { FiDownload, FiImage, FiFilePdf, FiArrowUpRight, FiArrowRight, FiArrowLeft, FiRotateCw, FiCrop, FiResize, FiEdit, FiHelpCircle, FiInfo, FiAlertTriangle, FiSearch, FiCheckCircle, FiX, FiPlus, FiMinus, FiRotateCw, FiMove, FiCrop, FiSettings, FiSlidersHorizontal } from 'react-icons/fi'
+import { FiDownload, FiImage, FiFilePdf, FiArrowUpRight, FiArrowRight, FiArrowLeft, FiRotateCw, FiCrop, FiResize, FiEdit, FiHelpCircle, FiInfo, FiAlertTriangle, FiSearch, FiCheckCircle, FiX, FiPlus, FiMinus, FiMove, FiSettings, FiSlidersHorizontal, FiLoader } from 'react-icons/fi'
 
 export default function ImageTools() {
   const [activeTab, setActiveTab] = useState('pdf-to-image')
@@ -191,5 +191,3 @@ export default function ImageTools() {
     </div>
   )
 }
-
-export default ImageTools

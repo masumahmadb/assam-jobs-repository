@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link, useLocation } from 'react-router-dom'
-import { FiMenu, FiX, FiBell, FiUser, FiLogOut, FiSettings, FiHelpCircle, FiMoon, FiSun, FiTool, FiMessageSquare, FiWifiOff } from 'react-icons/fi'
+import { FiMenu, FiX, FiBell, FiUser, FiLogOut, FiSettings, FiHelpCircle, FiMoon, FiSun, FiTool, FiMessageSquare, FiWifiOff, FiBookOpen } from 'react-icons/fi'
 import { useAuth } from '../../contexts/AuthContext.jsx'
 import { useLanguage } from '../../contexts/LanguageContext.jsx'
 import { useOffline } from '../../hooks/useOffline.js'
